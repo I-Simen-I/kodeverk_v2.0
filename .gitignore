@@ -5,6 +5,5 @@ out/*
 # Files #
 *.class
 *.iml
-*.xls
 *.DS_Store
 *.jar
