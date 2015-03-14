@@ -9,7 +9,7 @@ import java.util.List;
  * @author Simen Søhol
  */
 public class SQLGenerator {
-    private List<String> sqlInsertList = new ArrayList<>();
+    private List<String> sqlInsertList = new ArrayList<String>();
 
     public List<String> generateSQL(String kodeverkName, String[][] kodeverkList, int columns) {
         StringBuilder insertstatement;

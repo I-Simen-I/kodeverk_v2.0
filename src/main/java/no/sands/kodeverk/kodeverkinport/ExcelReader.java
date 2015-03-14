@@ -17,7 +17,7 @@ import static no.sands.kodeverk.common.CommonVariables.NTG;
  * @author Simen Søhol
  */
 public class ExcelReader {
-    private Map<String, Integer> statusList = new HashMap<>();
+    private Map<String, Integer> statusList = new HashMap<String, Integer>();
 
     public Map<String, Integer> read(String inputFile) throws Exception {
         File inputWorkbook = new File(inputFile);
