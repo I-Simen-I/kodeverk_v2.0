@@ -1,4 +1,4 @@
-package no.sands.kodeverk.kodeverkinport;
+package no.sands.kodeverk.excelconverter;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package no.sands.kodeverk.kodeverkinport;
+package no.sands.kodeverk.excelconverter;
 
 import jxl.Cell;
 import jxl.Sheet;
