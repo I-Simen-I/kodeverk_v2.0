@@ -3,7 +3,10 @@ package no.sands.kodeverk.utils;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static no.sands.kodeverk.enums.FileType.CSV;
 
 /**
  * @author Simen Søhol
@@ -14,10 +17,10 @@ public class FileUtil {
      * Returns all csv files in a given folder
      *
      * @param folderPath the path to the folder where the kodeverkfiles are stored
-     * @return list of file names
+     * @return list of files
      */
-    public static List<String> getFilesInFolder(String folderPath) {
-        return getFilesInFolderOfGivenType(folderPath, ".csv");
+    public static List<File> getFilesInFolder(String folderPath) {
+        return getFilesInFolderOfGivenType(folderPath, CSV.getFiletype());
     }
 
     /**
@@ -25,11 +28,11 @@ public class FileUtil {
      *
      * @param folderPath the path to the folder where the kodeverkfiles are stored
      * @param fileType   the type of file to find
-     * @return list of file names
+     * @return list of files
      */
-    public static List<String> getFilesInFolderOfGivenType(String folderPath, final String fileType) {
+    public static List<File> getFilesInFolderOfGivenType(String folderPath, final String fileType) {
         File folder = new File(folderPath);
-        List<String> filesInFolder = new ArrayList<String>();
+        List<File> filesInFolder = new ArrayList<File>();
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
@@ -38,9 +41,7 @@ public class FileUtil {
             }
         };
 
-        for (File file : folder.listFiles(filter)) {
-            filesInFolder.add(file.getName());
-        }
+        Collections.addAll(filesInFolder, folder.listFiles(filter));
 
         return filesInFolder;
     }
