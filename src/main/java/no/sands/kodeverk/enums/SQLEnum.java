@@ -1,4 +1,4 @@
-package no.sands.kodeverk.common;
+package no.sands.kodeverk.enums;
 
 /**
  * @author Simen Søhol

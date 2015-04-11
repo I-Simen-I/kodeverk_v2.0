@@ -3,7 +3,7 @@ package no.sands.kodeverk.excelconverter;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
-import no.sands.kodeverk.utils.CSVGenerator;
+import no.sands.kodeverk.generator.CSVGenerator;
 
 import java.io.File;
 

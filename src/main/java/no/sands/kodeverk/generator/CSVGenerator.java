@@ -1,11 +1,11 @@
-package no.sands.kodeverk.utils;
+package no.sands.kodeverk.generator;
 
 import no.sands.kodeverk.common.CommonVariables;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static no.sands.kodeverk.common.SQLEnum.COMMA;
+import static no.sands.kodeverk.enums.SQLEnum.COMMA;
 
 /**
  * This class is used for creating csv files.
@@ -28,7 +28,6 @@ public class CSVGenerator {
         FileWriter fileWriter = new FileWriter(CommonVariables.KODEVERK_FILE_PATH + kodeverkName + ".csv");
         fileWriter.append(columnHeader).append("\n");
         fileWriter.append(columnStyle).append("\n");
-
 
         for (int i = 2; i < kodeverkList.length; i++) {
             fileWriter.append(getColumnsAtRow(i, kodeverkList, columns)).append("\n");

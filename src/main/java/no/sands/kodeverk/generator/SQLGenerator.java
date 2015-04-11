@@ -1,10 +1,10 @@
-package no.sands.kodeverk.utils;
+package no.sands.kodeverk.generator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static no.sands.kodeverk.common.ColumType.*;
-import static no.sands.kodeverk.common.SQLEnum.*;
+import static no.sands.kodeverk.enums.SQLEnum.*;
 
 /**
  * @author Simen Søhol

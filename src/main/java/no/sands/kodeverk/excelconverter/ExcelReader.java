@@ -3,7 +3,7 @@ package no.sands.kodeverk.excelconverter;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
-import no.sands.kodeverk.utils.SQLGenerator;
+import no.sands.kodeverk.generator.SQLGenerator;
 
 import java.io.File;
 import java.util.HashMap;
