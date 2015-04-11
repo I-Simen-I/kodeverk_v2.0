@@ -5,6 +5,8 @@ import no.sands.kodeverk.common.CommonVariables;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static no.sands.kodeverk.enums.ColumnType.DECODE;
+import static no.sands.kodeverk.enums.FileType.CSV;
 import static no.sands.kodeverk.enums.SQLEnum.COMMA;
 
 /**
@@ -25,7 +27,7 @@ public class CSVGenerator {
         String columnHeader = getColumnsAtRow(1, kodeverkList, columns);
         String columnStyle = getColumnsAtRow(0, kodeverkList, columns);
 
-        FileWriter fileWriter = new FileWriter(CommonVariables.KODEVERK_FILE_PATH + kodeverkName + ".csv");
+        FileWriter fileWriter = new FileWriter(CommonVariables.KODEVERK_FILE_PATH + kodeverkName + CSV.getFiletype());
         fileWriter.append(columnHeader).append("\n");
         fileWriter.append(columnStyle).append("\n");
 
@@ -41,7 +43,11 @@ public class CSVGenerator {
         StringBuilder columnbilder = new StringBuilder();
 
         for (int column = 0; column < columns; column++) {
-            columnbilder.append(kodeverkList[row][column]);
+            if (kodeverkList[1][column].equals(DECODE.getColumnType())) {
+                columnbilder.append("\"").append(kodeverkList[row][column]).append("\"");
+            } else {
+                columnbilder.append(kodeverkList[row][column]);
+            }
             columnbilder.append(addCommmaSeparator(column, columns));
         }
         return columnbilder.toString();

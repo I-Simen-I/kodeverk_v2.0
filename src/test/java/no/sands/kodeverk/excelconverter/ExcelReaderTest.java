@@ -19,6 +19,6 @@ public class ExcelReaderTest {
         Map<String, Integer> status = generatedInserts.read(TEST_FILE_1);
 
         assertThat(status.get(NTG), is(3));
-        assertThat(status.get(NIG), is(583));
+        assertThat(status.get(NIG), is(585));
     }
 }
