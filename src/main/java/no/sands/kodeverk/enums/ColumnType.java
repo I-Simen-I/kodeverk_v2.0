@@ -1,16 +1,16 @@
-package no.sands.kodeverk.common;
+package no.sands.kodeverk.enums;
 
 /**
  * @author Simen Søhol
  */
-public enum ColumType {
+public enum ColumnType {
     TEXT_COLUMN('c'),
     TIMESTAMP_COLUMN('t'),
     DATE_COLUMN('d');
 
     private char prefix;
 
-    private ColumType(char prefix) {
+    private ColumnType(char prefix) {
         setPrefix(prefix);
     }
 

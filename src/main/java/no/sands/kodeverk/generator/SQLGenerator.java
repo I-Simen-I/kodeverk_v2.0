@@ -3,7 +3,7 @@ package no.sands.kodeverk.generator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static no.sands.kodeverk.common.ColumType.*;
+import static no.sands.kodeverk.enums.ColumnType.*;
 import static no.sands.kodeverk.enums.SQLEnum.*;
 
 /**
