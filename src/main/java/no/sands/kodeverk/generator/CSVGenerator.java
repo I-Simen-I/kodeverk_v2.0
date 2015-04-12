@@ -43,7 +43,7 @@ public class CSVGenerator {
         StringBuilder columnbilder = new StringBuilder();
 
         for (int column = 0; column < columns; column++) {
-            if (kodeverkList[1][column].equals(DECODE.getColumnType())) {
+            if (kodeverkList[1][column].equals(DECODE.getColumnType()) && row != 0 && row != 1) {
                 columnbilder.append("\"").append(kodeverkList[row][column]).append("\"");
             } else {
                 columnbilder.append(kodeverkList[row][column]);
