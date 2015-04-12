@@ -5,7 +5,7 @@ import no.sands.kodeverk.common.CommonVariables;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static no.sands.kodeverk.enums.ColumnType.DECODE;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DECODE;
 import static no.sands.kodeverk.enums.FileType.CSV;
 import static no.sands.kodeverk.enums.SQLEnum.COMMA;
 
@@ -43,7 +43,7 @@ public class CSVGenerator {
         StringBuilder columnbilder = new StringBuilder();
 
         for (int column = 0; column < columns; column++) {
-            if (kodeverkList[1][column].equals(DECODE.getColumnType()) && row != 0 && row != 1) {
+            if (kodeverkList[1][column].equals(COLUMN_DECODE) && row != 0 && row != 1) {
                 columnbilder.append("\"").append(kodeverkList[row][column]).append("\"");
             } else {
                 columnbilder.append(kodeverkList[row][column]);
