@@ -51,7 +51,7 @@ public class FileUtil {
     }
 
     /**
-     * Reads given csv file and returns an list that contains each line
+     * Reads a given csv file and returns a list that contains each line
      *
      * @param kodeverkFile the file to read
      * @return list that contains each line as a String[]
@@ -60,5 +60,17 @@ public class FileUtil {
         CSVReader reader = new CSVReader(new FileReader(kodeverkFile));
 
         return reader.readAll();
+    }
+
+    /**
+     * Get the name on the file without the extension
+     *
+     * @param file the file to get the name from
+     * @return the name of  the file
+     */
+    public static String getFileName(File file) {
+        int fileTypeIndex = file.getName().indexOf(".");
+
+        return file.getName().substring(0, fileTypeIndex);
     }
 }
