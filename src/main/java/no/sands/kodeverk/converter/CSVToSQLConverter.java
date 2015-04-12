@@ -59,7 +59,7 @@ public class CSVToSQLConverter {
 
         for (int i = 0; i < getNumberOfValidInsertValues(csvList); i++) {
             rowBuilder.append(header[i]);
-            rowBuilder.append(addCommmaSeparator(i, header.length));
+            rowBuilder.append(addCommmaSeparator(i, getNumberOfValidInsertValues(csvList)));
         }
         return rowBuilder.toString();
     }
