@@ -73,4 +73,23 @@ public class FileUtil {
 
         return file.getName().substring(0, fileTypeIndex);
     }
+
+    /**
+     * Returns the number of valid rows that can be used in sql a insert statement
+     *
+     * @param csvList the list to check
+     * @return number of valid rows
+     */
+    public static int getNumberOfValidInsertValues(List<String[]> csvList) {
+        String[] columnTypes = csvList.get(1);
+        int validInsertValues = 0;
+
+        for (String column : columnTypes) {
+            if (column != null && !column.isEmpty()) {
+                validInsertValues++;
+            }
+        }
+
+        return validInsertValues;
+    }
 }

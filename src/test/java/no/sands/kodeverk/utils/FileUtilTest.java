@@ -3,6 +3,7 @@ package no.sands.kodeverk.utils;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_PATH;
@@ -36,5 +37,14 @@ public class FileUtilTest {
         List<String[]> csvList = FileUtil.readCSVFile(kodeverk);
         assertThat(csvList, hasSize(5));
         assertThat(csvList.get(0).length, is(10));
+    }
+
+    @Test
+    public void testGetNumberOfValidInsertValues() {
+        String[] header = {"a", "b", "c", "d"};
+        String[] columnType = {"c", "c", "d"};
+        List<String[]> csvList = Arrays.asList(header, columnType);
+
+        assertThat(FileUtil.getNumberOfValidInsertValues(csvList), is(3));
     }
 }
