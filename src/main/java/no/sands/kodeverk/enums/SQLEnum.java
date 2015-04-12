@@ -10,7 +10,7 @@ public enum SQLEnum {
     TIMESTAMP("TIMESTAMP("),
     DATE("DATE("),
     COMMA(","),
-    SQL_ENDING(");");
+    SQL_ENDING(");\n");
 
     private String sqlValue;
 
