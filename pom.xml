@@ -13,6 +13,7 @@
         <junit.version>4.8.1</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
         <jxl.version>2.6.12</jxl.version>
+        <opencsv.version>3.3</opencsv.version>
     </properties>
 
     <dependencies>
@@ -33,6 +34,12 @@
             <groupId>net.sourceforge.jexcelapi</groupId>
             <artifactId>jxl</artifactId>
             <version>${jxl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${opencsv.version}</version>
         </dependency>
     </dependencies>
 </project>

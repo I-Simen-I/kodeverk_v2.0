@@ -1,7 +1,11 @@
 package no.sands.kodeverk.utils;
 
+import com.opencsv.CSVReader;
+
 import java.io.File;
+import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,5 +48,17 @@ public class FileUtil {
         Collections.addAll(filesInFolder, folder.listFiles(filter));
 
         return filesInFolder;
+    }
+
+    /**
+     * Reads given csv file and returns an list that contains each line
+     *
+     * @param kodeverkFile the file to read
+     * @return list that contains each line as a String[]
+     */
+    public static List<String[]> readCSVFile(File kodeverkFile) throws IOException {
+        CSVReader reader = new CSVReader(new FileReader(kodeverkFile));
+
+        return reader.readAll();
     }
 }
