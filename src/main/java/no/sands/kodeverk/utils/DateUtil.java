@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 
 /**
- * @author Simen Sï¿½hol
- * @author Ã˜yvind StrÃ¸mmen
+ * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class DateUtil {
     private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm";

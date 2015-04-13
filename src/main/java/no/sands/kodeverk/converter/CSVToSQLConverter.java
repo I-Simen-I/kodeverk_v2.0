@@ -16,7 +16,7 @@ import static no.sands.kodeverk.enums.SQLEnum.*;
 import static no.sands.kodeverk.utils.FileUtil.*;
 
 /**
- * @author Simen Sï¿½hol
+ * @author Simen Søhol
  */
 public class CSVToSQLConverter {
 
