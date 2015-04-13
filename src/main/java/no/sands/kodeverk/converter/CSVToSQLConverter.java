@@ -1,6 +1,7 @@
 package no.sands.kodeverk.converter;
 
 import no.sands.kodeverk.utils.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +16,7 @@ import static no.sands.kodeverk.enums.SQLEnum.*;
 import static no.sands.kodeverk.utils.FileUtil.*;
 
 /**
- * @author Simen Søhol
+ * @author Simen Sï¿½hol
  */
 public class CSVToSQLConverter {
 
@@ -69,7 +70,7 @@ public class CSVToSQLConverter {
         String[] columnType = csvList.get(1);
 
         for (int column = 0; column < getNumberOfValidInsertValues(csvList); column++) {
-            if (!columnType[column].equals("") && columnType[column] != null) {
+            if (StringUtils.isNotEmpty(columnType[column])) {
                 validateColumnTypeForInsert(columnType[column], column, csvList.get(index), valueBuilder);
                 valueBuilder.append(addCommmaSeparator(column, getNumberOfValidInsertValues(csvList)));
             }
