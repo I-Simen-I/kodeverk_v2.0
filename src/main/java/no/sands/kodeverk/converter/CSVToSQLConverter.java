@@ -12,8 +12,8 @@ import java.util.Map;
 import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
 import static no.sands.kodeverk.common.CommonVariables.SQL_FILE_PATH;
 import static no.sands.kodeverk.enums.ColumnType.*;
-import static no.sands.kodeverk.enums.SQLEnum.*;
 import static no.sands.kodeverk.utils.FileUtil.*;
+import static no.sands.kodeverk.utils.SQLUtil.*;
 
 /**
  * @author Simen Søhol
@@ -31,14 +31,7 @@ public class CSVToSQLConverter {
             insertCounter = 0;
 
             for (int i = 2; i < csvLines.size(); i++) {
-                StringBuilder insertstatement = new StringBuilder(INSERT_INTO.toString());
-                insertstatement.append(TABLE_PREFIX).append(getFileName(file)).append("(");
-                insertstatement.append(getHeader(csvLines));
-                insertstatement.append(VALUES);
-                insertstatement.append(getValuesToInsert(csvLines, i));
-                insertstatement.append(SQL_ENDING);
-
-                fileWriter.append(insertstatement);
+                fileWriter.append(createInsertStatement(getFileName(file), getHeader(csvLines), getValuesToInsert(csvLines, i)));
                 insertCounter++;
             }
             insertStats.put(getFileName(file), insertCounter);
@@ -93,14 +86,14 @@ public class CSVToSQLConverter {
             valueBuilder.append("'").append(values[columnIndex]).append("'");
         } else if (column.charAt(0) == DATE_COLUMN.getPrefix()) {
             if (DateUtil.isDateValid(values[columnIndex])) {
-                valueBuilder.append(DATE).append(values[columnIndex]).append(")");
+                valueBuilder.append(getDateFormat(values[columnIndex]));
             } else {
                 //TODO Legg til skikkelig exception her
                 throw new Exception();
             }
         } else if (column.charAt(0) == TIMESTAMP_COLUMN.getPrefix()) {
             if (DateUtil.isTimestampValid(values[columnIndex])) {
-                valueBuilder.append(TIMESTAMP).append(values[columnIndex]).append(")");
+                valueBuilder.append(getTimestampFormat(values[columnIndex]));
             } else {
                 //TODO Legg til skikkelig exception her
                 throw new Exception();
@@ -112,7 +105,7 @@ public class CSVToSQLConverter {
 
     private String addCommmaSeparator(int column, int columns) {
         if (column != columns - 1) {
-            return COMMA.toString();
+            return ",";
         }
         return "";
     }

@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import static no.sands.kodeverk.common.CommonVariables.COLUMN_DECODE;
 import static no.sands.kodeverk.enums.FileType.CSV;
-import static no.sands.kodeverk.enums.SQLEnum.COMMA;
 
 /**
  * This class is used for creating csv files.
@@ -55,7 +54,7 @@ public class CSVGenerator {
 
     private String addCommmaSeparator(int column, int columns) {
         if (column != columns - 1) {
-            return COMMA.toString();
+            return ",";
         }
         return "";
     }
