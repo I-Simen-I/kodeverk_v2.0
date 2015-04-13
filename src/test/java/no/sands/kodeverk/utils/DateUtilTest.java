@@ -6,7 +6,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author Simen S�hol
+ * @author Simen S¯hol
+ * @author Øyvind Strømmen
  */
 public class DateUtilTest {
 
@@ -26,7 +27,8 @@ public class DateUtilTest {
         assertFalse(DateUtil.isTimestampValid("2015-12-32 23:00"));
         assertFalse(DateUtil.isTimestampValid("2015-01-10 10:06:59.0"));
         assertFalse(DateUtil.isTimestampValid("2015-1d-10 10:60:59.0"));
-        assertFalse(DateUtil.isTimestampValid("2015-1-1 10:60"));
+        assertFalse(DateUtil.isTimestampValid("2015-1-1 10:60:59.0"));
+        assertFalse(DateUtil.isTimestampValid(null));
     }
 
     @Test
@@ -48,5 +50,6 @@ public class DateUtilTest {
         assertFalse(DateUtil.isDateValid("2015-32-26"));
         assertFalse(DateUtil.isDateValid("2015-1-26"));
         assertFalse(DateUtil.isDateValid("2015-01-1"));
+        assertFalse(DateUtil.isDateValid(null));
     }
 }

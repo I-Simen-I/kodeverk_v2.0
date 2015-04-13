@@ -1,10 +1,11 @@
 package no.sands.kodeverk.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.format.DateTimeFormat;
 
 /**
- * @author Simen S�hol
+ * @author Simen S�hol
+ * @author Øyvind Strømmen
  */
 public class DateUtil {
     private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm";
@@ -19,29 +20,27 @@ public class DateUtil {
      * @return true if date is valid, otherwise false
      */
     public static boolean isTimestampValid(String date) {
-        return date.length() == TIMESTAMP_LENGTH && validate(date, TIMESTAMP_FORMAT);
+        return date != null && date.length() == TIMESTAMP_LENGTH && validate(date, TIMESTAMP_FORMAT);
     }
 
     /**
-     * Checks if date format is yyyy-MM-dd
+     * Checks if date format is yyyy-MM-dd or if date is an empty String
      *
      * @param date the date to validate
      * @return true if date is valid, otherwise false
      */
     public static boolean isDateValid(String date) {
-        return date.equals("") || date.length() == DATE_LENGTH && validate(date, DATE_FORMAT);
+        return date != null && ((date.length() == DATE_LENGTH && validate(date, DATE_FORMAT)) | StringUtils.isEmpty(date));
     }
 
     private static boolean validate(String date, String dateFormat) {
-        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-        format.setLenient(false);
-
         try {
-            format.parse(date);
-        } catch (ParseException e) {
+            DateTimeFormat.forPattern(dateFormat).parseDateTime(date);
+        } catch (UnsupportedOperationException ex) {
+            return false;
+        } catch (IllegalArgumentException ex) {
             return false;
         }
-
         return true;
     }
 }
