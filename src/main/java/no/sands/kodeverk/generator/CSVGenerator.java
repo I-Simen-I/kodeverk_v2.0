@@ -1,5 +1,7 @@
 package no.sands.kodeverk.generator;
 
+import no.sands.kodeverk.helper.ExcelConverterHelper;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -11,48 +13,30 @@ import static no.sands.kodeverk.common.CommonVariables.*;
  * @author Simen Søhol
  */
 public class CSVGenerator {
+    private ExcelConverterHelper excelConverterHelper = new ExcelConverterHelper();
 
     /**
      * Creates a csv file for each kodeverk
      *
      * @param kodeverkName the kodeverk to create
      * @param kodeverkList the kodeverkcodes to insert in the csv file
-     * @param columns      the number of columns in the codeverk
      */
-    public void generateCSVFiles(final String kodeverkName, String[][] kodeverkList, int columns) throws IOException {
-        String columnHeader = getColumnsAtRow(1, kodeverkList, columns);
-        String columnStyle = getColumnsAtRow(0, kodeverkList, columns);
+    public void generateCSVFiles(final String kodeverkName, String[][] kodeverkList) throws IOException {
+        String columnHeaderRow = excelConverterHelper.getHeaderRow(kodeverkList);
+        String columnTypeRow = excelConverterHelper.getColumnTypeRow(kodeverkList);
 
         FileWriter fileWriter = new FileWriter(KODEVERK_FILE_PATH + kodeverkName + CSV_FILE);
-        fileWriter.append(columnHeader).append("\n");
-        fileWriter.append(columnStyle).append("\n");
+        fileWriter.append(columnHeaderRow).append("\n");
+        fileWriter.append(columnTypeRow).append("\n");
 
-        for (int i = 2; i < kodeverkList.length; i++) {
-            fileWriter.append(getColumnsAtRow(i, kodeverkList, columns)).append("\n");
+        for (int i = FIRS_KODEVERK_ROW_WITH_VALUES; i < kodeverkList.length; i++) {
+            fileWriter.append(excelConverterHelper.getValuesAtRow(
+                            kodeverkList[EXCEL_HEADER_ROW],
+                            kodeverkList[EXCEL_COLUMN_TYPE_ROW],
+                            kodeverkList[i], i)
+            ).append("\n");
         }
 
         fileWriter.close();
-    }
-
-
-    private String getColumnsAtRow(int row, String[][] kodeverkList, int columns) {
-        StringBuilder columnBuilder = new StringBuilder();
-
-        for (int column = 0; column < columns; column++) {
-            if (kodeverkList[1][column].equals(COLUMN_DECODE) && row != 0 && row != 1) {
-                columnBuilder.append("\"").append(kodeverkList[row][column]).append("\"");
-            } else {
-                columnBuilder.append(kodeverkList[row][column]);
-            }
-            columnBuilder.append(addCommmaSeparator(column, columns));
-        }
-        return columnBuilder.toString();
-    }
-
-    private String addCommmaSeparator(int column, int columns) {
-        if (column != columns - 1) {
-            return ",";
-        }
-        return "";
     }
 }
