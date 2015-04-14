@@ -1,6 +1,5 @@
 package no.sands.kodeverk.converter;
 
-import no.sands.kodeverk.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -83,19 +82,19 @@ public class CSVToSQLConverter {
         if (column.charAt(0) == TEXT_COLUMN) {
             valueBuilder.append("'").append(values[columnIndex]).append("'");
         } else if (column.charAt(0) == DATE_COLUMN) {
-            if (DateUtil.isDateValid(values[columnIndex])) {
+            // if (DateUtil.isDateValid(values[columnIndex])) {
                 valueBuilder.append(getDateFormat(values[columnIndex]));
-            } else {
+           /* } else {
                 //TODO Legg til skikkelig exception her
                 throw new Exception();
-            }
+            }*/
         } else if (column.charAt(0) == TIMESTAMP_COLUMN) {
-            if (DateUtil.isTimestampValid(values[columnIndex])) {
+            //  if (DateUtil.isTimestampValid(values[columnIndex])) {
                 valueBuilder.append(getTimestampFormat(values[columnIndex]));
-            } else {
+          /*  } else {
                 //TODO Legg til skikkelig exception her
                 throw new Exception();
-            }
+            }*/
         } else {
             valueBuilder.append(values[columnIndex]);
         }
