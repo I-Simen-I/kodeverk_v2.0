@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
-import static no.sands.kodeverk.common.CommonVariables.SQL_FILE_PATH;
-import static no.sands.kodeverk.enums.ColumnType.*;
+import static no.sands.kodeverk.common.CommonVariables.*;
 import static no.sands.kodeverk.utils.FileUtil.*;
 import static no.sands.kodeverk.utils.SQLUtil.*;
 
@@ -82,16 +80,16 @@ public class CSVToSQLConverter {
      * @throws Exception
      */
     private void validateColumnTypeForInsert(String column, int columnIndex, String[] values, StringBuilder valueBuilder) throws Exception {
-        if (column.charAt(0) == TEXT_COLUMN.getPrefix()) {
+        if (column.charAt(0) == TEXT_COLUMN) {
             valueBuilder.append("'").append(values[columnIndex]).append("'");
-        } else if (column.charAt(0) == DATE_COLUMN.getPrefix()) {
+        } else if (column.charAt(0) == DATE_COLUMN) {
             if (DateUtil.isDateValid(values[columnIndex])) {
                 valueBuilder.append(getDateFormat(values[columnIndex]));
             } else {
                 //TODO Legg til skikkelig exception her
                 throw new Exception();
             }
-        } else if (column.charAt(0) == TIMESTAMP_COLUMN.getPrefix()) {
+        } else if (column.charAt(0) == TIMESTAMP_COLUMN) {
             if (DateUtil.isTimestampValid(values[columnIndex])) {
                 valueBuilder.append(getTimestampFormat(values[columnIndex]));
             } else {

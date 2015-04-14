@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_PATH;
-import static no.sands.kodeverk.enums.FileType.XLS;
+import static no.sands.kodeverk.common.CommonVariables.XLS_FILE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -24,7 +24,7 @@ public class FileUtilTest {
 
     @Test
     public void testGetFilesInFolderOfGivenType() throws Exception {
-        assertThat(FileUtil.getFilesInFolderOfGivenType(TEST_FILE_PATH, XLS.getFiletype()), hasSize(1));
+        assertThat(FileUtil.getFilesInFolderOfGivenType(TEST_FILE_PATH, XLS_FILE), hasSize(1));
     }
 
     @Test

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static no.sands.kodeverk.enums.FileType.CSV;
+import static no.sands.kodeverk.common.CommonVariables.CSV_FILE;
 
 /**
  * @author Simen Søhol
@@ -24,7 +24,7 @@ public class FileUtil {
      * @return list of files
      */
     public static List<File> getFilesInFolder(String folderPath) {
-        return getFilesInFolderOfGivenType(folderPath, CSV.getFiletype());
+        return getFilesInFolderOfGivenType(folderPath, CSV_FILE);
     }
 
     /**

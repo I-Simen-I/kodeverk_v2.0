@@ -1,12 +1,9 @@
 package no.sands.kodeverk.generator;
 
-import no.sands.kodeverk.common.CommonVariables;
-
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static no.sands.kodeverk.common.CommonVariables.COLUMN_DECODE;
-import static no.sands.kodeverk.enums.FileType.CSV;
+import static no.sands.kodeverk.common.CommonVariables.*;
 
 /**
  * This class is used for creating csv files.
@@ -26,7 +23,7 @@ public class CSVGenerator {
         String columnHeader = getColumnsAtRow(1, kodeverkList, columns);
         String columnStyle = getColumnsAtRow(0, kodeverkList, columns);
 
-        FileWriter fileWriter = new FileWriter(CommonVariables.KODEVERK_FILE_PATH + kodeverkName + CSV.getFiletype());
+        FileWriter fileWriter = new FileWriter(KODEVERK_FILE_PATH + kodeverkName + CSV_FILE);
         fileWriter.append(columnHeader).append("\n");
         fileWriter.append(columnStyle).append("\n");
 
@@ -39,17 +36,17 @@ public class CSVGenerator {
 
 
     private String getColumnsAtRow(int row, String[][] kodeverkList, int columns) {
-        StringBuilder columnbilder = new StringBuilder();
+        StringBuilder columnBuilder = new StringBuilder();
 
         for (int column = 0; column < columns; column++) {
             if (kodeverkList[1][column].equals(COLUMN_DECODE) && row != 0 && row != 1) {
-                columnbilder.append("\"").append(kodeverkList[row][column]).append("\"");
+                columnBuilder.append("\"").append(kodeverkList[row][column]).append("\"");
             } else {
-                columnbilder.append(kodeverkList[row][column]);
+                columnBuilder.append(kodeverkList[row][column]);
             }
-            columnbilder.append(addCommmaSeparator(column, columns));
+            columnBuilder.append(addCommmaSeparator(column, columns));
         }
-        return columnbilder.toString();
+        return columnBuilder.toString();
     }
 
     private String addCommmaSeparator(int column, int columns) {

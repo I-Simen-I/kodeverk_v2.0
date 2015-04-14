@@ -19,6 +19,6 @@ public class CSVToSQLConverterTest {
         Map<String, Integer> insertStats = converter.generateSQL();
         assertThat(insertStats.get("K_NAVN_1"), is(3));
         assertThat(insertStats.get("K_NAVN_2"), is(6));
-        assertThat(insertStats.get("K_NAVN_3"), is(574));
+        assertThat(insertStats.get("K_NAVN_3"), is(20));
     }
 }
