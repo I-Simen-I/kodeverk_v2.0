@@ -1,13 +1,16 @@
 package no.sands.kodeverk.utils;
 
-import org.junit.Test;
-
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 /**
- * @author Simen SÂ¯hol
- * @author Ã˜yvind StrÃ¸mmen
+ * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class DateUtilTest {
 
@@ -51,5 +54,34 @@ public class DateUtilTest {
         assertFalse(DateUtil.isDateValid("2015-1-26"));
         assertFalse(DateUtil.isDateValid("2015-01-1"));
         assertFalse(DateUtil.isDateValid(null));
+    }
+
+    @Test
+    public void shouldReturnDateAsStringInCorrectFormat() {
+        String formatOne = "1900-01-15 23:00";
+        String formatTwo = "1900/01/01 10:10";
+        String formatThree = "28.01.1900 10:00";
+        String formatFour = "1900.01.01 10:10";
+
+        assertThat(DateUtil.convertDateString(formatOne), is("1900-01-15 23:00"));
+        assertThat(DateUtil.convertDateString(formatTwo), is("1900-01-01 10:10"));
+        assertThat(DateUtil.convertDateString(formatThree), is("1900-01-28 10:00"));
+        assertThat(DateUtil.convertDateString(formatFour), is("1900-01-01 10:10"));
+    }
+
+    @Test
+    public void shouldReturnNullWhenDateIsInInvalidFormat() {
+        String formatOne = "Winter is coming";
+        String formatTwo = "01.28.1900 10:00";
+        String formatThree = "01.01.2015";
+        String formatFour = "1900/01/01 25:10";
+        String formatFive = "1900-01-32 23:00";
+
+        assertThat(DateUtil.convertDateString(null), is(nullValue()));
+        assertThat(DateUtil.convertDateString(formatOne), is(nullValue()));
+        assertThat(DateUtil.convertDateString(formatTwo), is(nullValue()));
+        assertThat(DateUtil.convertDateString(formatThree), is(nullValue()));
+        assertThat(DateUtil.convertDateString(formatFour), is(nullValue()));
+        assertThat(DateUtil.convertDateString(formatFive), is(nullValue()));
     }
 }
