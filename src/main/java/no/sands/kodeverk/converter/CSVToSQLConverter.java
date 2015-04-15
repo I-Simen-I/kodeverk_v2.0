@@ -1,5 +1,6 @@
 package no.sands.kodeverk.converter;
 
+import no.sands.kodeverk.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -79,24 +80,28 @@ public class CSVToSQLConverter {
      * @throws Exception
      */
     private void validateColumnTypeForInsert(String column, int columnIndex, String[] values, StringBuilder valueBuilder) throws Exception {
-        if (column.charAt(0) == TEXT_COLUMN) {
-            valueBuilder.append("'").append(values[columnIndex]).append("'");
-        } else if (column.charAt(0) == DATE_COLUMN) {
-            // if (DateUtil.isDateValid(values[columnIndex])) {
-                valueBuilder.append(getDateFormat(values[columnIndex]));
-           /* } else {
-                //TODO Legg til skikkelig exception her
-                throw new Exception();
-            }*/
-        } else if (column.charAt(0) == TIMESTAMP_COLUMN) {
-            //  if (DateUtil.isTimestampValid(values[columnIndex])) {
-                valueBuilder.append(getTimestampFormat(values[columnIndex]));
-          /*  } else {
-                //TODO Legg til skikkelig exception her
-                throw new Exception();
-            }*/
+        if (!values[columnIndex].equals(SQL_EMPTY_VALUE)) {
+            if (column.charAt(0) == TEXT_COLUMN) {
+                valueBuilder.append("'").append(values[columnIndex]).append("'");
+            } else if (column.charAt(0) == DATE_COLUMN) {
+                if (DateUtil.isDateValid(values[columnIndex])) {
+                    valueBuilder.append(getDateFormat(values[columnIndex]));
+                } else {
+                    //TODO Legg til skikkelig exception her
+                    throw new Exception();
+                }
+            } else if (column.charAt(0) == TIMESTAMP_COLUMN) {
+                if (DateUtil.isTimestampValid(values[columnIndex])) {
+                    valueBuilder.append(getTimestampFormat(values[columnIndex]));
+                } else {
+                    //TODO Legg til skikkelig exception her
+                    throw new Exception();
+                }
+            } else {
+                valueBuilder.append(values[columnIndex]);
+            }
         } else {
-            valueBuilder.append(values[columnIndex]);
+            valueBuilder.append(SQL_NULL_VALUE);
         }
     }
 

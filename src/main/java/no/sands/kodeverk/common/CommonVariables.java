@@ -27,4 +27,8 @@ public class CommonVariables {
     public static final int EXCEL_COLUMN_TYPE_ROW = 0;
     public static final int CSV_HEADER_ROW = 0;
     public static final int CSV_COLUMN_TYPE_ROW = 1;
+
+    //SQL
+    public static final String SQL_NULL_VALUE = "null";
+    public static final String SQL_EMPTY_VALUE = "";
 }
