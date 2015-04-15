@@ -22,7 +22,8 @@ public class ExcelConverter {
 
         for (Sheet sheet : w.getSheets()) {
             if (isExcelSheetAValidKodeverk(sheet.getName())) {
-                String[][] kodeverkList = excelConverterHelper.mapSheetToArray(sheet);
+                String[][] mapedList = excelConverterHelper.mapSheetToArray(sheet);
+                String[][] kodeverkList = excelConverterHelper.removeEmptyRowsInKodeverk(mapedList);
 
                 csvGenerator.generateCSVFiles(sheet.getName(), kodeverkList);
             }

@@ -92,6 +92,36 @@ public class ExcelConverterHelper {
         return columnBuilder.toString();
     }
 
+    /**
+     * Removes all the empty lines in the kodeverk file. If the first column in a row has a value,
+     * then it is a valid row.
+     *
+     * @param kodeverkList the kodeverklist to filter
+     * @return a list with with only valid rows
+     */
+    public String[][] removeEmptyRowsInKodeverk(String[][] kodeverkList) {
+        String[][] kodeverkListWithoutEmptyLines = new String[kodeverkList.length - emptyRowCounter(kodeverkList)][kodeverkList[0].length];
+
+        for (int row = 0; row < kodeverkList.length; row++) {
+            if (!kodeverkList[row][0].equals("")) {
+                kodeverkListWithoutEmptyLines[row] = kodeverkList[row];
+            }
+        }
+
+        return kodeverkListWithoutEmptyLines;
+    }
+
+    private int emptyRowCounter(String[][] kodeverkList) {
+        int emptyRowsCounter = 0;
+
+        for (String[] kodeverkRow : kodeverkList) {
+            if (kodeverkRow[0].equals("")) {
+                emptyRowsCounter++;
+            }
+        }
+        return emptyRowsCounter;
+    }
+
     private String checkRowType(String[] header, String[] columnType, String[] values, int column) {
         if (!isEmpty(values[column]) && isColumnADate(columnType, column)) {
             return convertDateString(values[column]);
