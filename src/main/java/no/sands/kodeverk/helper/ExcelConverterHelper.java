@@ -97,7 +97,7 @@ public class ExcelConverterHelper {
             return convertDateString(values[column]);
         } else if (!isEmpty(values[column]) && isColumnATimestamp(columnType, column)) {
             return convertTimestampString(values[column]);
-        } else if (isColumnOfTypeDecode(header, column)) {
+        } else if (isEmpty(columnType[column]) || isColumnOfTypeDecode(header, column)) {
             return "\"".concat(values[column]).concat("\"");
         } else {
             return values[column];
