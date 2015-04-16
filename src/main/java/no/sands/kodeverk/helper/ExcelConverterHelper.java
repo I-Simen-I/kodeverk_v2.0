@@ -147,7 +147,7 @@ public class ExcelConverterHelper {
     }
 
     private boolean isColumnOfTypeDecode(String[] columnType, int column) {
-        return columnType[column].equals(COLUMN_DECODE);
+        return columnType[column].equals(COLUMN_DECODE) || columnType[column].equals(COLUMN_DEKODE);
     }
 
     private boolean isRowColumnTypeOrHeader(int row) {
