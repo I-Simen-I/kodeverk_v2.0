@@ -12,7 +12,7 @@ public class SQLUtilTest {
 
     @Test
     public void testGetTimestampFormat() throws Exception {
-        assertThat(SQLUtil.getTimestampFormat("2015-01-10 10:00"), is("TIMESTAMP('2015-01-10 10:00')"));
+        assertThat(SQLUtil.getTimestampFormat("2015-01-10 10:00"), is("TIMESTAMP('2015-01-10', '10:00')"));
     }
 
     @Test

@@ -1,5 +1,7 @@
 package no.sands.kodeverk.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author Simen Søhol
  */
@@ -11,13 +13,14 @@ public class SQLUtil {
     private static final String DATE = "DATE('";
 
     /**
-     * Returns the SQL timestamp format TIMESTAMP('1900-01-01 10:00')
+     * Returns the SQL timestamp format TIMESTAMP('1900-01-01', '10:00')
      *
      * @param date the date to use in the SQL timestamp format
      * @return SQL timestamp format
      */
     public static String getTimestampFormat(String date) {
-        return TIMESTAMP.concat(date).concat("')");
+        String separatedDateTime = StringUtils.replace(date, " ", "', '");
+        return TIMESTAMP.concat(separatedDateTime).concat("')");
     }
 
     /**
