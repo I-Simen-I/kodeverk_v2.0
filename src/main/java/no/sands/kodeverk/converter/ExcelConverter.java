@@ -6,6 +6,7 @@ import no.sands.kodeverk.generator.CSVGenerator;
 import no.sands.kodeverk.helper.ExcelConverterHelper;
 
 import java.io.File;
+import java.util.List;
 
 import static no.sands.kodeverk.helper.ExcelConverterHelper.isExcelSheetAValidKodeverk;
 
@@ -18,12 +19,12 @@ public class ExcelConverter {
 
     public void convertToCSV(String inputFile) throws Exception {
         File inputWorkbook = new File(inputFile);
-        Workbook w = Workbook.getWorkbook(inputWorkbook);
+        Workbook workbook = Workbook.getWorkbook(inputWorkbook);
 
-        for (Sheet sheet : w.getSheets()) {
+        for (Sheet sheet : workbook.getSheets()) {
             if (isExcelSheetAValidKodeverk(sheet.getName())) {
-                String[][] mapedList = excelConverterHelper.mapSheetToArray(sheet);
-                String[][] kodeverkList = excelConverterHelper.removeEmptyRowsInKodeverk(mapedList);
+                List<String[]> mappedList = excelConverterHelper.mapSheet(sheet);
+                List<String[]> kodeverkList = excelConverterHelper.removeEmptyRowsInKodeverk(mappedList);
 
                 csvGenerator.generateCSVFiles(sheet.getName(), kodeverkList);
             }

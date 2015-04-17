@@ -4,6 +4,8 @@ import jxl.Workbook;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import static no.sands.kodeverk.common.CommonVariables.EXCEL_HEADER_ROW;
 import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_1;
@@ -21,30 +23,28 @@ public class ExcelConverterHelperTest {
         File inputWorkbook = new File(TEST_FILE_1);
         Workbook w = Workbook.getWorkbook(inputWorkbook);
 
-        String[][] convertedSheet = helper.mapSheetToArray(w.getSheet(0));
+        List<String[]> convertedSheet = helper.mapSheet(w.getSheet(0));
 
-        assertThat(convertedSheet.length, is(12));
-        assertThat(convertedSheet[EXCEL_HEADER_ROW].length, is(12));
-        assertTrue(convertedSheet[EXCEL_HEADER_ROW][0].equals("kode_k"));
-        assertTrue(convertedSheet[EXCEL_HEADER_ROW][1].equals("decode"));
+        assertThat(convertedSheet.size(), is(12));
+        assertThat(convertedSheet.get(EXCEL_HEADER_ROW).length, is(12));
+        assertTrue(convertedSheet.get(EXCEL_HEADER_ROW)[0].equals("kode_k"));
+        assertTrue(convertedSheet.get(EXCEL_HEADER_ROW)[1].equals("decode"));
     }
 
     @Test
     public void testRemoveEmptyRowsInKodeverk() throws Exception {
-        String[][] kodeverkWithEmptyRows = new String[4][2];
-        kodeverkWithEmptyRows[0][0] = "kode1";
-        kodeverkWithEmptyRows[0][1] = "kode2";
-        kodeverkWithEmptyRows[1][0] = "kode3";
-        kodeverkWithEmptyRows[1][1] = "kode4";
-        kodeverkWithEmptyRows[2][0] = "kode5";
-        kodeverkWithEmptyRows[2][1] = "";
-        kodeverkWithEmptyRows[3][0] = "";
-        kodeverkWithEmptyRows[3][1] = "";
+        String[] row1 = {"kode1", "kode2"};
+        String[] row2 = {"kode3", "kode4"};
+        String[] row3 = {"kode5", ""};
+        String[] row4 = {"", " "};
+        String[] row5 = {"   ", "        "};
 
-        assertThat(kodeverkWithEmptyRows.length, is(4));
+        List<String[]> kodeverkWithEmptyRows = Arrays.asList(row1, row2, row3, row4, row5);
 
-        String[][] validKodeverk = helper.removeEmptyRowsInKodeverk(kodeverkWithEmptyRows);
-        assertThat(validKodeverk.length, is(3));
+        assertThat(kodeverkWithEmptyRows.size(), is(5));
+
+        List<String[]> validKodeverk = helper.removeEmptyRowsInKodeverk(kodeverkWithEmptyRows);
+        assertThat(validKodeverk.size(), is(3));
     }
 
     @Test

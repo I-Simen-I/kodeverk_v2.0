@@ -4,8 +4,9 @@ import jxl.Cell;
 import jxl.Sheet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import static java.lang.System.arraycopy;
 import static no.sands.kodeverk.common.CommonVariables.DATE_COLUMN;
 import static no.sands.kodeverk.common.CommonVariables.TIMESTAMP_COLUMN;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -28,20 +29,23 @@ public class ExcelConverterHelper {
     }
 
     /**
-     * Find all cells in the excel sheet  and adds stores them in a 2D string array
+     * Find all cells in the excel sheet  and adds stores them in a List that contains string arrays
      *
      * @param sheet the sheet to use
-     * @return a 2D string array[row][column] with all the cells in the excel sheet
+     * @return a List of String arrays with all the cells in the excel sheet
      * @throws IOException
      */
-    public String[][] mapSheetToArray(Sheet sheet) throws IOException {
-        String[][] kodeverkList = new String[sheet.getRows()][sheet.getColumns()];
+    public List<String[]> mapSheet(Sheet sheet) throws IOException {
+        List<String[]> kodeverkList = new ArrayList<String[]>();
 
         for (int rowNumber = 0; rowNumber < sheet.getRows(); rowNumber++) {
+            String[] row = new String[sheet.getColumns()];
+
             for (int columnNumber = 0; columnNumber < sheet.getColumns(); columnNumber++) {
                 Cell cell = sheet.getCell(columnNumber, rowNumber);
-                kodeverkList[rowNumber][columnNumber] = cell.getContents();
+                row[columnNumber] = cell.getContents();
             }
+            kodeverkList.add(row);
         }
         return kodeverkList;
     }
@@ -53,12 +57,14 @@ public class ExcelConverterHelper {
      * @param kodeverkList the kodeverklist to filter
      * @return a list with with only valid rows
      */
-    public String[][] removeEmptyRowsInKodeverk(String[][] kodeverkList) {
-        int fileLengthWithoutEmptyLines = kodeverkList.length - emptyRowCounter(kodeverkList);
-        String[][] kodeverkListWithoutEmptyLines = new String[fileLengthWithoutEmptyLines][kodeverkList[0].length];
+    public List<String[]> removeEmptyRowsInKodeverk(List<String[]> kodeverkList) {
+        List<String[]> kodeverkListWithoutEmptyLines = new ArrayList<String[]>();
 
-        arraycopy(kodeverkList, 0, kodeverkListWithoutEmptyLines, 0, kodeverkListWithoutEmptyLines.length);
-
+        for (String[] row : kodeverkList) {
+            if (!isBlank(row[0])) {
+                kodeverkListWithoutEmptyLines.add(row);
+            }
+        }
         return kodeverkListWithoutEmptyLines;
     }
 
@@ -82,17 +88,6 @@ public class ExcelConverterHelper {
      */
     public boolean isColumnATimestamp(String[] columnType, int column) {
         return isColumnOfType(columnType, column, TIMESTAMP_COLUMN);
-    }
-
-    private int emptyRowCounter(String[][] kodeverkList) {
-        int emptyRowsCounter = 0;
-
-        for (String[] kodeverkRow : kodeverkList) {
-            if (isBlank(kodeverkRow[0])) {
-                emptyRowsCounter++;
-            }
-        }
-        return emptyRowsCounter;
     }
 
     private boolean isColumnOfType(String[] columnType, int column, char type) {
