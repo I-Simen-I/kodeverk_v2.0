@@ -24,7 +24,7 @@ public class ExcelConverterHelperTest {
         String[][] convertedSheet = helper.mapSheetToArray(w.getSheet(0));
 
         assertThat(convertedSheet.length, is(12));
-        assertThat(convertedSheet[EXCEL_HEADER_ROW].length, is(11));
+        assertThat(convertedSheet[EXCEL_HEADER_ROW].length, is(12));
         assertTrue(convertedSheet[EXCEL_HEADER_ROW][0].equals("kode_k"));
         assertTrue(convertedSheet[EXCEL_HEADER_ROW][1].equals("decode"));
     }

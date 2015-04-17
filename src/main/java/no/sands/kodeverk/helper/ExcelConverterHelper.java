@@ -1,23 +1,15 @@
 package no.sands.kodeverk.helper;
 
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-
-import static no.sands.kodeverk.common.CommonVariables.COLUMN_DECODE;
-import static no.sands.kodeverk.common.CommonVariables.COLUMN_DEKODE;
-import static no.sands.kodeverk.common.CommonVariables.DATE_COLUMN;
-import static no.sands.kodeverk.common.CommonVariables.EXCEL_COLUMN_TYPE_ROW;
-import static no.sands.kodeverk.common.CommonVariables.EXCEL_HEADER_ROW;
-import static no.sands.kodeverk.common.CommonVariables.TEXT_COLUMN;
-import static no.sands.kodeverk.common.CommonVariables.TIMESTAMP_COLUMN;
-import static no.sands.kodeverk.utils.DateUtil.convertDateString;
-import static no.sands.kodeverk.utils.DateUtil.convertTimestampString;
+import jxl.Cell;
+import jxl.Sheet;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
-
-import jxl.Cell;
-import jxl.Sheet;
+import static java.lang.System.arraycopy;
+import static no.sands.kodeverk.common.CommonVariables.DATE_COLUMN;
+import static no.sands.kodeverk.common.CommonVariables.TIMESTAMP_COLUMN;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /**
  * @author Simen Søhol
@@ -33,20 +25,6 @@ public class ExcelConverterHelper {
     public static boolean isExcelSheetAValidKodeverk(String sheetName) {
         return !sheetName.equals("Main")
                 && !sheetName.equals("Logg");
-    }
-
-    /**
-     * Adds a blank string if column is the last in a row, otherwise a comma
-     *
-     * @param column  the current column
-     * @param columns number of columns in row
-     * @return blank string if column is the last in a row, otherwise a comma
-     */
-    public static String addCommmaSeparator(int column, int columns) {
-        if (column != columns - 1) {
-            return ",";
-        }
-        return "";
     }
 
     /**
@@ -69,39 +47,6 @@ public class ExcelConverterHelper {
     }
 
     /**
-     * Returns the header row in the given kodeverkList
-     *
-     * @param kodeverklList the kodeverklist to get the header from
-     * @return the header in the list
-     */
-    public String getHeaderRow(String[][] kodeverklList) {
-        return getColumnAtRow(EXCEL_HEADER_ROW, kodeverklList);
-    }
-
-    /**
-     * Returns the column type row in the given kodeverkList
-     *
-     * @param kodeverklList the kodeverklist to get the column type row from
-     * @return the comumn type row in the list
-     */
-    public String getColumnTypeRow(String[][] kodeverklList) {
-        return getColumnAtRow(EXCEL_COLUMN_TYPE_ROW, kodeverklList);
-    }
-
-    public String getValuesAtRow(String[] header, String[] columnType, String[] values, int row) {
-        StringBuilder columnBuilder = new StringBuilder();
-        if (!isRowColumnTypeOrHeader(row)) {
-            int numberOfColumns = columnType.length;
-
-            for (int column = 0; column < numberOfColumns; column++) {
-                columnBuilder.append(checkRowType(header, columnType, values, column));
-                columnBuilder.append(addCommmaSeparator(column, numberOfColumns));
-            }
-        }
-        return columnBuilder.toString();
-    }
-
-    /**
      * Removes all the empty lines in the kodeverk file. If the first column in a row has a value,
      * then it is a valid row.
      *
@@ -109,66 +54,45 @@ public class ExcelConverterHelper {
      * @return a list with with only valid rows
      */
     public String[][] removeEmptyRowsInKodeverk(String[][] kodeverkList) {
-        String[][] kodeverkListWithoutEmptyLines = new String[kodeverkList.length - emptyRowCounter(kodeverkList)][kodeverkList[0].length];
+        int fileLengthWithoutEmptyLines = kodeverkList.length - emptyRowCounter(kodeverkList);
+        String[][] kodeverkListWithoutEmptyLines = new String[fileLengthWithoutEmptyLines][kodeverkList[0].length];
 
-        for (int row = 0; row < kodeverkListWithoutEmptyLines.length; row++) {
-            if (!kodeverkList[row][0].equals("")) {
-                kodeverkListWithoutEmptyLines[row] = kodeverkList[row];
-            }
-        }
+        arraycopy(kodeverkList, 0, kodeverkListWithoutEmptyLines, 0, kodeverkListWithoutEmptyLines.length);
 
         return kodeverkListWithoutEmptyLines;
+    }
+
+    /**
+     * Checks if column is a date column
+     *
+     * @param columnType the columnType row to check
+     * @param column     the column to check
+     * @return true if column is a date
+     */
+    public boolean isColumnADate(String[] columnType, int column) {
+        return isColumnOfType(columnType, column, DATE_COLUMN);
+    }
+
+    /**
+     * Checks if column is a timestamp column
+     *
+     * @param columnType the columnType row to check
+     * @param column     the column to check
+     * @return true if column is a timestamp
+     */
+    public boolean isColumnATimestamp(String[] columnType, int column) {
+        return isColumnOfType(columnType, column, TIMESTAMP_COLUMN);
     }
 
     private int emptyRowCounter(String[][] kodeverkList) {
         int emptyRowsCounter = 0;
 
         for (String[] kodeverkRow : kodeverkList) {
-            if (kodeverkRow[0].equals("") || kodeverkRow[0].equals(" ")) {
+            if (isBlank(kodeverkRow[0])) {
                 emptyRowsCounter++;
             }
         }
         return emptyRowsCounter;
-    }
-
-    private String checkRowType(String[] header, String[] columnType, String[] values, int column) {
-        if (!isEmpty(values[column]) && isColumnADate(columnType, column)) {
-            return convertDateString(StringUtils.trim(values[column]));
-        } else if (!isEmpty(values[column]) && isColumnATimestamp(columnType, column)) {
-            return convertTimestampString(StringUtils.trim(values[column]));
-        } else if (isEmpty(columnType[column]) || isColumnOfTypeDecode(header, column) || columnType[column].charAt(0) == TEXT_COLUMN) {
-            return "\"".concat(values[column]).concat("\"");
-        } else {
-            return values[column];
-        }
-    }
-
-    private String getColumnAtRow(int row, String[][] kodeverklList) {
-        StringBuilder columnBuilder = new StringBuilder();
-        int numberOfColumns = kodeverklList[0].length;
-
-        for (int column = 0; column < numberOfColumns; column++) {
-            columnBuilder.append(kodeverklList[row][column]);
-            columnBuilder.append(addCommmaSeparator(column, numberOfColumns));
-        }
-
-        return columnBuilder.toString();
-    }
-
-    private boolean isColumnOfTypeDecode(String[] columnType, int column) {
-        return columnType[column].equals(COLUMN_DECODE) || columnType[column].equals(COLUMN_DEKODE);
-    }
-
-    private boolean isRowColumnTypeOrHeader(int row) {
-        return row == 0 || row == 1;
-    }
-
-    private boolean isColumnADate(String[] columnType, int column) {
-        return isColumnOfType(columnType, column, DATE_COLUMN);
-    }
-
-    private boolean isColumnATimestamp(String[] columnType, int column) {
-        return isColumnOfType(columnType, column, TIMESTAMP_COLUMN);
     }
 
     private boolean isColumnOfType(String[] columnType, int column, char type) {
