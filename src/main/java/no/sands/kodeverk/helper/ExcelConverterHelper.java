@@ -1,14 +1,23 @@
 package no.sands.kodeverk.helper;
 
-import jxl.Cell;
-import jxl.Sheet;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DECODE;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DEKODE;
+import static no.sands.kodeverk.common.CommonVariables.DATE_COLUMN;
+import static no.sands.kodeverk.common.CommonVariables.EXCEL_COLUMN_TYPE_ROW;
+import static no.sands.kodeverk.common.CommonVariables.EXCEL_HEADER_ROW;
+import static no.sands.kodeverk.common.CommonVariables.TEXT_COLUMN;
+import static no.sands.kodeverk.common.CommonVariables.TIMESTAMP_COLUMN;
+import static no.sands.kodeverk.utils.DateUtil.convertDateString;
+import static no.sands.kodeverk.utils.DateUtil.convertTimestampString;
 
 import java.io.IOException;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static no.sands.kodeverk.utils.DateUtil.convertDateString;
-import static no.sands.kodeverk.utils.DateUtil.convertTimestampString;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
+import org.apache.commons.lang3.StringUtils;
+
+import jxl.Cell;
+import jxl.Sheet;
 
 /**
  * @author Simen Søhol
@@ -102,7 +111,7 @@ public class ExcelConverterHelper {
     public String[][] removeEmptyRowsInKodeverk(String[][] kodeverkList) {
         String[][] kodeverkListWithoutEmptyLines = new String[kodeverkList.length - emptyRowCounter(kodeverkList)][kodeverkList[0].length];
 
-        for (int row = 0; row < kodeverkList.length; row++) {
+        for (int row = 0; row < kodeverkListWithoutEmptyLines.length; row++) {
             if (!kodeverkList[row][0].equals("")) {
                 kodeverkListWithoutEmptyLines[row] = kodeverkList[row];
             }
@@ -115,7 +124,7 @@ public class ExcelConverterHelper {
         int emptyRowsCounter = 0;
 
         for (String[] kodeverkRow : kodeverkList) {
-            if (kodeverkRow[0].equals("")) {
+            if (kodeverkRow[0].equals("") || kodeverkRow[0].equals(" ")) {
                 emptyRowsCounter++;
             }
         }
@@ -124,10 +133,10 @@ public class ExcelConverterHelper {
 
     private String checkRowType(String[] header, String[] columnType, String[] values, int column) {
         if (!isEmpty(values[column]) && isColumnADate(columnType, column)) {
-            return convertDateString(values[column]);
+            return convertDateString(StringUtils.trim(values[column]));
         } else if (!isEmpty(values[column]) && isColumnATimestamp(columnType, column)) {
-            return convertTimestampString(values[column]);
-        } else if (isEmpty(columnType[column]) || isColumnOfTypeDecode(header, column)) {
+            return convertTimestampString(StringUtils.trim(values[column]));
+        } else if (isEmpty(columnType[column]) || isColumnOfTypeDecode(header, column) || columnType[column].charAt(0) == TEXT_COLUMN) {
             return "\"".concat(values[column]).concat("\"");
         } else {
             return values[column];
