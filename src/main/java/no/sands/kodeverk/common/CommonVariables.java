@@ -19,6 +19,12 @@ public class CommonVariables {
     //Column types
     public static final String COLUMN_DECODE = "decode";
     public static final String COLUMN_DEKODE = "dekode";
+    public static final String COLUMN_DATO_FOM = "dato_fom";
+    public static final String COLUMN_GYLDIG = "gyldig";
+    public static final String COLUMN_ENDRET_AV = "endret_av";
+    public static final String COLUMN_OPPRETTET_AV = "opprettet_av";
+    public static final String COLUMN_DATO_OPPRETTET = "dato_opprettet";
+    public static final String COLUMN_DATO_ENDRET = "dato_endret";
     public static final char TEXT_COLUMN = 'c';
     public static final char TIMESTAMP_COLUMN = 't';
     public static final char DATE_COLUMN = 'd';
@@ -27,6 +33,7 @@ public class CommonVariables {
     public static final int EXCEL_COLUMN_TYPE_ROW = 0;
     public static final int CSV_HEADER_ROW = 0;
     public static final int CSV_COLUMN_TYPE_ROW = 1;
+    public static final int FIRST_COLUMN = 0;
 
     //SQL
     public static final String SQL_NULL_VALUE = "null";
