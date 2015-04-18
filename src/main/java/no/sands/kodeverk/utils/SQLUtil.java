@@ -2,6 +2,8 @@ package no.sands.kodeverk.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import static no.sands.kodeverk.common.CommonVariables.*;
+
 /**
  * @author Simen Søhol
  */
@@ -45,5 +47,27 @@ public class SQLUtil {
         return INSERT_INTO.concat(" ").concat(TABLE_PREFIX).concat(tableName)
                 .concat("(").concat(insertColumns).concat(") ")
                 .concat(VALUES).concat("(").concat(values).concat(");\n");
+    }
+
+    /**
+     * Converts the kodeverk values to SQL values
+     *
+     * @param columnType  the columnType to validate
+     * @param columnValue the column to convert
+     */
+    public static String convertCSVValuesToSQlValues(String columnType, String columnValue) {
+        if (!columnValue.equals(SQL_EMPTY_VALUE)) {
+            if (columnType.charAt(0) == TEXT_COLUMN) {
+                return "'".concat(columnValue.concat("'"));
+            } else if (columnType.charAt(0) == DATE_COLUMN) {
+                return getDateFormat(columnValue);
+            } else if (columnType.charAt(0) == TIMESTAMP_COLUMN) {
+                return getTimestampFormat(columnValue);
+            } else {
+                return columnValue;
+            }
+        } else {
+            return SQL_NULL_VALUE;
+        }
     }
 }

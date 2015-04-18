@@ -6,8 +6,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_PATH;
-import static no.sands.kodeverk.common.CommonVariables.XLS_FILE;
+import static no.sands.kodeverk.common.CommonVariables.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -46,5 +45,12 @@ public class FileUtilTest {
         List<String[]> csvList = Arrays.asList(header, columnType);
 
         assertThat(FileUtil.getNumberOfValidInsertValues(csvList), is(3));
+    }
+
+    @Test
+    public void testGetFileName() {
+        File file = new File(TEST_FILE_1);
+
+        assertThat(FileUtil.getFileName(file), is("kodeverk_to_import"));
     }
 }
