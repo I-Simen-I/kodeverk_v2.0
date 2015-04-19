@@ -1,26 +1,30 @@
 package no.sands.kodeverk.converter;
 
-import no.sands.kodeverk.utils.DateUtil;
-import org.apache.commons.lang3.StringUtils;
+import no.sands.kodeverk.helper.CSVErrorHelper;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static no.sands.kodeverk.common.CommonVariables.*;
 import static no.sands.kodeverk.utils.FileUtil.*;
-import static no.sands.kodeverk.utils.SQLUtil.*;
+import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
+import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
  * @author Simen Søhol
  */
 public class CSVToSQLConverter {
+    private CSVErrorHelper csvErrorHelper = new CSVErrorHelper();
 
     public Map<String, Integer> generateSQL() throws Exception {
         FileWriter fileWriter = new FileWriter(SQL_FILE_PATH + "inserts.sql");
         Map<String, Integer> insertStats = new HashMap<String, Integer>();
+        List<String> errorList = new ArrayList<String>();
 
         int insertCounter;
 
@@ -28,12 +32,22 @@ public class CSVToSQLConverter {
             List<String[]> csvLines = readCSVFile(file);
             insertCounter = 0;
 
-            for (int i = 2; i < csvLines.size(); i++) {
-                fileWriter.append(createInsertStatement(getFileName(file), getHeader(csvLines), getValuesToInsert(csvLines, i)));
-                insertCounter++;
+            for (int i = FIRS_KODEVERK_ROW_WITH_VALUES; i < csvLines.size(); i++) {
+                errorList.addAll(rowContainError(getFileName(file), csvLines, i));
+            }
+
+            if (errorList.isEmpty()) {
+                for (int i = FIRS_KODEVERK_ROW_WITH_VALUES; i < csvLines.size(); i++) {
+                    fileWriter.append(createInsertStatement(getFileName(file), getHeader(csvLines), getValuesToInsert(csvLines, i)));
+                    insertCounter++;
+                }
             }
             insertStats.put(getFileName(file), insertCounter);
         }
+        for (String error : errorList) {
+            System.out.println(error);
+        }
+
         fileWriter.close();
 
         return insertStats;
@@ -46,7 +60,7 @@ public class CSVToSQLConverter {
      * @return the header
      */
     private String getHeader(List<String[]> csvList) {
-        String[] header = csvList.get(0);
+        String[] header = csvList.get(CSV_HEADER_ROW);
         StringBuilder rowBuilder = new StringBuilder();
 
         for (int i = 0; i < getNumberOfValidInsertValues(csvList); i++) {
@@ -58,11 +72,11 @@ public class CSVToSQLConverter {
 
     private String getValuesToInsert(List<String[]> csvList, int index) throws Exception {
         StringBuilder valueBuilder = new StringBuilder();
-        String[] columnType = csvList.get(1);
+        String[] columnType = csvList.get(CSV_COLUMN_TYPE_ROW);
 
         for (int column = 0; column < getNumberOfValidInsertValues(csvList); column++) {
-            if (StringUtils.isNotEmpty(columnType[column])) {
-                validateColumnTypeForInsert(columnType[column], column, csvList.get(index), valueBuilder);
+            if (isNotEmpty(columnType[column])) {
+                valueBuilder.append(convertCSVValuesToSQlValues(columnType[column], csvList.get(index)[column]));
                 valueBuilder.append(addCommmaSeparator(column, getNumberOfValidInsertValues(csvList)));
             }
         }
@@ -70,45 +84,16 @@ public class CSVToSQLConverter {
         return valueBuilder.toString();
     }
 
-    /**
-     * Validates the column values
-     *
-     * @param column       the columnType to validate
-     * @param columnIndex  the index of the column
-     * @param values       the row to insert
-     * @param valueBuilder the StringBuilder
-     * @throws Exception
-     */
-    private void validateColumnTypeForInsert(String column, int columnIndex, String[] values, StringBuilder valueBuilder) throws Exception {
-        if (!values[columnIndex].equals(SQL_EMPTY_VALUE)) {
-            if (column.charAt(0) == TEXT_COLUMN) {
-                valueBuilder.append("'").append(values[columnIndex]).append("'");
-            } else if (column.charAt(0) == DATE_COLUMN) {
-                if (DateUtil.isDateValid(values[columnIndex])) {
-                    valueBuilder.append(getDateFormat(values[columnIndex]));
-                } else {
-                    //TODO Legg til skikkelig exception her
-                    throw new Exception();
-                }
-            } else if (column.charAt(0) == TIMESTAMP_COLUMN) {
-                if (DateUtil.isTimestampValid(values[columnIndex])) {
-                    valueBuilder.append(getTimestampFormat(values[columnIndex]));
-                } else {
-                    //TODO Legg til skikkelig exception her
-                    throw new Exception();
-                }
-            } else {
-                valueBuilder.append(values[columnIndex]);
-            }
-        } else {
-            valueBuilder.append(SQL_NULL_VALUE);
-        }
+    private List<String> rowContainError(String fileName, List<String[]> csvList, int row) {
+        int numberOfValidColumns = getNumberOfValidInsertValues(csvList);
+
+        return csvErrorHelper.rowContainError(fileName, csvList, numberOfValidColumns, row);
     }
 
     private String addCommmaSeparator(int column, int columns) {
         if (column != columns - 1) {
             return ",";
         }
-        return "";
+        return SQL_EMPTY_VALUE;
     }
 }
