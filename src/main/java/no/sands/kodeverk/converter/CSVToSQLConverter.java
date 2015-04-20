@@ -1,6 +1,19 @@
 package no.sands.kodeverk.converter;
 
-import no.sands.kodeverk.helper.CSVErrorHelper;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import static no.sands.kodeverk.common.CommonVariables.CSV_COLUMN_TYPE_ROW;
+import static no.sands.kodeverk.common.CommonVariables.CSV_HEADER_ROW;
+import static no.sands.kodeverk.common.CommonVariables.FIRS_KODEVERK_ROW_WITH_VALUES;
+import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
+import static no.sands.kodeverk.common.CommonVariables.SQL_EMPTY_VALUE;
+import static no.sands.kodeverk.common.CommonVariables.SQL_FILE_PATH;
+import static no.sands.kodeverk.utils.FileUtil.getFileName;
+import static no.sands.kodeverk.utils.FileUtil.getFilesInFolder;
+import static no.sands.kodeverk.utils.FileUtil.getNumberOfValidInsertValues;
+import static no.sands.kodeverk.utils.FileUtil.readCSVFile;
+import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
+import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,16 +22,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static no.sands.kodeverk.utils.FileUtil.*;
-import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
-import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
+import no.sands.kodeverk.helper.CSVErrorHelper;
 
 /**
  * @author Simen Søhol
  */
 public class CSVToSQLConverter {
+
+    private static final Logger LOGGER = Logger.getLogger(CSVToSQLConverter.class);
+
     private CSVErrorHelper csvErrorHelper = new CSVErrorHelper();
 
     public Map<String, Integer> generateSQL() throws Exception {
@@ -45,7 +60,7 @@ public class CSVToSQLConverter {
             insertStats.put(getFileName(file), insertCounter);
         }
         for (String error : errorList) {
-            System.out.println(error);
+            LOGGER.log(Level.ERROR, error);
         }
 
         fileWriter.close();
