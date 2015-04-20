@@ -1,6 +1,8 @@
 package no.sands.kodeverk.utils;
 
-import com.opencsv.CSVReader;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
+import static no.sands.kodeverk.common.CommonVariables.CSV_FILE;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static no.sands.kodeverk.common.CommonVariables.CSV_FILE;
+import com.opencsv.CSVReader;
 
 /**
  * @author Simen Søhol
@@ -85,7 +87,7 @@ public class FileUtil {
         int validInsertValues = 0;
 
         for (String column : columnTypes) {
-            if (column != null && !column.isEmpty()) {
+            if (column != null && !isBlank(column)) {
                 validInsertValues++;
             }
         }

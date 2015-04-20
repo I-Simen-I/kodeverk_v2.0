@@ -1,8 +1,12 @@
 package no.sands.kodeverk.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import static no.sands.kodeverk.common.CommonVariables.DATE_COLUMN;
+import static no.sands.kodeverk.common.CommonVariables.SQL_EMPTY_VALUE;
+import static no.sands.kodeverk.common.CommonVariables.SQL_NULL_VALUE;
+import static no.sands.kodeverk.common.CommonVariables.TEXT_COLUMN;
+import static no.sands.kodeverk.common.CommonVariables.TIMESTAMP_COLUMN;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Simen Søhol
@@ -21,7 +25,7 @@ public class SQLUtil {
      * @return SQL timestamp format
      */
     public static String getTimestampFormat(String date) {
-        String separatedDateTime = StringUtils.replace(date, " ", "', '");
+        String separatedDateTime = StringUtils.replace(date, " ", "','");
         return TIMESTAMP.concat(separatedDateTime).concat("')");
     }
 
@@ -45,8 +49,8 @@ public class SQLUtil {
      */
     public static String createInsertStatement(String tableName, String insertColumns, String values) {
         return INSERT_INTO.concat(" ").concat(TABLE_PREFIX).concat(tableName)
-                .concat("(").concat(insertColumns).concat(") ")
-                .concat(VALUES).concat("(").concat(values).concat(");\n");
+                .concat(" (").concat(insertColumns).concat(") ")
+                .concat(VALUES).concat(" (").concat(values).concat(");\n");
     }
 
     /**
