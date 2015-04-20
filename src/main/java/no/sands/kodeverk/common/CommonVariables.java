@@ -37,7 +37,7 @@ public class CommonVariables {
     public static final int FIRST_COLUMN = 0;
 
     //SQL
-    public static final String SQL_NULL_VALUE = "null";
+    public static final String SQL_NULL_VALUE = "NULL";
     public static final String SQL_EMPTY_VALUE = "";
 
     //Error messages
