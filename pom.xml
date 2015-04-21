@@ -18,6 +18,7 @@
         <guava.version>17.0</guava.version>
         <commons-cli.version>1.2</commons-cli.version>
         <system-rules.version>1.8.0</system-rules.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
     </properties>
 
     <dependencies>
@@ -68,6 +69,12 @@
             <groupId>com.github.stefanbirkner</groupId>
             <artifactId>system-rules</artifactId>
             <version>${system-rules.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
         </dependency>
     </dependencies>
 </project>
