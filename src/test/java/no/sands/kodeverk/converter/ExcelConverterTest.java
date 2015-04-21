@@ -1,8 +1,9 @@
 package no.sands.kodeverk.converter;
 
-import org.junit.Test;
-
 import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_1;
+
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author Simen Søhol
@@ -10,6 +11,7 @@ import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_1;
 public class ExcelConverterTest {
     private ExcelConverter converter = new ExcelConverter();
 
+    @Ignore
     @Test
     public void convertExcelfileToCSVfiles() throws Exception {
         converter.convertToCSV(TEST_FILE_1);
