@@ -1,11 +1,12 @@
 package no.sands.kodeverk.utils;
 
-import com.google.common.collect.ImmutableSet;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import java.util.Locale;
 import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * @author Simen Søhol
@@ -59,9 +60,7 @@ public class DateUtil {
     private static boolean validate(String date, String dateFormat) {
         try {
             DateTimeFormat.forPattern(dateFormat).parseDateTime(date);
-        } catch (UnsupportedOperationException ex) {
-            return false;
-        } catch (IllegalArgumentException ex) {
+        } catch (UnsupportedOperationException | IllegalArgumentException ex) {
             return false;
         }
         return true;
@@ -77,11 +76,7 @@ public class DateUtil {
             try {
                 DateTimeFormatter formatter = DateTimeFormat.forPattern(format).withLocale(Locale.forLanguageTag(NORWEGIAN_LOCALE));
                 correctlyFormattedDateString = formatter.parseDateTime(date).toString(defaultFormat);
-            } catch (UnsupportedOperationException ignored) {
-
-            } catch (IllegalArgumentException ignored) {
-
-            }
+            } catch (UnsupportedOperationException | IllegalArgumentException ignored) {}
         }
         return correctlyFormattedDateString;
     }

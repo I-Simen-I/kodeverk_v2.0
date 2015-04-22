@@ -9,6 +9,7 @@
     <version>0.1-SNAPSHOT</version>
 
     <properties>
+        <jdk>C:/apps/Java/jdk1.7.0_05/bin</jdk>
         <jdk.version>1.7</jdk.version>
         <junit.version>4.11</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
@@ -81,16 +82,30 @@
     <build>
         <finalName>kodeverk</finalName>
         <plugins>
+            <!-- Force maven to compile with javac 1.7 -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
                     <verbose>true</verbose>
                     <fork>true</fork>
-                    <executable>C:/apps/Java/jdk1.7.0_05/bin/javac</executable>
-                    <compilerVersion>1.7</compilerVersion>
+                    <executable>${jdk}/javac</executable>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
+
+            <!-- Run surefire tests with java 1.7 -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <jvm>${jdk}/java</jvm>
+                    <forkMode>once</forkMode>
+                </configuration>
+            </plugin>
+
+            <!-- Create one jar with dependencies and one without -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
