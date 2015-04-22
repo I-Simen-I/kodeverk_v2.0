@@ -38,7 +38,7 @@ public class CSVErrorHelperTest {
         List<String[]> csvList = Arrays.asList(HEADER_ROW, COLUMN_TYPE_ROW, row);
 
         List<String> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRS_KODEVERK_ROW_WITH_VALUES);
-        assertThat(errorList, hasSize(8));
+        assertThat(errorList, hasSize(7));
     }
 
     @Test

@@ -17,7 +17,6 @@ public class CommonVariables {
     public static final String XLS_FILE = ".xls";
 
     //Column types
-    public static final String COLUMN_DECODE = "decode";
     public static final String COLUMN_DEKODE = "dekode";
     public static final String COLUMN_DATO_FOM = "dato_fom";
     public static final String COLUMN_DATO_TOM = "dato_tom";
@@ -40,9 +39,12 @@ public class CommonVariables {
     public static final String SQL_NULL_VALUE = "NULL";
     public static final String SQL_EMPTY_VALUE = "";
 
+    //CSV
+    public static final String CSV_NULL_VALUE = "NULL";
+
     //Error messages
     public static final String SQL_FIRST_COLUMN_IS_EMPTY_ERROR_MESSAGE = "Feil i kodeverk: %s. Kodeverket har en ingen verdi på rad %s";
     public static final String SQL_NO_VALUE_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må være satt for verdien %s";
-    public static final String SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Kodeverksverdien %s inneholder en dato med feil formate";
-    public static final String SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Kodeverksverdien %s inneholder et timestamp med feil formate";
+    public static final String SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig(yyyy-MM-dd) format for verdien %s";
+    public static final String SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd hh:mm) for verdien %s";
 }
