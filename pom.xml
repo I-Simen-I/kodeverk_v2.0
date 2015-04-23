@@ -20,6 +20,7 @@
         <commons-cli.version>1.2</commons-cli.version>
         <system-rules.version>1.8.0</system-rules.version>
         <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-exec.version>1.3</commons-exec.version>
     </properties>
 
     <dependencies>
@@ -76,6 +77,12 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons-collections.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-exec</artifactId>
+            <version>${commons-exec.version}</version>
         </dependency>
     </dependencies>
 
