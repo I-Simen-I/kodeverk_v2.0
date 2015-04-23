@@ -76,10 +76,11 @@ public class KodeverkOptionsParserTest {
 
     @Test
     public void shouldReturnHelpAndLeveranseWhenLeveranseAndHelpIsPassedAsParameters() {
-        Map<KodeverkOption, String> options = KodeverkOptionsParser.parseOptions(new String[] {"--help", "-l", "2015/HL3"});
-        assertThat(options.entrySet(), hasSize(2));
+        Map<KodeverkOption, String> options = KodeverkOptionsParser.parseOptions(new String[] {"--help", "-l", "2015/HL3", "--generate"});
+        assertThat(options.entrySet(), hasSize(3));
         assertThat(options, hasEntry(KodeverkOption.HELP, null));
         assertThat(options, hasEntry(KodeverkOption.LEVERANSE, "2015/HL3"));
+        assertThat(options, hasEntry(KodeverkOption.GENERATE, null));
     }
 
     @Test
@@ -105,5 +106,12 @@ public class KodeverkOptionsParserTest {
     public void shouldExitWithStatus0WhenUnrecognizedOptionIsProvided() {
         exit.expectSystemExitWithStatus(0);
         KodeverkOptionsParser.parseOptions(new String[] {"-x", "55"});
+    }
+
+    @Test
+    public void shouldReturnGenerateWhenGenerateIsPassedAsOption() {
+        Map<KodeverkOption, String> options = KodeverkOptionsParser.parseOptions(new String[] {"-gen"});
+        assertThat(options.entrySet(), hasSize(1));
+        assertThat(options, hasEntry(KodeverkOption.GENERATE, null));
     }
 }

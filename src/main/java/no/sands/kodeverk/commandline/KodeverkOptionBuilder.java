@@ -20,14 +20,11 @@ public class KodeverkOptionBuilder {
 
     private String description;
 
-    private boolean hasArg;
-
     public KodeverkOptionBuilder() {
         option = null;
         argName = null;
         longOpt = null;
         description = null;
-        hasArg = false;
     }
 
     public KodeverkOptionBuilder withOption(String option) {
@@ -50,16 +47,11 @@ public class KodeverkOptionBuilder {
         return this;
     }
 
-    public KodeverkOptionBuilder hasArg() {
-        this.hasArg = true;
-        return this;
-    }
-
     public Option build() {
         Option buildtOption = new Option(option, description);
         buildtOption.setArgName(argName);
         buildtOption.setLongOpt(longOpt);
-        buildtOption.setArgs(hasArg ? 1 : 0);
+        buildtOption.setArgs(argName != null ? 1 : 0);
         return buildtOption;
     }
 }
