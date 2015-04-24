@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -13,7 +12,6 @@ import org.junit.Test;
  */
 public class CSVToSQLConverterTest {
 
-    @Ignore
     @Test
     public void testGenerateSQL() throws Exception {
         CSVToSQLConverter converter = new CSVToSQLConverter();
