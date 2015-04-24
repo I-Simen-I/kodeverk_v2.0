@@ -4,34 +4,23 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * This task prints a help message showing available command line options and their usages.
- *
  * @author Øyvind Strømmen
  */
-public class Help implements Task {
+public class Validate implements Task {
 
     private String argument;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void execute() {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public Help withArgument(String argument) {
+    public Task withArgument(String argument) {
         this.argument = argument;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getArgument() {
         return argument;
@@ -51,12 +40,12 @@ public class Help implements Task {
             return false;
         }
 
-        Help help = (Help) object;
-        return new EqualsBuilder().append(argument, help.getArgument()).isEquals();
+        Validate validate = (Validate) object;
+        return new EqualsBuilder().append(argument, validate.getArgument()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(23, 47).append(argument).toHashCode();
+        return new HashCodeBuilder(5, 7).append(argument).toHashCode();
     }
 }
