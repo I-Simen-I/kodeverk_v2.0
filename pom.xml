@@ -111,6 +111,12 @@
                 <configuration>
                     <jvm>${jdk}/java</jvm>
                     <forkMode>once</forkMode>
+                    <includes>
+                        <include>**/*TestSuite.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*ConverterTest.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 
