@@ -8,6 +8,7 @@ public class CommonVariables {
     public static final String TEST_FILE_PATH = "../kodeverk_v2.0/src/test/resources/testdata/";
     public static final String KODEVERK_FILE_PATH = "../kodeverk_v2.0/src/main/resources/kodeverk/";
     public static final String SQL_FILE_PATH = "../kodeverk_v2.0/src/main/resources/sqlFiles/";
+    public static final String KODEVERK_FILE = "W:/Simen/Kode/Kodeverk_2.0/PEN.xls";
 
     //Files
     public static final String TEST_FILE_1 = TEST_FILE_PATH + "kodeverk_to_import.xls";
@@ -41,10 +42,13 @@ public class CommonVariables {
 
     //CSV
     public static final String CSV_NULL_VALUE = "NULL";
+    public static final String CSV_VALID_GYLDIG_VALUE_0 = "0";
+    public static final String CSV_VALID_GYLDIG_VALUE_1 = "1";
 
     //Error messages
     public static final String SQL_FIRST_COLUMN_IS_EMPTY_ERROR_MESSAGE = "Feil i kodeverk: %s. Kodeverket har en ingen verdi på rad %s";
-    public static final String SQL_NO_VALUE_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må være satt for verdien %s";
-    public static final String SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig(yyyy-MM-dd) format for verdien %s";
-    public static final String SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd hh:mm) for verdien %s";
+    public static final String SQL_NO_VALUE_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må være satt for koden %s";
+    public static final String SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd) for koden %s";
+    public static final String SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd hh:mm) for koden %s";
+    public static final String SQL_WRONG_VALUE_GYLDIG = "Feil i kodeverk: %s. Feltet %s må ha verdien 0 eller 1 for koden %s";
 }
