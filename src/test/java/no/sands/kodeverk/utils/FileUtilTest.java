@@ -64,4 +64,9 @@ public class FileUtilTest {
 
         assertThat(FileUtil.getFileName(file), is("kodeverk_to_import"));
     }
+
+    @Test
+    public void shouldCreateKodeverk() {
+
+    }
 }

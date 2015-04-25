@@ -41,7 +41,7 @@ public class FileUtil {
      */
     public static List<File> getFilesInFolderOfGivenType(String folderPath, final String fileType) {
         File folder = new File(folderPath);
-        List<File> filesInFolder = new ArrayList<File>();
+        List<File> filesInFolder = new ArrayList<>();
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
@@ -68,6 +68,10 @@ public class FileUtil {
             throw new KodeverkUnrecoverableException("Bad things happened when trying to read " + kodeverkFile + ". Maybe it couldn't be opened?", e.getCause());
         }
     }
+
+//    public static Kodeverk getKodeverk(File kodeverkFile) {
+//
+//    }
 
     /**
      * Get the name on the file without the extension

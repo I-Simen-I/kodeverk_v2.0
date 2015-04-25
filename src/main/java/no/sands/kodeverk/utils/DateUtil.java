@@ -103,7 +103,7 @@ public class DateUtil {
     }
 
     /**
-     * Attempt to convert any given String to a default date format (yyyy-MM-dd) from a set of supported formatts
+     * Attempt to convert any given String to a default date format (dd.MM.yyyy) from a set of supported formatts
      * <br>
      * Supported formatts are as follows:
      * <ul>
