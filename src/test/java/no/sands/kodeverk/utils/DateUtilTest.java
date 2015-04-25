@@ -36,8 +36,8 @@ public class DateUtilTest {
 
     @Test
     public void testValidateDate() {
-        assertTrue(DateUtil.isDateValid("2015-01-10"));
-        assertTrue(DateUtil.isDateValid("2016-02-29"));
+        assertTrue(DateUtil.isDateValid("10.01.2015"));
+        assertTrue(DateUtil.isDateValid("29.02.2016"));
     }
 
     @Test
@@ -97,11 +97,11 @@ public class DateUtilTest {
         String formatFour = "1900.01.01";
         String formatFive = "8/14/14";
 
-        assertThat(DateUtil.convertDateString(formatOne), is("1900-01-15"));
-        assertThat(DateUtil.convertDateString(formatTwo), is("1900-01-01"));
-        assertThat(DateUtil.convertDateString(formatThree), is("1900-01-28"));
-        assertThat(DateUtil.convertDateString(formatFour), is("1900-01-01"));
-        assertThat(DateUtil.convertDateString(formatFive), is("2014-08-14"));
+        assertThat(DateUtil.convertDateString(formatOne), is("15.01.1900"));
+        assertThat(DateUtil.convertDateString(formatTwo), is("01.01.1900"));
+        assertThat(DateUtil.convertDateString(formatThree), is("28.01.1900"));
+        assertThat(DateUtil.convertDateString(formatFour), is("01.01.1900"));
+        assertThat(DateUtil.convertDateString(formatFive), is("14.08.2014"));
     }
 
     @Test

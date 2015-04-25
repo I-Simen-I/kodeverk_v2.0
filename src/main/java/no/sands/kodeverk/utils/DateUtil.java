@@ -15,7 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class DateUtil {
     private static final String NORWEGIAN_LOCALE = "nb";
     private static final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm";
-    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+    private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
     private static final int DATE_LENGTH = 10;
     private static final int TIMESTAMP_LENGTH = 16;
 

@@ -12,11 +12,11 @@ import org.apache.commons.lang3.StringUtils;
  * @author Simen Søhol
  */
 public class SQLUtil {
-    private static final String INSERT_INTO = "INSERT INTO";
+    private static final String INSERT_INTO = "insert into";
     private static final String TABLE_PREFIX = "T_";
     private static final String VALUES = "VALUES";
-    private static final String TIMESTAMP = "TIMESTAMP('";
-    private static final String DATE = "DATE('";
+    private static final String TIMESTAMP = "timestamp('";
+    private static final String DATE = "date('";
 
     /**
      * Returns the SQL timestamp format TIMESTAMP('1900-01-01', '10:00')

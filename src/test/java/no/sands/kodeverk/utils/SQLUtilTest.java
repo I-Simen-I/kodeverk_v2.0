@@ -17,18 +17,18 @@ public class SQLUtilTest {
 
     @Test
     public void testGetTimestampFormat() throws Exception {
-        assertThat(getTimestampFormat("2015-01-10 10:00"), is("TIMESTAMP('2015-01-10','10:00')"));
+        assertThat(getTimestampFormat("2015-01-10 10:00"), is("timestamp('2015-01-10','10:00')"));
     }
 
     @Test
     public void testGetDateFormat() throws Exception {
-        assertThat(getDateFormat("1991-01-01"), is("DATE('1991-01-01')"));
+        assertThat(getDateFormat("1991-01-01"), is("date('1991-01-01')"));
     }
 
     @Test
     public void testGetInsertStatementFormat() throws Exception {
         assertThat(createInsertStatement("K_NAVN_1", "k_kode,dekode", "'kode_1','dette er en kode'"),
-                is("INSERT INTO T_K_NAVN_1 (k_kode,dekode) VALUES ('kode_1','dette er en kode');\n"));
+                is("insert into T_K_NAVN_1 (k_kode,dekode) VALUES ('kode_1','dette er en kode');\n"));
     }
 
     @Test
@@ -47,9 +47,9 @@ public class SQLUtilTest {
         String[] values = {"kode", "dekode", "1900-01-01", "1900-01-01 10:00", "", "1"};
 
         assertThat(convertCSVValuesToSQlValues(columnTypeString, values[stringColumnIndex]), is("'dekode'"));
-        assertThat(convertCSVValuesToSQlValues(columnTypeDate, values[dateColumnIndex]), is("DATE('1900-01-01')"));
+        assertThat(convertCSVValuesToSQlValues(columnTypeDate, values[dateColumnIndex]), is("date('1900-01-01')"));
         assertThat(convertCSVValuesToSQlValues(columnTypeTimestamp, values[timestampColumnIndex]),
-                is("TIMESTAMP('1900-01-01','10:00')"));
+                is("timestamp('1900-01-01','10:00')"));
         assertThat(convertCSVValuesToSQlValues(columnTypeString, values[emptyColumnIndex]), is("NULL"));
         assertThat(convertCSVValuesToSQlValues(columnTypeOther, values[numberColumnIndex]), is("1"));
     }
