@@ -3,16 +3,27 @@ package no.sands.kodeverk.index.tasks;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import no.sands.kodeverk.validator.client.Validator;
+import no.sands.kodeverk.validator.support.CSVValidator;
+
 /**
  * @author Øyvind Strømmen
  */
 public class Validate implements Task {
 
+    private Validator validator = new CSVValidator();
+
     private String argument;
 
     @Override
     public void execute() {
+        try {
 
+            validator.validate("");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

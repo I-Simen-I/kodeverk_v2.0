@@ -1,16 +1,22 @@
 package no.sands.kodeverk.generator;
 
-import com.opencsv.CSVWriter;
-import no.sands.kodeverk.helper.ExcelConverterHelper;
+import static org.apache.commons.lang3.StringUtils.trim;
+
+import static no.sands.kodeverk.common.CommonVariables.CSV_FILE;
+import static no.sands.kodeverk.common.CommonVariables.EXCEL_COLUMN_TYPE_ROW;
+import static no.sands.kodeverk.common.CommonVariables.EXCEL_HEADER_ROW;
+import static no.sands.kodeverk.common.CommonVariables.FIRST_KODEVERK_ROW_WITH_VALUES;
+import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
+import static no.sands.kodeverk.utils.DateUtil.convertDateString;
+import static no.sands.kodeverk.utils.DateUtil.convertTimestampString;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static no.sands.kodeverk.utils.DateUtil.convertDateString;
-import static no.sands.kodeverk.utils.DateUtil.convertTimestampString;
-import static org.apache.commons.lang3.StringUtils.trim;
+import com.opencsv.CSVWriter;
+
+import no.sands.kodeverk.helper.ExcelConverterHelper;
 
 /**
  * This class is used for creating csv files.
@@ -34,7 +40,7 @@ public class CSVGenerator {
         fileWriter.writeNext(columnHeaderRow);
         fileWriter.writeNext(columnTypeRow);
 
-        for (int row = FIRS_KODEVERK_ROW_WITH_VALUES; row < kodeverkList.size(); row++) {
+        for (int row = FIRST_KODEVERK_ROW_WITH_VALUES; row < kodeverkList.size(); row++) {
             for (int column = 0; column < kodeverkList.get(row).length; column++) {
                 if (excelConverterHelper.isColumnADate(columnTypeRow, column)) {
                     kodeverkList.get(row)[column] = convertDateString(trim(kodeverkList.get(row)[column]));

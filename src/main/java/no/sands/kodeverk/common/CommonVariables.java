@@ -29,7 +29,7 @@ public class CommonVariables {
     public static final char TEXT_COLUMN = 'c';
     public static final char TIMESTAMP_COLUMN = 't';
     public static final char DATE_COLUMN = 'd';
-    public static final int FIRS_KODEVERK_ROW_WITH_VALUES = 2;
+    public static final int FIRST_KODEVERK_ROW_WITH_VALUES = 2;
     public static final int EXCEL_HEADER_ROW = 1;
     public static final int EXCEL_COLUMN_TYPE_ROW = 0;
     public static final int CSV_HEADER_ROW = 0;

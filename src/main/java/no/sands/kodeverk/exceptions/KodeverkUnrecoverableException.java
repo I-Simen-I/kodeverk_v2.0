@@ -16,4 +16,14 @@ public class KodeverkUnrecoverableException extends RuntimeException {
     public KodeverkUnrecoverableException(String message) {
         super(message);
     }
+
+    /**
+     * Construct a new unchecked exception with a given detail message and cause.
+     *
+     * @param message the detail message
+     * @param cause the cause
+     */
+    public KodeverkUnrecoverableException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

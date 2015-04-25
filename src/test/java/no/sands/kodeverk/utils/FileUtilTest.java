@@ -1,18 +1,24 @@
 package no.sands.kodeverk.utils;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+
+import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_1;
+import static no.sands.kodeverk.common.CommonVariables.TEST_FILE_PATH;
+import static no.sands.kodeverk.common.CommonVariables.XLS_FILE;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import org.junit.Test;
+
+import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
 
 /**
  * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class FileUtilTest {
 
@@ -36,6 +42,11 @@ public class FileUtilTest {
         List<String[]> csvList = FileUtil.readCSVFile(kodeverk);
         assertThat(csvList, hasSize(5));
         assertThat(csvList.get(0).length, is(10));
+    }
+
+    @Test(expected = KodeverkUnrecoverableException.class)
+    public void shouldThrowKodeverkUnrecoverableExceptionIfFileDoesNotExist() {
+        FileUtil.readCSVFile(new File("wait, this isn't a valid file path"));
     }
 
     @Test

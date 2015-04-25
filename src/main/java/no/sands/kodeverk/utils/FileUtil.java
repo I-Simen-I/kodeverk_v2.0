@@ -14,8 +14,11 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
+import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
+
 /**
  * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class FileUtil {
 
@@ -58,10 +61,12 @@ public class FileUtil {
      * @param kodeverkFile the file to read
      * @return list that contains each line as a String[]
      */
-    public static List<String[]> readCSVFile(File kodeverkFile) throws IOException {
-        CSVReader reader = new CSVReader(new FileReader(kodeverkFile));
-
-        return reader.readAll();
+    public static List<String[]> readCSVFile(File kodeverkFile) {
+        try {
+            return new CSVReader(new FileReader(kodeverkFile)).readAll();
+        } catch (IOException e) {
+            throw new KodeverkUnrecoverableException("Bad things happened when trying to read " + kodeverkFile + ". Maybe it couldn't be opened?", e.getCause());
+        }
     }
 
     /**

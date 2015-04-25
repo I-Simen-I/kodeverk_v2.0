@@ -4,7 +4,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import static no.sands.kodeverk.common.CommonVariables.CSV_COLUMN_TYPE_ROW;
 import static no.sands.kodeverk.common.CommonVariables.CSV_HEADER_ROW;
-import static no.sands.kodeverk.common.CommonVariables.FIRS_KODEVERK_ROW_WITH_VALUES;
+import static no.sands.kodeverk.common.CommonVariables.FIRST_KODEVERK_ROW_WITH_VALUES;
 import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
 import static no.sands.kodeverk.common.CommonVariables.SQL_EMPTY_VALUE;
 import static no.sands.kodeverk.common.CommonVariables.SQL_FILE_PATH;
@@ -36,7 +36,7 @@ public class CSVToSQLConverter {
             insertCounter = 0;
             System.out.println(getFileName(file));
 
-            for (int i = FIRS_KODEVERK_ROW_WITH_VALUES; i < csvLines.size(); i++) {
+            for (int i = FIRST_KODEVERK_ROW_WITH_VALUES; i < csvLines.size(); i++) {
                 fileWriter.append(createInsertStatement(getFileName(file), getHeader(csvLines), getValuesToInsert(csvLines, i)));
                 insertCounter++;
             }

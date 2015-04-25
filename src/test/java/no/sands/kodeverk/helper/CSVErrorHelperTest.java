@@ -1,13 +1,24 @@
 package no.sands.kodeverk.helper;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DATO_ENDRET;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DATO_FOM;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DATO_OPPRETTET;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DATO_TOM;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_DEKODE;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_ENDRET_AV;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_GYLDIG;
+import static no.sands.kodeverk.common.CommonVariables.COLUMN_OPPRETTET_AV;
+import static no.sands.kodeverk.common.CommonVariables.FIRST_KODEVERK_ROW_WITH_VALUES;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+
+import no.sands.kodeverk.validator.support.KodeverkError;
 
 /**
  * @author Simen Søhol
@@ -37,7 +48,7 @@ public class CSVErrorHelperTest {
 
         List<String[]> csvList = Arrays.asList(HEADER_ROW, COLUMN_TYPE_ROW, row);
 
-        List<String> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRS_KODEVERK_ROW_WITH_VALUES);
+        List<KodeverkError> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRST_KODEVERK_ROW_WITH_VALUES);
         assertThat(errorList, hasSize(7));
     }
 
@@ -47,7 +58,7 @@ public class CSVErrorHelperTest {
 
         List<String[]> csvList = Arrays.asList(HEADER_ROW, COLUMN_TYPE_ROW, row);
 
-        List<String> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRS_KODEVERK_ROW_WITH_VALUES);
+        List<KodeverkError> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRST_KODEVERK_ROW_WITH_VALUES);
         assertThat(errorList, hasSize(1));
     }
 
@@ -57,7 +68,7 @@ public class CSVErrorHelperTest {
 
         List<String[]> csvList = Arrays.asList(HEADER_ROW, COLUMN_TYPE_ROW, row);
 
-        List<String> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRS_KODEVERK_ROW_WITH_VALUES);
+        List<KodeverkError> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRST_KODEVERK_ROW_WITH_VALUES);
         assertThat(errorList, hasSize(1));
     }
 
@@ -67,7 +78,7 @@ public class CSVErrorHelperTest {
 
         List<String[]> csvList = Arrays.asList(HEADER_ROW, COLUMN_TYPE_ROW, row);
 
-        List<String> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRS_KODEVERK_ROW_WITH_VALUES);
+        List<KodeverkError> errorList = helper.rowContainError("K_KDV", csvList, COLUMN_TYPE_ROW.length, FIRST_KODEVERK_ROW_WITH_VALUES);
         assertThat(errorList, hasSize(0));
     }
 }

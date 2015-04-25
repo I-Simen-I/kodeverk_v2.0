@@ -27,13 +27,16 @@ import static no.sands.kodeverk.utils.DateUtil.isTimestampValid;
 import java.util.ArrayList;
 import java.util.List;
 
+import no.sands.kodeverk.validator.support.KodeverkError;
+
 /**
  * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class CSVErrorHelper {
 
     /**
-     * Checks if the  columns contains invalid data
+     * Checks if the columns contains invalid data
      *
      * @param fileName     the kodeverk name
      * @param csvList      the kodeverk  list
@@ -41,13 +44,13 @@ public class CSVErrorHelper {
      * @param row          the row to check
      * @return true if row contains errors, otherwise false
      */
-    public List<String> rowContainError(String fileName, List<String[]> csvList, int validColumns, int row) {
-        List<String> errorList = new ArrayList<>();
+    public List<KodeverkError> rowContainError(String fileName, List<String[]> csvList, int validColumns, int row) {
+        List<KodeverkError> errorList = new ArrayList<>();
         String[] headerRow = csvList.get(CSV_HEADER_ROW);
         String[] valueRow = csvList.get(row);
 
         if (isBlank(valueRow[FIRST_COLUMN])) {
-            errorList.add(format(SQL_FIRST_COLUMN_IS_EMPTY_ERROR_MESSAGE, fileName, (row + 1)));
+            errorList.add(new KodeverkError().withMessage(format(SQL_FIRST_COLUMN_IS_EMPTY_ERROR_MESSAGE, fileName, (row + 1))));
         }
 
         for (int column = FIRST_COLUMN; column < validColumns; column++) {
@@ -64,42 +67,42 @@ public class CSVErrorHelper {
         return errorList;
     }
 
-    private void validateThatMandatoryColumnsIsSet(List<String> errorList, String fileName, String headerRow, String kode) {
+    private void validateThatMandatoryColumnsIsSet(List<KodeverkError> errorList, String fileName, String headerRow, String kode) {
         if (headerRow.equals(COLUMN_GYLDIG)) {
-            errorList.add(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
         if (headerRow.equals(COLUMN_DATO_FOM)) {
-            errorList.add(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
         if (headerRow.equals(COLUMN_DATO_OPPRETTET)) {
-            errorList.add(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
         if (headerRow.equals(COLUMN_OPPRETTET_AV)) {
-            errorList.add(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
         if (headerRow.equals(COLUMN_DATO_ENDRET)) {
-            errorList.add(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
         if (headerRow.equals(COLUMN_ENDRET_AV)) {
-            errorList.add(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_NO_VALUE_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
     }
 
-    private void validateGyldigColumn(List<String> errorList, String fileName, String columnValue, String kode) {
+    private void validateGyldigColumn(List<KodeverkError> errorList, String fileName, String columnValue, String kode) {
         if (!columnValue.equals(CSV_VALID_GYLDIG_VALUE_0) && !columnValue.equals(CSV_VALID_GYLDIG_VALUE_1)) {
-            errorList.add(format(SQL_WRONG_VALUE_GYLDIG, fileName, COLUMN_GYLDIG.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_WRONG_VALUE_GYLDIG, fileName, COLUMN_GYLDIG.toUpperCase(), kode)));
         }
     }
 
-    private void validateTimestamps(List<String> errorList, String fileName, String headerRow, String columnValue, String kode) {
+    private void validateTimestamps(List<KodeverkError> errorList, String fileName, String headerRow, String columnValue, String kode) {
         if ((headerRow.equals(COLUMN_DATO_OPPRETTET) || headerRow.equals(COLUMN_DATO_ENDRET)) && !isTimestampValid(columnValue)) {
-            errorList.add(format(SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
     }
 
-    private void validateDate(List<String> errorList, String fileName, String headerRow, String columnValue, String kode) {
+    private void validateDate(List<KodeverkError> errorList, String fileName, String headerRow, String columnValue, String kode) {
         if ((headerRow.equals(COLUMN_DATO_FOM) || headerRow.equals(COLUMN_DATO_TOM)) && !isDateValid(columnValue)) {
-            errorList.add(format(SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode));
+            errorList.add(new KodeverkError().withMessage(format(SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE, fileName, headerRow.toUpperCase(), kode)));
         }
     }
 }
