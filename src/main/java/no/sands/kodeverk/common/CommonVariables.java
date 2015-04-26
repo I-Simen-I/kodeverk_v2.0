@@ -21,7 +21,7 @@ public class CommonVariables {
     public static final String COLUMN_DEKODE = "dekode";
     public static final String COLUMN_DATO_FOM = "dato_fom";
     public static final String COLUMN_DATO_TOM = "dato_tom";
-    public static final String COLUMN_GYLDIG = "gyldig";
+    public static final String COLUMN_GYLDIG = "er_gyldig";
     public static final String COLUMN_ENDRET_AV = "endret_av";
     public static final String COLUMN_OPPRETTET_AV = "opprettet_av";
     public static final String COLUMN_DATO_OPPRETTET = "dato_opprettet";

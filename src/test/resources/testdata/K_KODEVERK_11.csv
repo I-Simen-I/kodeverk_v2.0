@@ -1,5 +1,5 @@
-kode_k,decode,gyldig,dato_fom,dato_tom,opprettet_av,dato_opprettet,endret_av,dato_endret, historie
-text,text,boolean,date,date,text,timestamp,text,timestamp, ekstra
-kode_1,"Dette er en kode",1,2015-01-01,,Simen,"2015-01-01 : 10:00",Simen,"2015-01-01 : 10:00",PK-8999
-kode_2,"Dette er en lengre kode",0,2013-01-01,2014-12-31,Simen,"2012-03-09 : 09:00",Simen,"2014-05-09 : 14:00",PK-2222
-kode_3,"Dette er enda en kode",1,2015-01-01,2015-12-31,Simen,"2015-03-31 : 15:00",Simen,"2015-03-31 : 15:00",PK-1337
+kode_k,decode,er_gyldig,dato_fom,dato_tom,opprettet_av,dato_opprettet,endret_av,dato_endret,historie
+c,c,c,d,d,c,t,c,t,
+kode_1,"Dette er en kode",1,2015-01-01,,Simen,"2015-01-01 10:00",Simen,"2015-01-01 10:00",PK-8999
+kode_2,"Dette er en lengre kode",0,2013-01-01,2014-12-31,Simen,"2012-03-09 09:00",Simen,"2014-05-09 14:00",PK-2222
+kode_3,"Dette er enda en kode",1,2015-01-01,2015-12-31,Simen,"2015-03-31 15:00",Simen,"2015-03-31 15:00",PK-1337
