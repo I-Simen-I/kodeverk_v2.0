@@ -1,16 +1,18 @@
 package no.sands.kodeverk.converter.support;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-
-import java.util.List;
-
+import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
+import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
+/**
+ * @author Øyvind Strømmen
+ */
 public class HeaderTest {
 
     private static final String DUPLICATE = "Header kan ikke inneholde duplikate verdier";
@@ -28,6 +30,13 @@ public class HeaderTest {
     }
 
     @Test
+    public void shouldFailWhenHeaderContainsNullValues() {
+        expectedException.expect(KodeverkInvalidContentException.class);
+        expectedException.expectMessage(MISSING_FIELDS);
+        new Header().withRawValues(new String[]{"dato_endret", null});
+    }
+
+    @Test
     public void shouldFailWhenHeaderContainsDuplicates() {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(DUPLICATE);
@@ -40,7 +49,18 @@ public class HeaderTest {
     }
 
     @Test
-    public void shouldCreateAppropiateValuesWhenOnlyRequiredFieldsArePresent() {
+    public void shouldFailWhenOnlyRequiredFieldsArePresent() {
+        expectedException.expect(KodeverkInvalidContentException.class);
+        expectedException.expectMessage(MISSING_FIELDS);
+
+        List<String> rawValues = RequiredHeaderValue.getHeaderNames();
+
+        String[] rawArray = new String[rawValues.size()];
+        new Header().withRawValues(rawValues.toArray(rawArray));
+    }
+
+    @Test
+    public void shouldCreateAproppiateValuesWhenOnlyRequiredFieldsArePresent() {
         List<String> rawValues = RequiredHeaderValue.getHeaderNames();
         rawValues.add("this field is an id");
 

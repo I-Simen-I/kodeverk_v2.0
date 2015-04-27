@@ -1,11 +1,11 @@
 package no.sands.kodeverk.converter.support;
 
+import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
  * @author Øyvind Strømmen
