@@ -10,9 +10,8 @@ public class Column {
 
     private Content content;
 
-    public Column withContent(Content content) {
-        this.content = content;
-        return this;
+    public Column(DataType dataType, String rawContent) {
+        content = ContentFactory.createContent(dataType, rawContent);
     }
 
     public Content getContent() {

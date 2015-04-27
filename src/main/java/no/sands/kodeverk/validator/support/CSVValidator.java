@@ -1,13 +1,12 @@
 package no.sands.kodeverk.validator.support;
 
-import static no.sands.kodeverk.utils.FileUtil.getFileName;
 import static no.sands.kodeverk.utils.FileUtil.getNumberOfValidInsertValues;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import no.sands.kodeverk.common.CommonVariables;
+import no.sands.kodeverk.converter.support.Kodeverk;
 import no.sands.kodeverk.helper.CSVErrorHelper;
 import no.sands.kodeverk.utils.FileUtil;
 import no.sands.kodeverk.validator.client.Validator;
@@ -27,15 +26,9 @@ public class CSVValidator implements Validator {
 
         for (File file : FileUtil.getFilesInFolder(filePath)) {
 
-            List<String[]> lines = FileUtil.readCSVFile(file);
+            new Kodeverk(FileUtil.readCSVFile(file));
 
-            for (int i = CommonVariables.FIRST_KODEVERK_ROW_WITH_VALUES; i < lines.size(); i++) {
-
-                errorList.addAll(rowContainError(getFileName(file), lines, i));
-
-            }
         }
-
         return errorList;
     }
 

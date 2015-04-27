@@ -10,13 +10,13 @@ public enum DataType {
     DATE("d"),
     INDEX("i");
 
-    private String value;
+    private String name;
 
-    private DataType(String value) {
-        this.value = value;
+    private DataType(String name) {
+        this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 }

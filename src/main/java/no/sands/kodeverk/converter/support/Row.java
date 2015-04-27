@@ -16,6 +16,12 @@ public class Row {
         return columns;
     }
 
+    public Row(String[] rawRow) {
+        for (String rawContent : rawRow) {
+            addColumn(new Column(DataType.TIMESTAMP, rawContent));
+        }
+    }
+
     public void addColumn(Column column) {
         columns.add(column);
 
