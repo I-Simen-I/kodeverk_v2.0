@@ -1,0 +1,8 @@
+k_sak_s,dekode,dato_fom,dato_tom,er_gyldig,dato_opprettet,opprettet_av,dato_endret,endret_av,"brukes i modul",kommentar
+c,c,u,d,c,t,,t,c9,,t
+AVSLUTTET,Avsluttet,31.12.1899,,1,"2007-03-06 09:00",Simen,"2007-03-15 09:00",Simen,"SUS004,
+SUS002,
+SUS010",
+LOPENDE,Løpende,31.12.1899,,1,"2007-03-06 09:00",Simen,"2007-03-15 09:00",Simen,"SUS010, KPEN855",
+OPPRETTET,Opprettet,31.12.1899,,1,"2007-03-06 09:00",Simen,"2007-03-15 09:00",Simen,"SUS004, SUS002",
+TIL_BEHANDLING,"Til behandling",31.12.1899,,1,"2007-03-06 09:00",Simen,"2007-03-15 09:00",Simen,KPEN101,
