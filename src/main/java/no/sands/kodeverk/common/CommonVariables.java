@@ -51,4 +51,8 @@ public class CommonVariables {
     public static final String SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd) for koden %s";
     public static final String SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd hh:mm) for koden %s";
     public static final String SQL_WRONG_VALUE_GYLDIG = "Feil i kodeverk: %s. Feltet %s må ha verdien 0 eller 1 for koden %s";
+
+    public static final String DUPLICATE = "Header raden kan ikke inneholde duplikate verdier";
+    public static final String MISSING_FIELDS = "Header raden inneholdt ikke alle påkrevde felter";
+    public static final String NON_CONTINUOUS = "Header kolonner uten innhold kan ikke etterfølges av kolonner med innhold";
 }
