@@ -4,11 +4,13 @@ package no.sands.kodeverk.common;
  * @author Simen Søhol
  */
 public class CommonVariables {
+    //Encoding
+    public static final String ENCODING_WINDOWS_1252 = "Windows-1252";
+
     //Paths
     public static final String TEST_FILE_PATH = "../kodeverk_v2.0/src/test/resources/testdata/";
     public static final String KODEVERK_FILE_PATH = "../kodeverk_v2.0/src/main/resources/kodeverk/";
     public static final String SQL_FILE_PATH = "../kodeverk_v2.0/src/main/resources/sqlFiles/";
-    public static final String KODEVERK_FILE = "W:/Simen/Kode/Kodeverk_2.0/PEN.xls";
 
     //Files
     public static final String TEST_FILE_1 = TEST_FILE_PATH + "kodeverk_to_import.xls";

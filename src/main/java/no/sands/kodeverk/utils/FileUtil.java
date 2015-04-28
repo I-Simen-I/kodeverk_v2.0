@@ -3,11 +3,13 @@ package no.sands.kodeverk.utils;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import static no.sands.kodeverk.common.CommonVariables.CSV_FILE;
+import static no.sands.kodeverk.common.CommonVariables.ENCODING_WINDOWS_1252;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +68,7 @@ public class FileUtil {
      */
     public static List<String[]> readCSVFile(File kodeverkFile) {
         try {
-            return new CSVReader(new FileReader(kodeverkFile)).readAll();
+            return new CSVReader(new InputStreamReader(new FileInputStream(kodeverkFile), ENCODING_WINDOWS_1252)).readAll();
         } catch (IOException e) {
             throw new KodeverkUnrecoverableException("Bad things happened when trying to read " + kodeverkFile + ". Maybe it couldn't be opened?", e.getCause());
         }

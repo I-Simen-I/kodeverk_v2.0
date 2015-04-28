@@ -2,6 +2,7 @@ package no.sands.kodeverk.converter;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import static no.sands.kodeverk.common.CommonVariables.ENCODING_WINDOWS_1252;
 import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
 import static no.sands.kodeverk.common.CommonVariables.SQL_EMPTY_VALUE;
 import static no.sands.kodeverk.common.CommonVariables.SQL_FILE_PATH;
@@ -12,7 +13,8 @@ import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
 import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public class CSVToSQLConverter {
     public Map<String, Integer> generateSQL() throws Exception {
         FileUtil.createDirectory(SQL_FILE_PATH);
 
-        FileWriter fileWriter = new FileWriter(SQL_FILE_PATH + "inserts.sql");
+        OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(SQL_FILE_PATH + "inserts.sql"), ENCODING_WINDOWS_1252);
         Map<String, Integer> insertStats = new HashMap<>();
 
         int insertCounter;
