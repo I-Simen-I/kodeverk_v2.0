@@ -2,6 +2,7 @@ package no.sands.kodeverk.common;
 
 /**
  * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class CommonVariables {
     //Paths
@@ -55,4 +56,7 @@ public class CommonVariables {
     public static final String DUPLICATE = "Header raden kan ikke inneholde duplikate verdier";
     public static final String MISSING_FIELDS = "Header raden inneholdt ikke alle påkrevde felter";
     public static final String NON_CONTINUOUS = "Header kolonner uten innhold kan ikke etterfølges av kolonner med innhold";
+    public static final String DATATYPE_DOESNT_MATCH_HEADER = "Datatype matcher ikke header";
+    public static final String MISSING_INDEX = "Indeks felter skal ha type 'i'";
+    public static final String INVALID_DATA_TYPE = "Ugyldig datatype";
 }

@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Rule;
@@ -42,8 +43,8 @@ public class HeaderTest {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(CommonVariables.DUPLICATE);
 
-        List<String> rawValues = RequiredHeaderValue.getHeaderNames();
-        rawValues.add(RequiredHeaderValue.DATO_ENDRET.getHeaderName());
+        List<String> rawValues = HeaderType.getHeaderNames();
+        rawValues.addAll(HeaderType.DATO_ENDRET.getValidHeaderNames());
 
         String[] rawArray = new String[rawValues.size()];
         new Header().withRawValues(rawValues.toArray(rawArray));
@@ -54,7 +55,7 @@ public class HeaderTest {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(CommonVariables.MISSING_FIELDS);
 
-        List<String> rawValues = RequiredHeaderValue.getHeaderNames();
+        List<String> rawValues = HeaderType.getHeaderNames();
 
         String[] rawArray = new String[rawValues.size()];
         new Header().withRawValues(rawValues.toArray(rawArray));
@@ -62,7 +63,7 @@ public class HeaderTest {
 
     @Test
     public void shouldCreateAppropriateValuesWhenRequiredFieldsArePresent() {
-        List<String> rawValues = RequiredHeaderValue.getHeaderNames();
+        List<String> rawValues = HeaderType.getHeaderNames();
         rawValues.add("this field is an id");
 
         String[] rawArray = new String[rawValues.size()];
@@ -76,7 +77,7 @@ public class HeaderTest {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(CommonVariables.NON_CONTINUOUS);
 
-        List<String> rawValues = RequiredHeaderValue.getHeaderNames();
+        List<String> rawValues = HeaderType.getHeaderNames();
         rawValues.add(null);
         rawValues.add("a_column");
 
@@ -86,7 +87,7 @@ public class HeaderTest {
 
     @Test
     public void shouldCreateAppropriateValuesWhenValidValuesAreFollowedByNullValues() {
-        List<String> rawValues = RequiredHeaderValue.getHeaderNames();
+        List<String> rawValues = HeaderType.getHeaderNames();
         rawValues.add("this field is an id");
 
         List<String> expectedValues = new ArrayList<>(rawValues);
@@ -97,5 +98,12 @@ public class HeaderTest {
         String[] rawArray = new String[rawValues.size()];
         Header header = new Header().withRawValues(rawValues.toArray(rawArray));
         assertThat(header.getValues(), is(expectedValues));
+    }
+
+    @Test
+    public void shouldCreateAppropriateValuesWhenValuesAreFollowedByBlanks() {
+        final String [] headerValues = new String[]{"id", "dato_fom", "RANDOM", "dato_tom", "er_gyldig", "opprettet_av", "dato_opprettet", "endret_av", "dato_endret", "", ""};
+        Header header = new Header().withRawValues(headerValues);
+        assertThat(header.getValues(), is(Arrays.asList(headerValues).subList(0, 9)));
     }
 }

@@ -25,9 +25,7 @@ public class CSVValidator implements Validator {
         List<KodeverkError> errorList = new ArrayList<>();
 
         for (File file : FileUtil.getFilesInFolder(filePath)) {
-
-            new Kodeverk(FileUtil.readCSVFile(file));
-
+            new Kodeverk().withRawValues(FileUtil.readCSVFile(file));
         }
         return errorList;
     }

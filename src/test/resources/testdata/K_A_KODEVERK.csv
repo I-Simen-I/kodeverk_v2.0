@@ -1,5 +1,5 @@
 "k_adr_t_person","dekode","dato_fom","dato_tom","er_gyldig","dato_opprettet","opprettet_av","dato_endret","endret_av","brukes i modul","kommentar"
-"c1","c2","d3","d4","c5","t6","c7","t8","c9","",""
+i,c,d,d,c,t,c,t,c,,
 POST,Postadresse,31.12.1899,,1,"2006-11-29 17:00",Øyvind,"2006-11-29 17:00",Øyvind,"Simen, 03.11.06",
 BOAD,Bostedsadresse,31.12.1899,,1,"2006-11-29 17:00",Øyvind,"2006-11-29 17:00",Øyvind,"Simen, 03.11.06",
 TIAD,Tilleggsadresse,31.12.1899,,1,"2006-11-29 17:00",Øyvind,"2006-11-29 17:00",Øyvind,"Simen, 03.11.06",
