@@ -92,10 +92,10 @@ public class FileUtil {
      * @param path the path to create
      */
     public static void createDirectory(String path) {
-        File sqlFilesFolder = new File(path);
+        File directory = new File(path);
 
-        if (!sqlFilesFolder.exists()) {
-            boolean isDirCreated = sqlFilesFolder.mkdirs();
+        if (!directory.exists()) {
+            boolean isDirCreated = directory.mkdirs();
             if (isDirCreated) {
                 LOGGER.log(Level.INFO, "Directory is created");
             } else {
