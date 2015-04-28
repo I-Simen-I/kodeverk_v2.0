@@ -1,23 +1,31 @@
 package no.sands.kodeverk.converter;
 
-import no.sands.kodeverk.domain.Kodeverk;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import static no.sands.kodeverk.common.CommonVariables.KODEVERK_FILE_PATH;
+import static no.sands.kodeverk.common.CommonVariables.SQL_EMPTY_VALUE;
+import static no.sands.kodeverk.common.CommonVariables.SQL_FILE_PATH;
+import static no.sands.kodeverk.utils.FileUtil.getFileName;
+import static no.sands.kodeverk.utils.FileUtil.getFilesInFolder;
+import static no.sands.kodeverk.utils.FileUtil.readCSVFile;
+import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
+import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static no.sands.kodeverk.utils.FileUtil.*;
-import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
-import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import no.sands.kodeverk.domain.Kodeverk;
+import no.sands.kodeverk.utils.FileUtil;
 
 /**
  * @author Simen Søhol
  */
 public class CSVToSQLConverter {
     public Map<String, Integer> generateSQL() throws Exception {
+        FileUtil.createDirectory(SQL_FILE_PATH);
+
         FileWriter fileWriter = new FileWriter(SQL_FILE_PATH + "inserts.sql");
         Map<String, Integer> insertStats = new HashMap<>();
 

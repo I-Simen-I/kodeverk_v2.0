@@ -14,6 +14,9 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
 
 /**
@@ -21,7 +24,7 @@ import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
  * @author Øyvind Strømmen
  */
 public class FileUtil {
-
+    private static final Logger LOGGER = Logger.getLogger(FileUtil.class);
     /**
      * Returns all csv files in a given folder
      *
@@ -41,7 +44,7 @@ public class FileUtil {
      */
     public static List<File> getFilesInFolderOfGivenType(String folderPath, final String fileType) {
         File folder = new File(folderPath);
-        List<File> filesInFolder = new ArrayList<File>();
+        List<File> filesInFolder = new ArrayList<>();
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
@@ -79,6 +82,24 @@ public class FileUtil {
         int fileTypeIndex = file.getName().indexOf(".");
 
         return file.getName().substring(0, fileTypeIndex);
+    }
+
+    /**
+     * Creates the directory if it does not excist
+     *
+     * @param path the path to create
+     */
+    public static void createDirectory(String path) {
+        File sqlFilesFolder = new File(path);
+
+        if (!sqlFilesFolder.exists()) {
+            boolean isDirCreated = sqlFilesFolder.mkdirs();
+            if (isDirCreated) {
+                LOGGER.log(Level.INFO, "Directory is created");
+            } else {
+                LOGGER.log(Level.ERROR, "Directory is not created");
+            }
+        }
     }
 
     /**
