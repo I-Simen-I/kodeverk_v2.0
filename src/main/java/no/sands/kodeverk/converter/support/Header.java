@@ -18,86 +18,13 @@ import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
  */
 public class Header {
 
-    private List<String> values;
+    private final List<String> values;
 
-    private Kodeverk kodeverk;
+    private final Kodeverk kodeverk;
 
-    private boolean hasFoundNullValue = false;
-
-    private Set<String> uniqueValues = new LinkedHashSet<>();
-
-    private List<String> requiredValues = HeaderType.getHeaderNames();
-
-    /**
-     * Builder method for supplying this header with raw values. The values provided will be validated against a set of required fields,
-     * for continuity, uniqueness etc.
-     *
-     * @param rawValues an array representation of the header row
-     * @return this header if all provided values validated ok
-     */
-    public Header withRawValues(String [] rawValues) {
-        for (String rawValue : rawValues) {
-            validateContinuityOfValue(rawValue);
-            validateUniquenessOfValue(rawValue);
-        }
-
-        if (headerContainsRequiredValues()) {
-            values = new ArrayList<>(uniqueValues);
-            return this;
-        }
-        throw new KodeverkInvalidContentException(CommonVariables.MISSING_FIELDS);
-    }
-
-    /**
-     * Null values cannot be followed by non null values
-     *
-     * @param rawValue the value to validate
-     */
-    private void validateContinuityOfValue(String rawValue) {
-        if (StringUtils.isBlank(rawValue)) {
-            hasFoundNullValue = true;
-        } else if (hasFoundNullValue) {
-            throw new KodeverkInvalidContentException(CommonVariables.NON_CONTINUOUS);
-        }
-    }
-
-    /**
-     * A set of header values cannot contain duplicates
-     *
-     * @param rawValue the value to validate
-     */
-    private void validateUniquenessOfValue(String rawValue) {
-        if (requiredValues.contains(rawValue)) {
-            requiredValues.remove(rawValue);
-        }
-
-        if (StringUtils.isNotBlank(rawValue)) {
-            if (!uniqueValues.add(rawValue)) {
-                throw new KodeverkInvalidContentException(CommonVariables.DUPLICATE);
-            }
-        }
-    }
-
-    /**
-     * Determine if the header contains all required values
-     *
-     * @return true if the header contains all required values, false otherwise
-     */
-    private boolean headerContainsRequiredValues() {
-        final int minimun_size = HeaderType.values().length + 1;
-        return (requiredValues.isEmpty()) && (uniqueValues.size() >= minimun_size);
-    }
-
-    /**
-     * Builder method for supplying a backward reference to the {@link no.sands.kodeverk.converter.support.Kodeverk} this
-     * Header belongs to
-     *
-     * @param kodeverk the kodeverk
-     * @return a referance to this Header
-     */
-    public Header withKodeverk(Kodeverk kodeverk) {
-        this.kodeverk = kodeverk;
-        return this;
+    private Header(HeaderBuilder builder) {
+        this.values = builder.values;
+        this.kodeverk = builder.kodeverk;
     }
 
     public List<String> getValues() {
@@ -106,5 +33,74 @@ public class Header {
 
     public Kodeverk getKodeverk() {
         return kodeverk;
+    }
+
+    public static class HeaderBuilder {
+
+        private final String [] rawHeader;
+        private final Kodeverk kodeverk;
+
+        private List<String> values;
+        private boolean hasFoundNullValue = false;
+        private Set<String> uniqueValues = new LinkedHashSet<>();
+        private List<String> requiredValues = HeaderType.getHeaderNames();
+
+        public HeaderBuilder(String [] rawHeader, Kodeverk kodeverk) {
+            this.rawHeader = rawHeader;
+            this.kodeverk = kodeverk;
+        }
+
+        public Header build() {
+            for (String rawValue : this.rawHeader) {
+                validateContinuityOfValue(rawValue);
+                validateUniquenessOfValue(rawValue);
+            }
+
+            if (headerContainsRequiredValues()) {
+                this.values = new ArrayList<>(this.uniqueValues);
+                return new Header(this);
+            }
+            throw new KodeverkInvalidContentException(CommonVariables.MISSING_FIELDS);
+        }
+
+        /**
+         * Null values cannot be followed by non null values
+         *
+         * @param rawValue the value to validate
+         */
+        private void validateContinuityOfValue(String rawValue) {
+            if (StringUtils.isBlank(rawValue)) {
+                hasFoundNullValue = true;
+            } else if (hasFoundNullValue) {
+                throw new KodeverkInvalidContentException(CommonVariables.NON_CONTINUOUS);
+            }
+        }
+
+        /**
+         * A set of header values cannot contain duplicates
+         *
+         * @param rawValue the value to validate
+         */
+        private void validateUniquenessOfValue(String rawValue) {
+            if (requiredValues.contains(rawValue)) {
+                requiredValues.remove(rawValue);
+            }
+
+            if (StringUtils.isNotBlank(rawValue)) {
+                if (!uniqueValues.add(rawValue)) {
+                    throw new KodeverkInvalidContentException(CommonVariables.DUPLICATE);
+                }
+            }
+        }
+
+        /**
+         * Determine if the header contains all required values
+         *
+         * @return true if the header contains all required values, false otherwise
+         */
+        private boolean headerContainsRequiredValues() {
+            final int minimun_size = HeaderType.values().length + 1;
+            return (requiredValues.isEmpty()) && (uniqueValues.size() >= minimun_size);
+        }
     }
 }

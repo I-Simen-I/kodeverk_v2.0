@@ -1,5 +1,6 @@
 package no.sands.kodeverk.converter.support;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -10,30 +11,43 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class Row {
 
-    private List<Column> columns;
+    private final List<Column> columns;
+
+    private final int rowNumber;
+
+    private Row(RowBuilder builder) {
+        this.columns = builder.columns;
+        this.rowNumber = builder.rowNumber;
+    }
 
     public List<Column> getColumns() {
         return columns;
     }
 
-    public Row(String[] rawRow) {
-        for (String rawContent : rawRow) {
-            addColumn(new Column(DataType.TIMESTAMP, rawContent));
-        }
+    public int getRowNumber() {
+        return rowNumber;
     }
 
-    public void addColumn(Column column) {
-        columns.add(column);
+    public static class RowBuilder {
 
-        //IF row is first row
-        //  only alow meta info.
-        //  validate presence of obligatory columns.
+        private final String [] rawColumns;
 
-        //IF row is second row
-        //  only allow data types.
+        private final int rowNumber;
 
-        //IF row is any other row
-        //
+        private List<Column> columns = new ArrayList<>();
+
+        public RowBuilder(String [] rawColumns, int rowNumber) {
+            this.rawColumns = rawColumns;
+            this.rowNumber = rowNumber;
+        }
+
+        public Row build() {
+            Row row = new Row(this);
+            for (int columnNumber = 0; columnNumber < rawColumns.length; columnNumber++) {
+                this.columns.add(new Column.ColumnBuilder(DataType.TIMESTAMP, rawColumns[columnNumber], columnNumber, row).build());
+            }
+            return row;
+        }
     }
 
     @Override
@@ -51,11 +65,11 @@ public class Row {
         }
 
         Row row = (Row) object;
-        return new EqualsBuilder().append(columns, row.getColumns()).isEquals();
+        return new EqualsBuilder().append(this.columns, row.getColumns()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(43, 45).append(columns).toHashCode();
+        return new HashCodeBuilder(43, 45).append(this.columns).toHashCode();
     }
 }

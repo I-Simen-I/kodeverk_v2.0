@@ -8,14 +8,53 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class Column {
 
-    private Content content;
+    private final Content content;
 
-    public Column(DataType dataType, String rawContent) {
-        content = ContentFactory.createContent(dataType, rawContent);
+    private final int colummNumber;
+
+    private final Row row;
+
+    private Column(ColumnBuilder builder) {
+        this.content = builder.content;
+        this.colummNumber = builder.columnNumber;
+        this.row = builder.row;
     }
 
     public Content getContent() {
         return content;
+    }
+
+    public int getColummNumber() {
+        return colummNumber;
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
+    public static class ColumnBuilder {
+
+        private final DataType dataType;
+
+        private final String rawContent;
+
+        private final int columnNumber;
+
+        private final Row row;
+
+        private Content content;
+
+        public ColumnBuilder(DataType dataType, String rawContent, int columnNumber, Row row) {
+            this.dataType = dataType;
+            this.rawContent = rawContent;
+            this.columnNumber = columnNumber;
+            this.row = row;
+        }
+
+        public Column build() {
+            content = ContentFactory.createContent(dataType, rawContent);
+            return new Column(this);
+        }
     }
 
     @Override
@@ -33,11 +72,11 @@ public class Column {
         }
 
         Column column = (Column) object;
-        return new EqualsBuilder().append(content, column.getContent()).isEquals();
+        return new EqualsBuilder().append(this.content, column.getContent()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(65, 3).append(content).toHashCode();
+        return new HashCodeBuilder(65, 3).append(this.content).toHashCode();
     }
 }

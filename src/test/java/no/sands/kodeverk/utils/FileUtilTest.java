@@ -28,7 +28,7 @@ public class FileUtilTest {
         File file = new File("C:/data/kodeverk_v2.0/src/test/resources/testdata/K_A_KODEVERK.csv");
         List<String[]> strings = FileUtil.readCSVFile(file);
 
-        Kodeverk kodeverk = new Kodeverk().withRawValues(strings);
+        Kodeverk kodeverk = new Kodeverk.KodeverkBuilder("name", strings.remove(0), strings.remove(0), strings).build();
 
         return;
     }

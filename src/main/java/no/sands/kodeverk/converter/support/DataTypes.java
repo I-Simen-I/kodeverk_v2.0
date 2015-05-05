@@ -17,108 +17,13 @@ import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
  */
 public class DataTypes {
 
-    private List<String> values = new ArrayList<>();
+    private final List<String> values;
 
-    private Kodeverk kodeverk;
+    private final Kodeverk kodeverk;
 
-    private boolean hasFoundNullValue = false;
-
-    /**
-     * Builder method for supplying this data types field with raw values. The values provided will go through several
-     * layers of validation, including correnspondence against the header etc.
-     *
-     * @param rawValues an array representation of the data types row
-     * @return this datatypes if all provided values where sucsesfully validated
-     */
-    public DataTypes withRawValues(String[] rawValues) {
-
-        int columnNumber = 0;
-
-        for (String rawValue : rawValues) {
-            validateType(rawValue);
-            validateContinuityOfValue(rawValue);
-            validateIndex(rawValue, columnNumber);
-            validateAgainstCorrespondingHeader(rawValue, columnNumber);
-
-            columnNumber++;
-
-            if (StringUtils.isNotBlank(rawValue)) {
-                this.values.add(rawValue);
-            }
-        }
-        return this;
-    }
-
-    /**
-     * Values must be of types defined by {@link no.sands.kodeverk.converter.support.DataType} only
-     *
-     * @param rawValue the value to validate
-     */
-    private void validateType(String rawValue) {
-        if (StringUtils.isNotBlank(rawValue) && DataType.getType(rawValue) == null) {
-            throw new KodeverkInvalidContentException(CommonVariables.INVALID_DATA_TYPE);
-        }
-    }
-
-    /**
-     * Null values cannot be followed by non null values
-     *
-     * @param rawValue the value to validate
-     */
-    private void validateContinuityOfValue(String rawValue) {
-        if (StringUtils.isBlank(rawValue)) {
-            hasFoundNullValue = true;
-        } else if (hasFoundNullValue) {
-            throw new KodeverkInvalidContentException(CommonVariables.NON_CONTINUOUS);
-        }
-    }
-
-    /**
-     * Index fields must be of type {@link no.sands.kodeverk.converter.support.DataType#INDEX}
-     *
-     * @param rawValue the value to validate
-     * @param columnNumber the columnNumber of the value to validate
-     */
-    private void validateIndex(String rawValue, int columnNumber) {
-        if (columnNumber == 0) {
-            DataType dataType = DataType.getType(rawValue);
-            HeaderType headerType = HeaderType.getType(kodeverk.getHeader().getValues().get(columnNumber));
-
-            if (headerType == null && dataType != DataType.INDEX) {
-                throw new KodeverkInvalidContentException(CommonVariables.MISSING_INDEX);
-            }
-        }
-    }
-
-    /**
-     * A data type must match the header value within the same column
-     *
-     * @param rawValue the value to validate
-     * @param columnNumber the columnNumber of the value to validate
-     */
-    private void validateAgainstCorrespondingHeader(String rawValue, int columnNumber) {
-        DataType dataType = DataType.getType(rawValue);
-        List<String> headerValues = kodeverk.getHeader().getValues();
-
-        if (columnNumber < headerValues.size()) {
-            HeaderType headerType = HeaderType.getType(headerValues.get(columnNumber));
-
-            if (headerType != null && !EnumSet.of(Kodeverk.headerDataTypeMap.get(headerType)).contains(dataType)) {
-                throw new KodeverkInvalidContentException(CommonVariables.DATATYPE_DOESNT_MATCH_HEADER);
-            }
-        }
-    }
-
-    /**
-     * Builder method for supplying a backward reference to the {@link no.sands.kodeverk.converter.support.Kodeverk} this
-     * DataTypes belongs to
-     *
-     * @param kodeverk the kodeverk
-     * @return a referance to this DataTypes
-     */
-    public DataTypes withKodeverk(Kodeverk kodeverk) {
-        this.kodeverk = kodeverk;
-        return this;
+    private DataTypes(DataTypesBuilder builder) {
+        this.values = builder.values;
+        this.kodeverk = builder.kodeverk;
     }
 
     public List<String> getValues() {
@@ -127,5 +32,96 @@ public class DataTypes {
 
     public Kodeverk getKodeverk() {
         return kodeverk;
+    }
+
+    public static class DataTypesBuilder {
+
+        private final String[] rawDataTypes;
+        private final Kodeverk kodeverk;
+
+        private List<String> values = new ArrayList<>();
+        private boolean hasFoundNullValue = false;
+
+        public DataTypesBuilder(String[] rawDataTypes, Kodeverk kodeverk) {
+            this.rawDataTypes = rawDataTypes;
+            this.kodeverk = kodeverk;
+        }
+
+        public DataTypes build() {
+            for (int columnNumber = 0; columnNumber < this.rawDataTypes.length; columnNumber++) {
+
+                String rawValue = this.rawDataTypes[columnNumber];
+
+                validateType(rawValue);
+                validateContinuityOfValue(rawValue);
+                validateIndex(rawValue, columnNumber);
+                validateAgainstCorrespondingHeader(rawValue, columnNumber);
+
+                if (StringUtils.isNotBlank(rawValue)) {
+                    this.values.add(rawValue);
+                }
+            }
+            return new DataTypes(this);
+        }
+
+        /**
+         * Values must be of types defined by {@link no.sands.kodeverk.converter.support.DataType} only
+         *
+         * @param rawValue the value to validate
+         */
+        private void validateType(String rawValue) {
+            if (StringUtils.isNotBlank(rawValue) && DataType.getType(rawValue) == null) {
+                throw new KodeverkInvalidContentException(CommonVariables.INVALID_DATA_TYPE);
+            }
+        }
+
+        /**
+         * Null values cannot be followed by non null values
+         *
+         * @param rawValue the value to validate
+         */
+        private void validateContinuityOfValue(String rawValue) {
+            if (StringUtils.isBlank(rawValue)) {
+                hasFoundNullValue = true;
+            } else if (hasFoundNullValue) {
+                throw new KodeverkInvalidContentException(CommonVariables.NON_CONTINUOUS);
+            }
+        }
+
+        /**
+         * Index fields must be of type {@link no.sands.kodeverk.converter.support.DataType#INDEX}
+         *
+         * @param rawValue the value to validate
+         * @param columnNumber the columnNumber of the value to validate
+         */
+        private void validateIndex(String rawValue, int columnNumber) {
+            if (columnNumber == 0) {
+                DataType dataType = DataType.getType(rawValue);
+                HeaderType headerType = HeaderType.getType(kodeverk.getHeader().getValues().get(columnNumber));
+
+                if (headerType == null && dataType != DataType.INDEX) {
+                    throw new KodeverkInvalidContentException(CommonVariables.MISSING_INDEX);
+                }
+            }
+        }
+
+        /**
+         * A data type must match the header value within the same column
+         *
+         * @param rawValue the value to validate
+         * @param columnNumber the columnNumber of the value to validate
+         */
+        private void validateAgainstCorrespondingHeader(String rawValue, int columnNumber) {
+            DataType dataType = DataType.getType(rawValue);
+            List<String> headerValues = kodeverk.getHeader().getValues();
+
+            if (columnNumber < headerValues.size()) {
+                HeaderType headerType = HeaderType.getType(headerValues.get(columnNumber));
+
+                if (headerType != null && !EnumSet.of(Kodeverk.headerDataTypeMap.get(headerType)).contains(dataType)) {
+                    throw new KodeverkInvalidContentException(CommonVariables.DATATYPE_DOESNT_MATCH_HEADER);
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package no.sands.kodeverk.converter.support;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,22 +21,16 @@ public class Kodeverk {
             .put(HeaderType.ENDRET_AV, DataType.CHARACTERS)
             .build();
 
-    private String name;
+    private final String name;
+    private final Header header;
+    private final DataTypes dataTypes;
+    private final List<Row> rows;
 
-    private Header header;
-
-    private DataTypes dataTypes;
-
-    private List<Row> rows;
-
-    public Kodeverk withRawValues(List<String[]> rawKodeverk) {
-        header = new Header().withKodeverk(this).withRawValues(rawKodeverk.remove(0));
-        dataTypes = new DataTypes().withKodeverk(this).withRawValues(rawKodeverk.remove(0));
-
-//        for (String [] row : rawKodeverk) {
-//            addRow(new Row(row));
-//        }
-        return this;
+    private Kodeverk(KodeverkBuilder builder) {
+        this.name = builder.name;
+        this.header = builder.header;
+        this.dataTypes = builder.dataTypes;
+        this.rows = builder.rows;
     }
 
     public String getName() {
@@ -54,7 +49,34 @@ public class Kodeverk {
         return rows;
     }
 
-    public void addRow(Row row) {
-        rows.add(row);
+    public static class KodeverkBuilder {
+
+        private final String name;
+        private final String[] rawHeader;
+        private final String[] rawDataTypes;
+        private final List<String[]> rawKodeverk;
+
+        private Header header;
+        private DataTypes dataTypes;
+        private List<Row> rows = new ArrayList<>();
+
+        public KodeverkBuilder(String name, String[] rawHeader, String[] rawDataTypes, List<String[]> rawKodeverk) {
+            this.name = name;
+            this.rawHeader = rawHeader;
+            this.rawDataTypes = rawDataTypes;
+            this.rawKodeverk = rawKodeverk;
+        }
+
+        public Kodeverk build() {
+            Kodeverk kodeverk = new Kodeverk(this);
+
+            this.header = new Header.HeaderBuilder(this.rawHeader, kodeverk).build();
+            this.dataTypes = new DataTypes.DataTypesBuilder(this.rawDataTypes, kodeverk).build();
+
+            for (int rowNumber = 0; rowNumber < this.rawKodeverk.size(); rowNumber++) {
+                this.rows.add(new Row.RowBuilder(this.rawKodeverk.get(rowNumber), rowNumber).build());
+            }
+            return kodeverk;
+        }
     }
 }
