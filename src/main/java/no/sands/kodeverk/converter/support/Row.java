@@ -34,19 +34,24 @@ public class Row {
 
         private final int rowNumber;
 
+        private final Header header;
+
+        private final DataTypes dataTypes;
+
         private List<Column> columns = new ArrayList<>();
 
-        public RowBuilder(String [] rawColumns, int rowNumber) {
+        public RowBuilder(String [] rawColumns, int rowNumber, Header header, DataTypes dataTypes) {
             this.rawColumns = rawColumns;
             this.rowNumber = rowNumber;
+            this.header = header;
+            this.dataTypes = dataTypes;
         }
 
         public Row build() {
-            Row row = new Row(this);
-            for (int columnNumber = 0; columnNumber < rawColumns.length; columnNumber++) {
-                this.columns.add(new Column.ColumnBuilder(DataType.TIMESTAMP, rawColumns[columnNumber], columnNumber, row).build());
+            for (int columnNumber = 0; columnNumber < this.dataTypes.getValues().size(); columnNumber++) {
+                this.columns.add(new Column.ColumnBuilder(rawColumns[columnNumber], columnNumber, this.header, this.dataTypes).build());
             }
-            return row;
+            return new Row(this);
         }
     }
 

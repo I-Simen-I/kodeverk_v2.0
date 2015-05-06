@@ -68,15 +68,13 @@ public class Kodeverk {
         }
 
         public Kodeverk build() {
-            Kodeverk kodeverk = new Kodeverk(this);
+            this.header = new Header.HeaderBuilder(this.rawHeader).build();
+            this.dataTypes = new DataTypes.DataTypesBuilder(this.rawDataTypes, this.header).build();
 
-            this.header = new Header.HeaderBuilder(this.rawHeader, kodeverk).build();
-            this.dataTypes = new DataTypes.DataTypesBuilder(this.rawDataTypes, kodeverk).build();
-
-            for (int rowNumber = 0; rowNumber < this.rawKodeverk.size(); rowNumber++) {
-                this.rows.add(new Row.RowBuilder(this.rawKodeverk.get(rowNumber), rowNumber).build());
-            }
-            return kodeverk;
+//            for (int rowNumber = 0; rowNumber < this.rawKodeverk.size(); rowNumber++) {
+//                this.rows.add(new Row.RowBuilder(this.rawKodeverk.get(rowNumber), rowNumber, this.header, this.dataTypes).build());
+//            }
+            return new Kodeverk(this);
         }
     }
 }

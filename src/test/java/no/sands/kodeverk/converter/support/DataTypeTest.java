@@ -19,6 +19,16 @@ public class DataTypeTest {
     }
 
     @Test
+    public void shouldReturnCharacterWhenValidStringWithNumberIsPassed() {
+        assertThat(DataType.getType("c42"), is(DataType.CHARACTERS));
+    }
+
+    @Test
+    public void shouldReturnNullWhenInvalidNumberStringIsPassed() {
+        assertThat(DataType.getType("t3b"), is(nullValue()));
+    }
+
+    @Test
     public void shouldReturnNullWhenInvalidStringIsPassed() {
         assertThat(DataType.getType("x"), is(nullValue()));
     }

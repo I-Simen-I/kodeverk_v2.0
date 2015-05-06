@@ -57,6 +57,7 @@ public class CommonVariables {
     public static final String MISSING_FIELDS = "Header raden inneholdt ikke alle påkrevde felter";
     public static final String NON_CONTINUOUS = "Header kolonner uten innhold kan ikke etterfølges av kolonner med innhold";
     public static final String DATATYPE_DOESNT_MATCH_HEADER = "Datatype matcher ikke header";
-    public static final String MISSING_INDEX = "Indeks felter skal ha type 'i'";
     public static final String INVALID_DATA_TYPE = "Ugyldig datatype";
+    public static final String EXCEEDED_CHAR_LIMIT = "Headerfelt kan ikke være lengre enn 30 tegn";
+    public static final String INVALID_FIRST_COLUMN = "Første kolonne skal enten være datatype 'i' eller 'c'";
 }

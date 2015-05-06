@@ -20,40 +20,32 @@ public class Header {
 
     private final List<String> values;
 
-    private final Kodeverk kodeverk;
-
     private Header(HeaderBuilder builder) {
         this.values = builder.values;
-        this.kodeverk = builder.kodeverk;
     }
 
     public List<String> getValues() {
         return values;
     }
 
-    public Kodeverk getKodeverk() {
-        return kodeverk;
-    }
-
     public static class HeaderBuilder {
 
         private final String [] rawHeader;
-        private final Kodeverk kodeverk;
 
         private List<String> values;
         private boolean hasFoundNullValue = false;
         private Set<String> uniqueValues = new LinkedHashSet<>();
         private List<String> requiredValues = HeaderType.getHeaderNames();
 
-        public HeaderBuilder(String [] rawHeader, Kodeverk kodeverk) {
+        public HeaderBuilder(String [] rawHeader) {
             this.rawHeader = rawHeader;
-            this.kodeverk = kodeverk;
         }
 
         public Header build() {
             for (String rawValue : this.rawHeader) {
                 validateContinuityOfValue(rawValue);
                 validateUniquenessOfValue(rawValue);
+                validateLengthOfValue(rawValue);
             }
 
             if (headerContainsRequiredValues()) {
@@ -82,14 +74,23 @@ public class Header {
          * @param rawValue the value to validate
          */
         private void validateUniquenessOfValue(String rawValue) {
-            if (requiredValues.contains(rawValue)) {
-                requiredValues.remove(rawValue);
-            }
+            requiredValues.remove(rawValue);
 
             if (StringUtils.isNotBlank(rawValue)) {
                 if (!uniqueValues.add(rawValue)) {
                     throw new KodeverkInvalidContentException(CommonVariables.DUPLICATE);
                 }
+            }
+        }
+
+        /**
+         * Header values cannot exceed 30 characters
+         *
+         * @param rawValue the value to validate
+         */
+        private void validateLengthOfValue(String rawValue) {
+            if (StringUtils.length(rawValue) > 30) {
+                throw new KodeverkInvalidContentException(CommonVariables.EXCEEDED_CHAR_LIMIT);
             }
         }
 

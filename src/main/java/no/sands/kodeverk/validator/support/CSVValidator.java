@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import no.sands.kodeverk.converter.support.Kodeverk;
 import no.sands.kodeverk.helper.CSVErrorHelper;
 import no.sands.kodeverk.utils.FileUtil;
 import no.sands.kodeverk.validator.client.Validator;
@@ -25,7 +24,7 @@ public class CSVValidator implements Validator {
         List<KodeverkError> errorList = new ArrayList<>();
 
         for (File file : FileUtil.getFilesInFolder(filePath)) {
-            new Kodeverk().withRawValues(FileUtil.readCSVFile(file));
+//            new Kodeverk().withRawValues(FileUtil.readCSVFile(file));
         }
         return errorList;
     }

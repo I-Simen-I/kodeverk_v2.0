@@ -12,12 +12,9 @@ public class Column {
 
     private final int colummNumber;
 
-    private final Row row;
-
     private Column(ColumnBuilder builder) {
         this.content = builder.content;
         this.colummNumber = builder.columnNumber;
-        this.row = builder.row;
     }
 
     public Content getContent() {
@@ -28,31 +25,27 @@ public class Column {
         return colummNumber;
     }
 
-    public Row getRow() {
-        return row;
-    }
-
     public static class ColumnBuilder {
-
-        private final DataType dataType;
 
         private final String rawContent;
 
         private final int columnNumber;
 
-        private final Row row;
+        private final Header header;
+
+        private final DataTypes dataTypes;
 
         private Content content;
 
-        public ColumnBuilder(DataType dataType, String rawContent, int columnNumber, Row row) {
-            this.dataType = dataType;
+        public ColumnBuilder(String rawContent, int columnNumber, Header header, DataTypes dataTypes) {
             this.rawContent = rawContent;
             this.columnNumber = columnNumber;
-            this.row = row;
+            this.header = header;
+            this.dataTypes = dataTypes;
         }
 
         public Column build() {
-            content = ContentFactory.createContent(dataType, rawContent);
+            content = ContentFactory.createContent(DataType.getType(this.dataTypes.getValues().get(columnNumber)), this.rawContent);
             return new Column(this);
         }
     }

@@ -1,6 +1,7 @@
 package no.sands.kodeverk.converter.support;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -12,9 +13,9 @@ import com.google.common.collect.ImmutableSet;
  */
 public enum DataType {
 
-    CHARACTERS(ImmutableSet.of("c")),
-    TIMESTAMP(ImmutableSet.of("t")),
-    DATE(ImmutableSet.of("d")),
+    CHARACTERS(ImmutableSet.of("c\\d*")),
+    TIMESTAMP(ImmutableSet.of("t\\d*")),
+    DATE(ImmutableSet.of("d\\d*")),
     INDEX(ImmutableSet.of("i"));
 
     private Set<String> validDataTypeNames;
@@ -30,9 +31,13 @@ public enum DataType {
      * @return the mapped DataType if mapping was possible, null otherwise
      */
     public static DataType getType(String rawValue) {
-        for (DataType dataType : values()) {
-            if (dataType.validDataTypeNames.contains(rawValue)) {
-                return dataType;
+        if (rawValue != null) {
+            for (DataType dataType : values()) {
+                for (String validPattern : dataType.validDataTypeNames) {
+                    if (Pattern.matches(validPattern, rawValue)) {
+                        return dataType;
+                    }
+                }
             }
         }
         return null;

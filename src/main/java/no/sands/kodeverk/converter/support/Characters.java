@@ -9,7 +9,6 @@ public class Characters implements Content {
 
     private String content;
 
-    @Override
     public Content withRawContent(String rawContent) throws KodeverkInvalidContentException {
         content = rawContent;
         return this;

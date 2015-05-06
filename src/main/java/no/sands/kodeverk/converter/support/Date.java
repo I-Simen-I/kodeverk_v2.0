@@ -10,7 +10,6 @@ public class Date implements Content {
 
     private String content;
 
-    @Override
     public Content withRawContent(String rawContent) throws KodeverkInvalidContentException {
         content = DateUtil.convertDateString(rawContent);
         if (rawContent != null && content == null) {

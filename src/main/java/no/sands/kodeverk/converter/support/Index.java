@@ -11,7 +11,6 @@ public class Index implements Content {
 
     private String content;
 
-    @Override
     public Content withRawContent(String rawContent) throws KodeverkInvalidContentException {
         if (rawContent != null && StringUtils.isNumeric(rawContent)) {
             content = rawContent;

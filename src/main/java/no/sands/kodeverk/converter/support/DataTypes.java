@@ -19,32 +19,32 @@ public class DataTypes {
 
     private final List<String> values;
 
-    private final Kodeverk kodeverk;
+    private final Header header;
 
     private DataTypes(DataTypesBuilder builder) {
         this.values = builder.values;
-        this.kodeverk = builder.kodeverk;
+        this.header = builder.header;
     }
 
     public List<String> getValues() {
         return values;
     }
 
-    public Kodeverk getKodeverk() {
-        return kodeverk;
+    public Header getHeader() {
+        return header;
     }
 
     public static class DataTypesBuilder {
 
         private final String[] rawDataTypes;
-        private final Kodeverk kodeverk;
+        private final Header header;
 
         private List<String> values = new ArrayList<>();
         private boolean hasFoundNullValue = false;
 
-        public DataTypesBuilder(String[] rawDataTypes, Kodeverk kodeverk) {
+        public DataTypesBuilder(String[] rawDataTypes, Header header) {
             this.rawDataTypes = rawDataTypes;
-            this.kodeverk = kodeverk;
+            this.header = header;
         }
 
         public DataTypes build() {
@@ -54,7 +54,7 @@ public class DataTypes {
 
                 validateType(rawValue);
                 validateContinuityOfValue(rawValue);
-                validateIndex(rawValue, columnNumber);
+                validateFirstColumn(rawValue, columnNumber);
                 validateAgainstCorrespondingHeader(rawValue, columnNumber);
 
                 if (StringUtils.isNotBlank(rawValue)) {
@@ -89,18 +89,18 @@ public class DataTypes {
         }
 
         /**
-         * Index fields must be of type {@link no.sands.kodeverk.converter.support.DataType#INDEX}
+         *
          *
          * @param rawValue the value to validate
          * @param columnNumber the columnNumber of the value to validate
          */
-        private void validateIndex(String rawValue, int columnNumber) {
+        private void validateFirstColumn(String rawValue, int columnNumber) {
             if (columnNumber == 0) {
                 DataType dataType = DataType.getType(rawValue);
-                HeaderType headerType = HeaderType.getType(kodeverk.getHeader().getValues().get(columnNumber));
+                HeaderType headerType = HeaderType.getType(this.header.getValues().get(columnNumber));
 
-                if (headerType == null && dataType != DataType.INDEX) {
-                    throw new KodeverkInvalidContentException(CommonVariables.MISSING_INDEX);
+                if (headerType == null && (StringUtils.isBlank(rawValue) || !EnumSet.of(DataType.INDEX, DataType.CHARACTERS).contains(dataType))) {
+                    throw new KodeverkInvalidContentException(CommonVariables.INVALID_FIRST_COLUMN);
                 }
             }
         }
@@ -113,9 +113,9 @@ public class DataTypes {
          */
         private void validateAgainstCorrespondingHeader(String rawValue, int columnNumber) {
             DataType dataType = DataType.getType(rawValue);
-            List<String> headerValues = kodeverk.getHeader().getValues();
+            List<String> headerValues = this.header.getValues();
 
-            if (columnNumber < headerValues.size()) {
+            if (columnNumber < headerValues.size() && StringUtils.isNotBlank(rawValue)) {
                 HeaderType headerType = HeaderType.getType(headerValues.get(columnNumber));
 
                 if (headerType != null && !EnumSet.of(Kodeverk.headerDataTypeMap.get(headerType)).contains(dataType)) {

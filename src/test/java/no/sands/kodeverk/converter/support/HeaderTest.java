@@ -28,14 +28,14 @@ public class HeaderTest {
     public void shouldFailWhenHeaderIsEmpty() {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(CommonVariables.MISSING_FIELDS);
-        new Header().withRawValues(new String[]{});
+        new Header.HeaderBuilder(new String[]{}).build();
     }
 
     @Test
     public void shouldFailWhenHeaderContainsNullValues() {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(CommonVariables.MISSING_FIELDS);
-        new Header().withRawValues(new String[]{"dato_endret", null});
+        new Header.HeaderBuilder(new String[]{"dato_endret", null}).build();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class HeaderTest {
         rawValues.addAll(HeaderType.DATO_ENDRET.getValidHeaderNames());
 
         String[] rawArray = new String[rawValues.size()];
-        new Header().withRawValues(rawValues.toArray(rawArray));
+        new Header.HeaderBuilder(rawValues.toArray(rawArray)).build();
     }
 
     @Test
@@ -58,7 +58,7 @@ public class HeaderTest {
         List<String> rawValues = HeaderType.getHeaderNames();
 
         String[] rawArray = new String[rawValues.size()];
-        new Header().withRawValues(rawValues.toArray(rawArray));
+        new Header.HeaderBuilder(rawValues.toArray(rawArray)).build();
     }
 
     @Test
@@ -68,12 +68,25 @@ public class HeaderTest {
 
         String[] rawArray = new String[rawValues.size()];
 
-        Header header = new Header().withRawValues(rawValues.toArray(rawArray));
+        Header header = new Header.HeaderBuilder(rawValues.toArray(rawArray)).build();
         assertThat(header.getValues(), is(rawValues));
     }
 
     @Test
-    public void shouldFailWhenFieldsAreNotContinuous() {
+    public void shouldFailWhenOneOreMoreFieldsAreMoreThan30Characters() {
+        expectedException.expect(KodeverkInvalidContentException.class);
+        expectedException.expectMessage(CommonVariables.EXCEEDED_CHAR_LIMIT);
+
+        List<String> rawValues = HeaderType.getHeaderNames();
+        rawValues.add("12345-12345-12345-12345-12345-12345");
+
+        String[] rawArray = new String[rawValues.size()];
+        new Header.HeaderBuilder(rawValues.toArray(rawArray)).build();
+
+    }
+
+    @Test
+    public void shouldFailWhenFieldsAreNonContinuous() {
         expectedException.expect(KodeverkInvalidContentException.class);
         expectedException.expectMessage(CommonVariables.NON_CONTINUOUS);
 
@@ -82,7 +95,7 @@ public class HeaderTest {
         rawValues.add("a_column");
 
         String[] rawArray = new String[rawValues.size()];
-        new Header().withRawValues(rawValues.toArray(rawArray));
+        new Header.HeaderBuilder(rawValues.toArray(rawArray)).build();
     }
 
     @Test
@@ -96,14 +109,14 @@ public class HeaderTest {
         rawValues.add(null);
 
         String[] rawArray = new String[rawValues.size()];
-        Header header = new Header().withRawValues(rawValues.toArray(rawArray));
+        Header header = new Header.HeaderBuilder(rawValues.toArray(rawArray)).build();
         assertThat(header.getValues(), is(expectedValues));
     }
 
     @Test
     public void shouldCreateAppropriateValuesWhenValuesAreFollowedByBlanks() {
         final String [] headerValues = new String[]{"id", "dato_fom", "RANDOM", "dato_tom", "er_gyldig", "opprettet_av", "dato_opprettet", "endret_av", "dato_endret", "", ""};
-        Header header = new Header().withRawValues(headerValues);
+        Header header = new Header.HeaderBuilder(headerValues).build();
         assertThat(header.getValues(), is(Arrays.asList(headerValues).subList(0, 9)));
     }
 }

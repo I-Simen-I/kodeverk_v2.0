@@ -15,18 +15,18 @@ public class TimestampTest {
 
     @Test(expected = KodeverkInvalidContentException.class)
     public void shouldFailWhenInvalidTimestampIsProvided() {
-        new Timestamp().withRawContent("winter is coming");
+        new Timestamp.TimeStampBuilder().rawContent("winter is coming").build();
     }
 
     @Test
     public void shouldSetContentToNullWhenNullTimestampIsProvided() {
-        Content content = new Timestamp().withRawContent(null);
+        Content content = new Timestamp.TimeStampBuilder().rawContent(null).build();
         assertThat(content.getContentAsString(), is(nullValue()));
     }
 
     @Test
     public void shouldSetContentWhenValidTimestampIsProvided() {
-        Content content = new Timestamp().withRawContent("2006/11/29 17:00");
+        Content content = new Timestamp.TimeStampBuilder().rawContent("2006/11/29 17:00").build();
         assertThat(content.getContentAsString(), is("2006-11-29 17:00"));
     }
 }

@@ -8,19 +8,35 @@ import no.sands.kodeverk.utils.DateUtil;
  */
 public class Timestamp implements Content {
 
-    private String content;
+    private final String content;
 
-    @Override
-    public Content withRawContent(String rawContent) throws KodeverkInvalidContentException {
-        content = DateUtil.convertTimestampString(rawContent);
-        if (rawContent != null && content == null) {
-            throw new KodeverkInvalidContentException("Attempt to format '" + rawContent + "' as a timestamp failed");
-        }
-        return this;
+    private Timestamp(TimeStampBuilder builder) {
+        this.content = builder.content;
     }
 
     @Override
     public String getContentAsString() {
         return content;
+    }
+
+    public static class TimeStampBuilder implements ContentBuilder<Timestamp> {
+
+        private String rawContent;
+        private String content;
+
+        @Override
+        public ContentBuilder rawContent(String rawContent) {
+            this.rawContent = rawContent;
+            return this;
+        }
+
+        @Override
+        public Timestamp build() {
+            this.content = DateUtil.convertTimestampString(this.rawContent);
+            if (this.rawContent != null && this.content == null) {
+                throw new KodeverkInvalidContentException("Attempt to format '" + this.rawContent + "' as a timestamp failed");
+            }
+            return new Timestamp(this);
+        }
     }
 }
