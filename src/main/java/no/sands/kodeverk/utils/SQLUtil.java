@@ -62,7 +62,7 @@ public class SQLUtil {
     public static String convertCSVValuesToSQlValues(String columnType, String columnValue) {
         if (!columnValue.equals(SQL_EMPTY_VALUE)) {
             if (columnType.charAt(0) == TEXT_COLUMN) {
-                return "'".concat(columnValue.concat("'"));
+                return makeValidSQLText(columnValue);
             } else if (columnType.charAt(0) == DATE_COLUMN) {
                 return getDateFormat(columnValue);
             } else if (columnType.charAt(0) == TIMESTAMP_COLUMN) {
@@ -73,5 +73,21 @@ public class SQLUtil {
         } else {
             return SQL_NULL_VALUE;
         }
+    }
+
+    /**
+     * Converts the columnvalue to a valid SQL text
+     *
+     * @param columnText the text to edit
+     * @return the valid SQL text
+     */
+    private static String makeValidSQLText(String columnText) {
+        String validSQLText = columnText;
+
+        if (columnText.contains("'")) {
+            validSQLText = StringUtils.replace(columnText, "'", "''");
+        }
+
+        return "'".concat(validSQLText.concat("'"));
     }
 }

@@ -12,11 +12,13 @@ import no.sands.kodeverk.converter.support.HeaderType;
  * @author Øyvind Strømmen
  */
 public class CommonVariables {
+    //Encoding
+    public static final String ENCODING_WINDOWS_1252 = "Windows-1252";
+
     //Paths
     public static final String TEST_FILE_PATH = "../kodeverk_v2.0/src/test/resources/testdata/";
     public static final String KODEVERK_FILE_PATH = "../kodeverk_v2.0/src/main/resources/kodeverk/";
     public static final String SQL_FILE_PATH = "../kodeverk_v2.0/src/main/resources/sqlFiles/";
-    public static final String KODEVERK_FILE = "W:/Simen/Kode/Kodeverk_2.0/PEN.xls";
 
     //Files
     public static final String TEST_FILE_1 = TEST_FILE_PATH + "kodeverk_to_import.xls";
@@ -29,7 +31,7 @@ public class CommonVariables {
     public static final String COLUMN_DEKODE = "dekode";
     public static final String COLUMN_DATO_FOM = "dato_fom";
     public static final String COLUMN_DATO_TOM = "dato_tom";
-    public static final String COLUMN_GYLDIG = "gyldig";
+    public static final String COLUMN_GYLDIG = "er_gyldig";
     public static final String COLUMN_ENDRET_AV = "endret_av";
     public static final String COLUMN_OPPRETTET_AV = "opprettet_av";
     public static final String COLUMN_DATO_OPPRETTET = "dato_opprettet";

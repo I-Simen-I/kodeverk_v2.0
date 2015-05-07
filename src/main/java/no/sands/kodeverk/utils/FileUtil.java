@@ -3,16 +3,21 @@ package no.sands.kodeverk.utils;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import static no.sands.kodeverk.common.CommonVariables.CSV_FILE;
+import static no.sands.kodeverk.common.CommonVariables.ENCODING_WINDOWS_1252;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.opencsv.CSVReader;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
 
@@ -21,7 +26,7 @@ import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
  * @author Øyvind Strømmen
  */
 public class FileUtil {
-
+    private static final Logger LOGGER = Logger.getLogger(FileUtil.class);
     /**
      * Returns all csv files in a given folder
      *
@@ -63,7 +68,7 @@ public class FileUtil {
      */
     public static List<String[]> readCSVFile(File kodeverkFile) {
         try {
-            return new CSVReader(new FileReader(kodeverkFile)).readAll();
+            return new CSVReader(new InputStreamReader(new FileInputStream(kodeverkFile), ENCODING_WINDOWS_1252)).readAll();
         } catch (IOException e) {
             throw new KodeverkUnrecoverableException("Bad things happened when trying to read " + kodeverkFile + ". Maybe it couldn't be opened?", e.getCause());
         }
@@ -83,6 +88,24 @@ public class FileUtil {
         int fileTypeIndex = file.getName().indexOf(".");
 
         return file.getName().substring(0, fileTypeIndex);
+    }
+
+    /**
+     * Creates the directory if it does not excist
+     *
+     * @param path the path to create
+     */
+    public static void createDirectory(String path) {
+        File directory = new File(path);
+
+        if (!directory.exists()) {
+            boolean isDirCreated = directory.mkdirs();
+            if (isDirCreated) {
+                LOGGER.log(Level.INFO, "Directory is created");
+            } else {
+                LOGGER.log(Level.ERROR, "Directory is not created");
+            }
+        }
     }
 
     /**
