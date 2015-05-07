@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 
 /**
- * This enum defines which header values all {@link no.sands.kodeverk.converter.support.Kodeverk} are required to contain.
+ * This enum defines which header values all {@link Kodeverk} are required to contain.
  * Each type defines the formats that are accepted as input for that particular type.
  *
  * @author Øyvind Strømmen

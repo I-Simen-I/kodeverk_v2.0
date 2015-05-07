@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 import org.apache.commons.lang3.StringUtils;
 

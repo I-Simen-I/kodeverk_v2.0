@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -10,8 +10,8 @@ import no.sands.kodeverk.common.CommonVariables;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
- * Representation of the data type row of a {@link no.sands.kodeverk.converter.support.Kodeverk}. The data types row lies second from the
- * top in a kodeverk. Accepted values are defined in {@link no.sands.kodeverk.converter.support.DataType}
+ * Representation of the data type row of a {@link Kodeverk}. The data types row lies second from the
+ * top in a kodeverk. Accepted values are defined in {@link DataType}
  *
  * @author Øyvind Strømmen
  */
@@ -65,7 +65,7 @@ public class DataTypes {
         }
 
         /**
-         * Values must be of types defined by {@link no.sands.kodeverk.converter.support.DataType} only
+         * Values must be of types defined by {@link DataType} only
          *
          * @param rawValue the value to validate
          */

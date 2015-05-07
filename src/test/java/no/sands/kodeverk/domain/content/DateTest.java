@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
@@ -6,10 +6,12 @@ import static org.hamcrest.core.Is.is;
 
 import org.junit.Test;
 
+import no.sands.kodeverk.domain.content.Content;
+import no.sands.kodeverk.domain.content.Date;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
- * Unit tests for {@link no.sands.kodeverk.converter.support.Date}
+ * Unit tests for {@link no.sands.kodeverk.domain.content.Date}
  *
  * @author Øyvind Strømmen
  */

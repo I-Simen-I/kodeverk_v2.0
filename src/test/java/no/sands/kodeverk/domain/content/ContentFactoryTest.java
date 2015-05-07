@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -9,12 +9,13 @@ import static org.hamcrest.core.IsNull.nullValue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import no.sands.kodeverk.converter.support.Date.DateBuilder;
-import no.sands.kodeverk.converter.support.Index.IndexBuilder;
-import no.sands.kodeverk.converter.support.Timestamp.TimeStampBuilder;
+import no.sands.kodeverk.domain.DataType;
+import no.sands.kodeverk.domain.content.Date.DateBuilder;
+import no.sands.kodeverk.domain.content.Index.IndexBuilder;
+import no.sands.kodeverk.domain.content.Timestamp.TimeStampBuilder;
 
 /**
- * Unit tests for {@link no.sands.kodeverk.converter.support.ContentFactoryTest}
+ * Unit tests for {@link ContentFactoryTest}
  *
  * @author Øyvind Strømmen
  */

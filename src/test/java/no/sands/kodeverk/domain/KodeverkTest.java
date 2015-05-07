@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import java.io.File;
 import java.util.List;
@@ -6,14 +6,17 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import no.sands.kodeverk.converter.support.Characters.CharactersBuilder;
-import no.sands.kodeverk.converter.support.Date.DateBuilder;
-import no.sands.kodeverk.converter.support.Index.IndexBuilder;
-import no.sands.kodeverk.converter.support.Timestamp.TimeStampBuilder;
+import no.sands.kodeverk.domain.content.Characters.CharactersBuilder;
+import no.sands.kodeverk.domain.content.ContentFactory;
+import no.sands.kodeverk.domain.DataType;
+import no.sands.kodeverk.domain.content.Date.DateBuilder;
+import no.sands.kodeverk.domain.content.Index.IndexBuilder;
+import no.sands.kodeverk.domain.Kodeverk;
+import no.sands.kodeverk.domain.content.Timestamp.TimeStampBuilder;
 import no.sands.kodeverk.utils.FileUtil;
 
 /**
- * Unit tests for {@link no.sands.kodeverk.converter.support.Kodeverk}
+ * Unit tests for {@link no.sands.kodeverk.domain.Kodeverk}
  *
  * @author Øyvind Strømmen
  */

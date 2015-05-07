@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -11,7 +11,7 @@ import no.sands.kodeverk.common.CommonVariables;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
- * Representation of the header row of a {@link no.sands.kodeverk.converter.support.Kodeverk}. The header is the top most row of a kodeverk,
+ * Representation of the header row of a {@link Kodeverk}. The header is the top most row of a kodeverk,
  * and must contain at minimun a set of required values defined by {@link HeaderType}.
  *
  * @author Øyvind Strømmen

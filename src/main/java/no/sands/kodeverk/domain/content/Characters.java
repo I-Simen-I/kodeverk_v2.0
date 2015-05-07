@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 /**
  * Self validating representation of the {@code char} data type. Character colums can contain almost all kinds of data.

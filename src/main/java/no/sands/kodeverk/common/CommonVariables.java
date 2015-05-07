@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import no.sands.kodeverk.converter.support.DataType;
-import no.sands.kodeverk.converter.support.HeaderType;
+import no.sands.kodeverk.domain.DataType;
+import no.sands.kodeverk.domain.HeaderType;
 
 /**
  * @author Simen Søhol

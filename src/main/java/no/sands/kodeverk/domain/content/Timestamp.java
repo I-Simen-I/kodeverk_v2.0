@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 import no.sands.kodeverk.utils.DateUtil;

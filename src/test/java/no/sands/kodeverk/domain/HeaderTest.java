@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -12,10 +12,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import no.sands.kodeverk.common.CommonVariables;
+import no.sands.kodeverk.domain.Header;
+import no.sands.kodeverk.domain.HeaderType;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
- * Unit tests for {@link no.sands.kodeverk.converter.support.Header}
+ * Unit tests for {@link no.sands.kodeverk.domain.Header}
  *
  * @author Øyvind Strømmen
  */

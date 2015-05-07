@@ -1,10 +1,12 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 import java.util.EnumMap;
 import java.util.Map;
 
+import no.sands.kodeverk.domain.DataType;
+
 /**
- * Factory in charge of creating {@link no.sands.kodeverk.converter.support.Content} to be contained within {@link no.sands.kodeverk.converter.support.Column}'s.
+ * Factory in charge of creating {@link Content} to be contained within {@link no.sands.kodeverk.domain.Column}'s.
  * Available content are contained within an internal registry populated from the outside.
  *
  * @author Øyvind Strømmen
@@ -16,18 +18,18 @@ public class ContentFactory {
     /**
      * Register Content to the factory. Content must be registered here for it to be eligable for creation.
      *
-     * @param dataType the {@link no.sands.kodeverk.converter.support.DataType} to register the Content with
-     * @param contentBuilder a {@link no.sands.kodeverk.converter.support.ContentBuilder}
+     * @param dataType the {@link DataType} to register the Content with
+     * @param contentBuilder a {@link ContentBuilder}
      */
     public static void registerContent(DataType dataType, ContentBuilder contentBuilder) {
         registeredContent.put(dataType, contentBuilder);
     }
 
     /**
-     * Creates {@link no.sands.kodeverk.converter.support.Content} based on a given {@link no.sands.kodeverk.converter.support.DataType}. Only Content registered using
-     * {@link no.sands.kodeverk.converter.support.ContentFactory#registerContent(DataType, ContentBuilder)} will be available for creation.
+     * Creates {@link Content} based on a given {@link DataType}. Only Content registered using
+     * {@link ContentFactory#registerContent(DataType, ContentBuilder)} will be available for creation.
      *
-     * @param targetDataType a {@link no.sands.kodeverk.converter.support.DataType}
+     * @param targetDataType a {@link DataType}
      * @param rawContent the rawContent which will be supplied to created Content
      * @return the appropriate Content or {@code null} if no appropriate Content was found
      */

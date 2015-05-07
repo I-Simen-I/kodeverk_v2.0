@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -6,8 +6,10 @@ import static org.hamcrest.core.IsNull.nullValue;
 
 import org.junit.Test;
 
+import no.sands.kodeverk.domain.DataType;
+
 /**
- * Unit tests for {@link no.sands.kodeverk.converter.support.DataType}
+ * Unit tests for {@link no.sands.kodeverk.domain.DataType}
  *
  * @author Øyvind Strømmen
  */

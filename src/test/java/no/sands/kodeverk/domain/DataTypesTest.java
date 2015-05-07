@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,10 +14,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import no.sands.kodeverk.common.CommonVariables;
+import no.sands.kodeverk.domain.DataTypes;
+import no.sands.kodeverk.domain.Header;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
- * Unit tests for {@link no.sands.kodeverk.converter.support.DataTypes}
+ * Unit tests for {@link no.sands.kodeverk.domain.DataTypes}
  *
  * @author Øyvind Strømmen
  */

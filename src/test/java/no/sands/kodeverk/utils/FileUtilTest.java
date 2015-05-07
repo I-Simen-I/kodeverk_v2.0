@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import no.sands.kodeverk.converter.support.Kodeverk;
+import no.sands.kodeverk.domain.Kodeverk;
 import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
 
 /**

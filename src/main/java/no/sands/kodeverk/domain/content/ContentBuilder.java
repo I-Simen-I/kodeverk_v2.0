@@ -1,10 +1,10 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain.content;
 
 /**
- * A generic builder interface meant to be used by the {@link no.sands.kodeverk.converter.support.ContentFactory}. Allows for generic creation of {@link no.sands.kodeverk.converter.support.Content}
+ * A generic builder interface meant to be used by the {@link ContentFactory}. Allows for generic creation of {@link Content}
  *
- * @see no.sands.kodeverk.converter.support.ContentFactory
- * @see no.sands.kodeverk.converter.support.Content
+ * @see ContentFactory
+ * @see Content
  *
  * @author Øyvind Strømmen
  */
@@ -19,7 +19,7 @@ public interface ContentBuilder<C extends Content> {
     public ContentBuilder rawContent(String rawContent);
 
     /**
-     * Build {@link no.sands.kodeverk.converter.support.Content} of a the given type. If rawContent is provided, an attempt to convert it will be made.
+     * Build {@link Content} of a the given type. If rawContent is provided, an attempt to convert it will be made.
      *
      * @return a Content instance
      */

@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.google.common.collect.ImmutableSet;
 
 /**
- * This enum defines which data types are accepted in the {@link no.sands.kodeverk.converter.support.DataTypes} row.
+ * This enum defines which data types are accepted in the {@link DataTypes} row.
  * Each type defines the formats that are accepted as input for that particular type.
  *
  * @author Øyvind Strømmen

@@ -1,11 +1,14 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import no.sands.kodeverk.domain.content.Content;
+import no.sands.kodeverk.domain.content.ContentFactory;
+
 /**
- * A column is contained within a {@link no.sands.kodeverk.converter.support.Row} and contains {@link no.sands.kodeverk.converter.support.Content}. A Column is
- * aware of it's position within a row and the value of it's corresponding {@link no.sands.kodeverk.converter.support.Header} and {@link no.sands.kodeverk.converter.support.DataTypes} column.
+ * A column is contained within a {@link Row} and contains {@link no.sands.kodeverk.domain.content.Content}. A Column is
+ * aware of it's position within a row and the value of it's corresponding {@link Header} and {@link DataTypes} column.
  *
  * @author Øyvind Strømmen
  */
@@ -30,7 +33,7 @@ public class Column {
     }
 
     /**
-     * Get the position of this Column within it's {@link no.sands.kodeverk.converter.support.Row}
+     * Get the position of this Column within it's {@link Row}
      *
      * @return the columnNumber
      */
@@ -58,7 +61,7 @@ public class Column {
         }
 
         /**
-         * Validate the state of the builder and build a {@link no.sands.kodeverk.converter.support.Column} if valid.
+         * Validate the state of the builder and build a {@link Column} if valid.
          *
          * @return a Column if validation was successful
          */

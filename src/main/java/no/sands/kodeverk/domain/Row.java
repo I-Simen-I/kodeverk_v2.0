@@ -1,4 +1,4 @@
-package no.sands.kodeverk.converter.support;
+package no.sands.kodeverk.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * A Row is contained within a {@link no.sands.kodeverk.converter.support.Kodeverk} and contains {@link no.sands.kodeverk.converter.support.Column}s.
+ * A Row is contained within a {@link Kodeverk} and contains {@link Column}s.
  * A Row is aware of it's position within a Kodeverk.
  *
  * @author Øyvind Strømmen
@@ -33,7 +33,7 @@ public class Row {
     }
 
     /**
-     * Get this row's position within a {@link no.sands.kodeverk.converter.support.Kodeverk}
+     * Get this row's position within a {@link Kodeverk}
      *
      * @return the rowNumber
      */
@@ -61,7 +61,7 @@ public class Row {
         }
 
         /**
-         * Validate the state of the builder and build a {@link no.sands.kodeverk.converter.support.Row} if valid.
+         * Validate the state of the builder and build a {@link Row} if valid.
          *
          * @return a Row if validation was successful
          */
