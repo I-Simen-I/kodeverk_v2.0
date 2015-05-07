@@ -16,7 +16,7 @@ public enum DataType {
     CHARACTERS(ImmutableSet.of("c\\d*")),
     TIMESTAMP(ImmutableSet.of("t\\d*")),
     DATE(ImmutableSet.of("d\\d*")),
-    INDEX(ImmutableSet.of("i"));
+    INDEX(ImmutableSet.of("i\\d*"));
 
     private Set<String> validDataTypeNames;
 
