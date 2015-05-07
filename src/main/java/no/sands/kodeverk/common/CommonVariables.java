@@ -1,7 +1,15 @@
 package no.sands.kodeverk.common;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
+
+import no.sands.kodeverk.domain.DataType;
+import no.sands.kodeverk.domain.HeaderType;
+
 /**
  * @author Simen Søhol
+ * @author Øyvind Strømmen
  */
 public class CommonVariables {
     //Encoding
@@ -53,4 +61,23 @@ public class CommonVariables {
     public static final String SQL_WRONG_DATE_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd) for koden %s";
     public static final String SQL_WRONG_TIMESTAMP_FORMAT_ERROR_MESSAGE = "Feil i kodeverk: %s. Feltet %s må ha riktig format(yyyy-MM-dd hh:mm) for koden %s";
     public static final String SQL_WRONG_VALUE_GYLDIG = "Feil i kodeverk: %s. Feltet %s må ha verdien 0 eller 1 for koden %s";
+
+    public static final String DUPLICATE = "Header raden kan ikke inneholde duplikate verdier";
+    public static final String MISSING_FIELDS = "Header raden inneholdt ikke alle påkrevde felter";
+    public static final String NON_CONTINUOUS = "Header kolonner uten innhold kan ikke etterfølges av kolonner med innhold";
+    public static final String DATATYPE_DOESNT_MATCH_HEADER = "Datatype matcher ikke header";
+    public static final String INVALID_DATA_TYPE = "Ugyldig datatype";
+    public static final String EXCEEDED_CHAR_LIMIT = "Headerfelt kan ikke være lengre enn 30 tegn";
+    public static final String INVALID_FIRST_COLUMN = "Første kolonne skal enten være datatype 'i' eller 'c'";
+
+    //Config
+    public static final Map<HeaderType, DataType> headerDataTypeMap = ImmutableMap.<HeaderType, DataType>builder()
+            .put(HeaderType.DATO_FOM, DataType.DATE)
+            .put(HeaderType.DATO_TOM, DataType.DATE)
+            .put(HeaderType.ER_GYLDIG, DataType.CHARACTERS)
+            .put(HeaderType.DATO_OPPRETTET, DataType.TIMESTAMP)
+            .put(HeaderType.OPPRETTET_AV, DataType.CHARACTERS)
+            .put(HeaderType.DATO_ENDRET, DataType.TIMESTAMP)
+            .put(HeaderType.ENDRET_AV, DataType.CHARACTERS)
+            .build();
 }

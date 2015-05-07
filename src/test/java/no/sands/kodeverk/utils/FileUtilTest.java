@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import no.sands.kodeverk.domain.Kodeverk;
 import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
 
 /**
@@ -21,6 +22,16 @@ import no.sands.kodeverk.exceptions.KodeverkUnrecoverableException;
  * @author Øyvind Strømmen
  */
 public class FileUtilTest {
+
+    @Test
+    public void testTest() {
+        File file = new File("C:/data/kodeverk_v2.0/src/test/resources/testdata/K_A_KODEVERK.csv");
+        List<String[]> strings = FileUtil.readCSVFile(file);
+
+        Kodeverk kodeverk = new Kodeverk.KodeverkBuilder("name", strings.remove(0), strings.remove(0), strings).build();
+
+        return;
+    }
 
     @Test
     public void testGetFilesInFolder() throws Exception {
@@ -63,5 +74,10 @@ public class FileUtilTest {
         File file = new File(TEST_FILE_1);
 
         assertThat(FileUtil.getFileName(file), is("kodeverk_to_import"));
+    }
+
+    @Test
+    public void shouldCreateKodeverk() {
+
     }
 }

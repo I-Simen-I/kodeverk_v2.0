@@ -3,87 +3,92 @@ package no.sands.kodeverk.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static no.sands.kodeverk.common.CommonVariables.*;
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
 /**
- * @author Simen Søhol
+ * A Kodeverk contains a {@link Header}, a {@link DataTypes} and one or more {@link Row}'s
+ *
+ * @author Øyvind Strømmen
  */
 public class Kodeverk {
-    private String name;
-    private String[] header;
-    private String[] columnTypes;
-    private List<String[]> values = new ArrayList<>();
 
-    public Kodeverk(String name) {
-        setName(name);
+    private final String name;
+    private final Header header;
+    private final DataTypes dataTypes;
+    private final List<Row> rows;
+
+    private Kodeverk(KodeverkBuilder builder) {
+        this.name = builder.name;
+        this.header = builder.header;
+        this.dataTypes = builder.dataTypes;
+        this.rows = builder.rows;
     }
 
-    public Kodeverk(String name, List<String[]> csvList) {
-        setName(name);
-        setValuesFromCSV(csvList);
-    }
-
+    /**
+     * Get the name of this Kodeverk
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    public String[] getHeader() {
+    /**
+     * Get the Header contained within this Kodeverk
+     *
+     * @return the Header
+     */
+    public Header getHeader() {
         return header;
     }
 
-    public void setHeader(String[] header) {
-        this.header = header;
-    }
-
-    public String[] getColumnTypes() {
-        return columnTypes;
-    }
-
-    public void setColumnTypes(String[] columnTypes) {
-        this.columnTypes = columnTypes;
-    }
-
-    public List<String[]> getValues() {
-        return values;
-    }
-
-    public void addValue(String[] value) {
-        values.add(value);
+    /**
+     * Get the DataTypes contained within this Kodeverk
+     *
+     * @return the Kodeverk
+     */
+    public DataTypes getDataTypes() {
+        return dataTypes;
     }
 
     /**
-     * Converts a csvFile to kodeverk class
+     * Get the Row's contained within this Kodeverk
      *
-     * @param csvList the csvList to convert
+     * @return a List of Row's
      */
-    public void setValuesFromCSV(List<String[]> csvList) {
-        setHeader(csvList.get(CSV_HEADER_ROW));
-        setColumnTypes(csvList.get(CSV_COLUMN_TYPE_ROW));
+    public List<Row> getRows() {
+        return rows;
+    }
 
-        for (int csvValueIndex = FIRST_KODEVERK_ROW_WITH_VALUES; csvValueIndex < csvList.size(); csvValueIndex++) {
-            addValue(csvList.get(csvValueIndex));
+    public static class KodeverkBuilder {
+
+        private final String name;
+        private final String[] rawHeader;
+        private final String[] rawDataTypes;
+        private final List<String[]> rawKodeverk;
+
+        private Header header;
+        private DataTypes dataTypes;
+        private List<Row> rows = new ArrayList<>();
+
+        public KodeverkBuilder(String name, String[] rawHeader, String[] rawDataTypes, List<String[]> rawKodeverk) {
+            this.name = name;
+            this.rawHeader = rawHeader;
+            this.rawDataTypes = rawDataTypes;
+            this.rawKodeverk = rawKodeverk;
         }
-    }
 
-    /**
-     * Returns the number of valid rows that can be used in a sql insert statement
-     *
-     * @return number of valid rows
-     */
-    public int getNumberOfValidInsertValues() {
-        int validInsertValues = 0;
+        /**
+         * Validate the state of the builder and build a {@link Kodeverk} if valid.
+         *
+         * @return a complete Kodeverk if validation was successful
+         */
+        public Kodeverk build() {
+            this.header = new Header.HeaderBuilder(this.rawHeader).build();
+            this.dataTypes = new DataTypes.DataTypesBuilder(this.rawDataTypes, this.header).build();
 
-        for (String column : getColumnTypes()) {
-            if (column != null && !isBlank(column)) {
-                validInsertValues++;
+            for (int rowNumber = 0; rowNumber < this.rawKodeverk.size(); rowNumber++) {
+                this.rows.add(new Row.RowBuilder(this.rawKodeverk.get(rowNumber), rowNumber, this.header, this.dataTypes).build());
             }
+            return new Kodeverk(this);
         }
-
-        return validInsertValues;
     }
 }

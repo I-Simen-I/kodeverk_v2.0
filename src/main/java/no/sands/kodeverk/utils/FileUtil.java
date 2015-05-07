@@ -74,6 +74,10 @@ public class FileUtil {
         }
     }
 
+//    public static Kodeverk getKodeverk(File kodeverkFile) {
+//
+//    }
+
     /**
      * Get the name on the file without the extension
      *
