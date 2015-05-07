@@ -19,7 +19,7 @@ public interface ContentBuilder<C extends Content> {
     public ContentBuilder rawContent(String rawContent);
 
     /**
-     * Build {@link Content} of a the given type. If rawContent is provided, an attempt to convert it will be made.
+     * Build {@link Content} of the given type. If rawContent is provided, an attempt to convert it will be made.
      *
      * @return a Content instance
      */
