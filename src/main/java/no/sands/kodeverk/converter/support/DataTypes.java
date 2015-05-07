@@ -118,7 +118,7 @@ public class DataTypes {
             if (columnNumber < headerValues.size() && StringUtils.isNotBlank(rawValue)) {
                 HeaderType headerType = HeaderType.getType(headerValues.get(columnNumber));
 
-                if (headerType != null && !EnumSet.of(Kodeverk.headerDataTypeMap.get(headerType)).contains(dataType)) {
+                if (headerType != null && !EnumSet.of(CommonVariables.headerDataTypeMap.get(headerType)).contains(dataType)) {
                     throw new KodeverkInvalidContentException(CommonVariables.DATATYPE_DOESNT_MATCH_HEADER);
                 }
             }

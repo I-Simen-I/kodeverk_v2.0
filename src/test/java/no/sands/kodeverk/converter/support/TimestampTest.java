@@ -9,6 +9,8 @@ import org.junit.Test;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
+ * Unit tests for {@link no.sands.kodeverk.converter.support.Timestamp}
+ *
  * @author Øyvind Strømmen
  */
 public class TimestampTest {

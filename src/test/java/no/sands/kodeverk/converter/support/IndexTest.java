@@ -16,17 +16,17 @@ public class IndexTest {
 
     @Test
     public void shouldSetContentWhenNumericStringIsProvided() {
-        Content content = new Index().withRawContent("42");
+        Content content = new Index.IndexBuilder().rawContent("42").build();
         assertThat(content.getContentAsString(), is("42"));
     }
 
     @Test(expected = KodeverkInvalidContentException.class)
     public void shouldFailWhenNonNumericContentIsProvided() {
-        new Index().withRawContent("winter is coming");
+        new Index.IndexBuilder().rawContent("winter is coming").build();
     }
 
     @Test(expected = KodeverkInvalidContentException.class)
     public void shouldFailWhenNullIsProvided() {
-        new Index().withRawContent(null);
+        new Index.IndexBuilder().rawContent(null).build();
     }
 }

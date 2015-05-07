@@ -1,5 +1,12 @@
 package no.sands.kodeverk.common;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
+
+import no.sands.kodeverk.converter.support.DataType;
+import no.sands.kodeverk.converter.support.HeaderType;
+
 /**
  * @author Simen Søhol
  * @author Øyvind Strømmen
@@ -60,4 +67,15 @@ public class CommonVariables {
     public static final String INVALID_DATA_TYPE = "Ugyldig datatype";
     public static final String EXCEEDED_CHAR_LIMIT = "Headerfelt kan ikke være lengre enn 30 tegn";
     public static final String INVALID_FIRST_COLUMN = "Første kolonne skal enten være datatype 'i' eller 'c'";
+
+    //Config
+    public static final Map<HeaderType, DataType> headerDataTypeMap = ImmutableMap.<HeaderType, DataType>builder()
+            .put(HeaderType.DATO_FOM, DataType.DATE)
+            .put(HeaderType.DATO_TOM, DataType.DATE)
+            .put(HeaderType.ER_GYLDIG, DataType.CHARACTERS)
+            .put(HeaderType.DATO_OPPRETTET, DataType.TIMESTAMP)
+            .put(HeaderType.OPPRETTET_AV, DataType.CHARACTERS)
+            .put(HeaderType.DATO_ENDRET, DataType.TIMESTAMP)
+            .put(HeaderType.ENDRET_AV, DataType.CHARACTERS)
+            .build();
 }

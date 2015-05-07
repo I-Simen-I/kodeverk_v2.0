@@ -2,24 +2,13 @@ package no.sands.kodeverk.converter.support;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
+ * A Kodeverk contains a {@link no.sands.kodeverk.converter.support.Header}, a {@link no.sands.kodeverk.converter.support.DataTypes} and one or more {@link no.sands.kodeverk.converter.support.Row}'s
+ *
  * @author Øyvind Strømmen
  */
 public class Kodeverk {
-
-    public static final Map<HeaderType, DataType> headerDataTypeMap = ImmutableMap.<HeaderType, DataType>builder()
-            .put(HeaderType.DATO_FOM, DataType.DATE)
-            .put(HeaderType.DATO_TOM, DataType.DATE)
-            .put(HeaderType.ER_GYLDIG, DataType.CHARACTERS)
-            .put(HeaderType.DATO_OPPRETTET, DataType.TIMESTAMP)
-            .put(HeaderType.OPPRETTET_AV, DataType.CHARACTERS)
-            .put(HeaderType.DATO_ENDRET, DataType.TIMESTAMP)
-            .put(HeaderType.ENDRET_AV, DataType.CHARACTERS)
-            .build();
 
     private final String name;
     private final Header header;
@@ -33,18 +22,38 @@ public class Kodeverk {
         this.rows = builder.rows;
     }
 
+    /**
+     * Get the name of this Kodeverk
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get the Header contained within this Kodeverk
+     *
+     * @return the Header
+     */
     public Header getHeader() {
         return header;
     }
 
+    /**
+     * Get the DataTypes contained within this Kodeverk
+     *
+     * @return the Kodeverk
+     */
     public DataTypes getDataTypes() {
         return dataTypes;
     }
 
+    /**
+     * Get the Row's contained within this Kodeverk
+     *
+     * @return a List of Row's
+     */
     public List<Row> getRows() {
         return rows;
     }
@@ -67,13 +76,18 @@ public class Kodeverk {
             this.rawKodeverk = rawKodeverk;
         }
 
+        /**
+         * Validate the state of the builder and build a {@link no.sands.kodeverk.converter.support.Kodeverk} if valid.
+         *
+         * @return a complete Kodeverk if validation was successful
+         */
         public Kodeverk build() {
             this.header = new Header.HeaderBuilder(this.rawHeader).build();
             this.dataTypes = new DataTypes.DataTypesBuilder(this.rawDataTypes, this.header).build();
 
-//            for (int rowNumber = 0; rowNumber < this.rawKodeverk.size(); rowNumber++) {
-//                this.rows.add(new Row.RowBuilder(this.rawKodeverk.get(rowNumber), rowNumber, this.header, this.dataTypes).build());
-//            }
+            for (int rowNumber = 0; rowNumber < this.rawKodeverk.size(); rowNumber++) {
+                this.rows.add(new Row.RowBuilder(this.rawKodeverk.get(rowNumber), rowNumber, this.header, this.dataTypes).build());
+            }
             return new Kodeverk(this);
         }
     }

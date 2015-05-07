@@ -7,6 +7,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
+ * A Row is contained within a {@link no.sands.kodeverk.converter.support.Kodeverk} and contains {@link no.sands.kodeverk.converter.support.Column}s.
+ * A Row is aware of it's position within a Kodeverk.
+ *
  * @author Øyvind Strømmen
  */
 public class Row {
@@ -20,10 +23,20 @@ public class Row {
         this.rowNumber = builder.rowNumber;
     }
 
+    /**
+     * Get the Columns contained within this Row
+     *
+     * @return a List of Columns
+     */
     public List<Column> getColumns() {
         return columns;
     }
 
+    /**
+     * Get this row's position within a {@link no.sands.kodeverk.converter.support.Kodeverk}
+     *
+     * @return the rowNumber
+     */
     public int getRowNumber() {
         return rowNumber;
     }
@@ -47,6 +60,11 @@ public class Row {
             this.dataTypes = dataTypes;
         }
 
+        /**
+         * Validate the state of the builder and build a {@link no.sands.kodeverk.converter.support.Row} if valid.
+         *
+         * @return a Row if validation was successful
+         */
         public Row build() {
             for (int columnNumber = 0; columnNumber < this.dataTypes.getValues().size(); columnNumber++) {
                 this.columns.add(new Column.ColumnBuilder(rawColumns[columnNumber], columnNumber, this.header, this.dataTypes).build());

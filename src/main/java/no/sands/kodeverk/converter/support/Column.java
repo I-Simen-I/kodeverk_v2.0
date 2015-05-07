@@ -4,6 +4,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
+ * A column is contained within a {@link no.sands.kodeverk.converter.support.Row} and contains {@link no.sands.kodeverk.converter.support.Content}. A Column is
+ * aware of it's position within a row and the value of it's corresponding {@link no.sands.kodeverk.converter.support.Header} and {@link no.sands.kodeverk.converter.support.DataTypes} column.
+ *
  * @author Øyvind Strømmen
  */
 public class Column {
@@ -17,10 +20,20 @@ public class Column {
         this.colummNumber = builder.columnNumber;
     }
 
+    /**
+     * Get the contents of this column
+     *
+     * @return the content
+     */
     public Content getContent() {
         return content;
     }
 
+    /**
+     * Get the position of this Column within it's {@link no.sands.kodeverk.converter.support.Row}
+     *
+     * @return the columnNumber
+     */
     public int getColummNumber() {
         return colummNumber;
     }
@@ -44,7 +57,13 @@ public class Column {
             this.dataTypes = dataTypes;
         }
 
+        /**
+         * Validate the state of the builder and build a {@link no.sands.kodeverk.converter.support.Column} if valid.
+         *
+         * @return a Column if validation was successful
+         */
         public Column build() {
+            //TODO: Validate that dato_fom cannot be null
             content = ContentFactory.createContent(DataType.getType(this.dataTypes.getValues().get(columnNumber)), this.rawContent);
             return new Column(this);
         }
