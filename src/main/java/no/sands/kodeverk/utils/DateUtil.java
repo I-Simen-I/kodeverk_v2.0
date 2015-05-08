@@ -1,12 +1,12 @@
 package no.sands.kodeverk.utils;
 
-import java.util.Locale;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
-
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Simen Søhol
@@ -16,6 +16,7 @@ public class DateUtil {
     private static final String NORWEGIAN_LOCALE = "nb";
     private static final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm";
     private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
+    private static final String VALID_DATE_FORMAT = "yyyy-MM-dd";
     private static final int DATE_LENGTH = 10;
     private static final int TIMESTAMP_LENGTH = 16;
 
@@ -38,41 +39,44 @@ public class DateUtil {
     );
 
     /**
-     * Checks if date format is yyyy-MM-dd hh:mm
+     * Determine if a timestamp string is formatted as yyyy-MM-dd hh:mm
      *
-     * @param date the date to validate
-     * @return true if date is valid, otherwise false
+     * @param date the timestamp to validate
+     * @return true if timestamp is valid, false otherwise
      */
     public static boolean isTimestampValid(String date) {
         return date != null && date.length() == TIMESTAMP_LENGTH && validate(date, DEFAULT_TIMESTAMP_FORMAT);
     }
 
     /**
-     * Checks if date format is yyyy-MM-dd
+     * Determine if a date string is formatted as either yyyy-MM-dd or dd.MM.yyyy
      *
      * @param date the date to validate
-     * @return true if date is valid, otherwise false
+     * @return true if date is valid, false otherwise
      */
     public static boolean isDateValid(String date) {
-        return date != null && date.length() == DATE_LENGTH && validate(date, DEFAULT_DATE_FORMAT);
+        return date != null && date.length() == DATE_LENGTH && validate(date, DEFAULT_DATE_FORMAT, VALID_DATE_FORMAT);
     }
 
-    private static boolean validate(String date, String dateFormat) {
-        try {
-            DateTimeFormat.forPattern(dateFormat).parseDateTime(date);
-        } catch (UnsupportedOperationException | IllegalArgumentException ex) {
-            return false;
+    private static boolean validate(String date, String ... dateFormats) {
+        if (StringUtils.isNotBlank(date)) {
+            for (String dateFormat : dateFormats) {
+                try {
+                    DateTimeFormat.forPattern(dateFormat).parseDateTime(date);
+                    return true;
+                } catch (UnsupportedOperationException | IllegalArgumentException ignore) {}
+            }
         }
-        return true;
+        return false;
     }
 
-    private static String convertToFormat(String date, String defaultFormat, Set<String> suportedFormats) {
+    private static String convertToFormat(String date, String defaultFormat, Set<String> supportedFormats) {
         if (date == null) {
             return null;
         }
         String correctlyFormattedDateString = null;
 
-        for (String format : suportedFormats) {
+        for (String format : supportedFormats) {
             try {
                 DateTimeFormatter formatter = DateTimeFormat.forPattern(format).withLocale(Locale.forLanguageTag(NORWEGIAN_LOCALE));
                 correctlyFormattedDateString = formatter.parseDateTime(date).toString(defaultFormat);
@@ -82,9 +86,9 @@ public class DateUtil {
     }
 
     /**
-     * Attempt to convert any given String to a default timestamp format (yyyy-MM-dd HH:mm) from a set of supported formatts
+     * Attempt to convert any given String to a default timestamp format (yyyy-MM-dd HH:mm) from a set of supported formats
      * <br>
-     * Supported formatts are as follows:
+     * Supported formats are as follows:
      * <ul>
      * <li>yyyy-MM-dd HH:mm:ss</li>
      * <li>yyyy/MM/dd HH:mm</li>
@@ -103,9 +107,9 @@ public class DateUtil {
     }
 
     /**
-     * Attempt to convert any given String to a default date format (dd.MM.yyyy) from a set of supported formatts
+     * Attempt to convert any given String to a default date format (dd.MM.yyyy) from a set of supported formats
      * <br>
-     * Supported formatts are as follows:
+     * Supported formats are as follows:
      * <ul>
      * <li>yyyy-MM-dd</li>
      * <li>yyyy/MM/dd</li>

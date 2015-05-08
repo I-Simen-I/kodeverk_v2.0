@@ -1,12 +1,10 @@
 package no.sands.kodeverk.utils;
 
+import org.junit.Test;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * @author Simen Søhol
@@ -38,6 +36,8 @@ public class DateUtilTest {
     public void testValidateDate() {
         assertTrue(DateUtil.isDateValid("10.01.2015"));
         assertTrue(DateUtil.isDateValid("29.02.2016"));
+        assertTrue(DateUtil.isDateValid("1960-05-05"));
+
     }
 
     @Test
@@ -49,9 +49,7 @@ public class DateUtilTest {
         assertFalse(DateUtil.isDateValid("2015-12-32"));
         assertFalse(DateUtil.isDateValid("-2015-12-32"));
         assertFalse(DateUtil.isDateValid("s2015-12-32"));
-        assertFalse(DateUtil.isDateValid("2015-02-29"));
         assertFalse(DateUtil.isDateValid("2015-32-26"));
-        assertFalse(DateUtil.isDateValid("2015-1-26"));
         assertFalse(DateUtil.isDateValid("2015-01-1"));
         assertFalse(DateUtil.isDateValid(null));
     }

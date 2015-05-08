@@ -1,9 +1,8 @@
 package no.sands.kodeverk.domain.content;
 
-import org.apache.commons.lang3.StringUtils;
-
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 import no.sands.kodeverk.utils.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Self validating representation of the {@code date} data type. The following are accepted date formats:
@@ -49,10 +48,10 @@ public class Date implements Content {
          */
         @Override
         public Date build() {
-            this.content = DateUtil.convertDateString(this.rawContent);
-            if (StringUtils.isNotBlank(this.rawContent) && this.content == null) {
+            if (!DateUtil.isDateValid(this.rawContent) && StringUtils.isNotBlank(this.rawContent)) {
                 throw new KodeverkInvalidContentException("Attempt to format '" + this.rawContent + "' as a date failed");
             }
+            this.content = this.rawContent;
             return new Date(this);
         }
     }
