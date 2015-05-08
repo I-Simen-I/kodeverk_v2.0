@@ -2,17 +2,17 @@ package no.sands.kodeverk.domain.content;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 import org.junit.Test;
 
-import no.sands.kodeverk.domain.content.Content;
-import no.sands.kodeverk.domain.content.Index;
 import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
  * Unit tests for {@link no.sands.kodeverk.domain.content.Index}
  *
  * @author Øyvind Strømmen
+ * @author Simen Søhol
  */
 public class IndexTest {
 
@@ -27,8 +27,15 @@ public class IndexTest {
         new Index.IndexBuilder().rawContent("winter is coming").build();
     }
 
-    @Test(expected = KodeverkInvalidContentException.class)
-    public void shouldFailWhenNullIsProvided() {
-        new Index.IndexBuilder().rawContent(null).build();
+    @Test
+    public void shouldReturnNull() {
+        Content content = new Index.IndexBuilder().rawContent(null).build();
+        assertThat(content.getContentAsString(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldReturnBlankWhenInputIsBlank() {
+        Content content = new Index.IndexBuilder().rawContent("").build();
+        assertThat(content.getContentAsString(), is(""));
     }
 }

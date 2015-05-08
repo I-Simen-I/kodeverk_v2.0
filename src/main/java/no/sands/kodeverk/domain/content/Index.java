@@ -8,6 +8,7 @@ import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
  * Self validating representation of the {@code index} data type. Indexes can only contain numeric values.
  *
  * @author Øyvind Strømmen
+ * @author Simen Søhol
  */
 public class Index implements Content {
 
@@ -44,7 +45,7 @@ public class Index implements Content {
          */
         @Override
         public Index build() {
-            if (this.rawContent != null && StringUtils.isNumeric(this.rawContent)) {
+            if (StringUtils.isNumeric(this.rawContent) || StringUtils.isBlank(this.rawContent)) {
                 this.content = this.rawContent;
                 return new Index(this);
             }
