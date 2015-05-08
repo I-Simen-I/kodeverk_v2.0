@@ -1,12 +1,14 @@
 package no.sands.kodeverk.utils;
 
-import static no.sands.kodeverk.common.CommonVariables.DATE_COLUMN;
-import static no.sands.kodeverk.common.CommonVariables.SQL_EMPTY_VALUE;
 import static no.sands.kodeverk.common.CommonVariables.SQL_NULL_VALUE;
-import static no.sands.kodeverk.common.CommonVariables.TEXT_COLUMN;
-import static no.sands.kodeverk.common.CommonVariables.TIMESTAMP_COLUMN;
 
 import org.apache.commons.lang3.StringUtils;
+
+import no.sands.kodeverk.domain.Column;
+import no.sands.kodeverk.domain.content.Characters;
+import no.sands.kodeverk.domain.content.Date;
+import no.sands.kodeverk.domain.content.Index;
+import no.sands.kodeverk.domain.content.Timestamp;
 
 /**
  * @author Simen Søhol
@@ -56,19 +58,20 @@ public class SQLUtil {
     /**
      * Converts the kodeverk values to SQL values
      *
-     * @param columnType  the columnType to validate
-     * @param columnValue the column to convert
+     * @param column  the column to convert
      */
-    public static String convertCSVValuesToSQlValues(String columnType, String columnValue) {
-        if (!columnValue.equals(SQL_EMPTY_VALUE)) {
-            if (columnType.charAt(0) == TEXT_COLUMN) {
-                return makeValidSQLText(columnValue);
-            } else if (columnType.charAt(0) == DATE_COLUMN) {
-                return getDateFormat(columnValue);
-            } else if (columnType.charAt(0) == TIMESTAMP_COLUMN) {
-                return getTimestampFormat(columnValue);
+    public static String convertCSVValuesToSQlValues(Column column) {
+        if (column.getContent() != null && StringUtils.isNotBlank(column.getContent().getContentAsString())) {
+            if (column.getContent() instanceof Characters) {
+                return makeValidSQLText(column.getContent().getContentAsString());
+            } else if (column.getContent() instanceof Date) {
+                return getDateFormat(column.getContent().getContentAsString());
+            } else if (column.getContent() instanceof Timestamp) {
+                return getTimestampFormat(column.getContent().getContentAsString());
+            } else if (column.getContent() instanceof Index) {
+                return column.getContent().getContentAsString();
             } else {
-                return columnValue;
+                return column.getContent().getContentAsString();
             }
         } else {
             return SQL_NULL_VALUE;
