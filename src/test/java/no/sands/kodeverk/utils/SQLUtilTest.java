@@ -2,17 +2,48 @@ package no.sands.kodeverk.utils;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
+import static no.sands.kodeverk.utils.SQLUtil.convertCSVValuesToSQlValues;
 import static no.sands.kodeverk.utils.SQLUtil.createInsertStatement;
 import static no.sands.kodeverk.utils.SQLUtil.getDateFormat;
 import static no.sands.kodeverk.utils.SQLUtil.getTimestampFormat;
 
+import java.util.Arrays;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import no.sands.kodeverk.domain.Column;
+import no.sands.kodeverk.domain.DataType;
+import no.sands.kodeverk.domain.DataTypes;
+import no.sands.kodeverk.domain.Header;
+import no.sands.kodeverk.domain.content.Characters;
+import no.sands.kodeverk.domain.content.ContentFactory;
+import no.sands.kodeverk.domain.content.Date;
+import no.sands.kodeverk.domain.content.Index;
+import no.sands.kodeverk.domain.content.Timestamp;
 
 /**
  * @author Simen Søhol
  */
+@RunWith(MockitoJUnitRunner.class)
 public class SQLUtilTest {
+
+    @Mock
+    private Header header;
+
+    @Mock
+    private DataTypes dataTypes;
+
+    static {
+        ContentFactory.registerContent(DataType.CHARACTERS, new Characters.CharactersBuilder());
+        ContentFactory.registerContent(DataType.DATE, new Date.DateBuilder());
+        ContentFactory.registerContent(DataType.TIMESTAMP, new Timestamp.TimeStampBuilder());
+        ContentFactory.registerContent(DataType.INDEX, new Index.IndexBuilder());
+    }
 
     @Test
     public void testGetTimestampFormat() throws Exception {
@@ -32,27 +63,28 @@ public class SQLUtilTest {
 
     @Test
     public void testConvertColumnsToSQlValues() {
-        //TODO: Fiks testen
-        int stringColumnIndex = 1;
-        int dateColumnIndex = 2;
-        int timestampColumnIndex = 3;
-        int emptyColumnIndex = 4;
-        int numberColumnIndex = 5;
+        String[] values = {"dette er en dekode", "31.12.1899", "", "1900-01-01 10:00", "1"};
 
-        String columnTypeDate = "d1";
-        String columnTypeTimestamp = "t1";
-        String columnTypeString = "c1";
-        String columnTypeOther = "i1";
+        Column stringColumn = new Column.ColumnBuilder(values[0], 0, mockHeader(), mockDataTypes()).build();
+        Column dateColumn = new Column.ColumnBuilder(values[1], 1, mockHeader(), mockDataTypes()).build();
+        Column emptyColumn = new Column.ColumnBuilder(values[2], 2, mockHeader(), mockDataTypes()).build();
+        Column timestampColumn = new Column.ColumnBuilder(values[3], 3, mockHeader(), mockDataTypes()).build();
+        Column numberColumn = new Column.ColumnBuilder(values[4], 4, mockHeader(), mockDataTypes()).build();
 
-        String[] values = {"kode", "dekode", "1900-01-01", "1900-01-01 10:00", "", "1"};
-/*
-        new Column.ColumnBuilder("", 2, ).build();
+        assertThat(convertCSVValuesToSQlValues(stringColumn), is("'dette er en dekode'"));
+        assertThat(convertCSVValuesToSQlValues(dateColumn), is("date('31.12.1899')"));
+        assertThat(convertCSVValuesToSQlValues(timestampColumn), is("timestamp('1900-01-01','10:00')"));
+        assertThat(convertCSVValuesToSQlValues(emptyColumn), is("NULL"));
+        assertThat(convertCSVValuesToSQlValues(numberColumn), is("1"));
+    }
 
-        assertThat(convertCSVValuesToSQlValues(columnTypeString, values[stringColumnIndex]), is("'dekode'"));
-        assertThat(convertCSVValuesToSQlValues(columnTypeDate, values[dateColumnIndex]), is("date('1900-01-01')"));
-        assertThat(convertCSVValuesToSQlValues(columnTypeTimestamp, values[timestampColumnIndex]),
-                is("timestamp('1900-01-01','10:00')"));
-        assertThat(convertCSVValuesToSQlValues(columnTypeString, values[emptyColumnIndex]), is("NULL"));
-        assertThat(convertCSVValuesToSQlValues(columnTypeOther, values[numberColumnIndex]), is("1"));*/
+    private Header mockHeader() {
+        when(header.getValues()).thenReturn(Arrays.asList("dekode", "dato_fom", "dato_tom", "dato_opprettet", "id"));
+        return header;
+    }
+
+    private DataTypes mockDataTypes() {
+        when(dataTypes.getValues()).thenReturn(Arrays.asList("c1", "d2", "d3", "t4", "i5"));
+        return dataTypes;
     }
 }
