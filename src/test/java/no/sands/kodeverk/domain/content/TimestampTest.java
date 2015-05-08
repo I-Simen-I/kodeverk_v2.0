@@ -11,6 +11,7 @@ import static org.hamcrest.core.Is.is;
  * Unit tests for {@link no.sands.kodeverk.domain.content.Timestamp}
  *
  * @author Øyvind Strømmen
+ * @author Simen Søhol
  */
 public class TimestampTest {
 
@@ -27,8 +28,11 @@ public class TimestampTest {
 
     @Test
     public void shouldSetAppropriateContentWhenAValidTimestampIsProvided() {
-        Content content = new Timestamp.TimeStampBuilder().rawContent("2015-12-10 23:00").build();
-        assertThat(content.getContentAsString(), is("2015-12-10 23:00"));
+        Content contentTimestampFormat1 = new Timestamp.TimeStampBuilder().rawContent("2015-12-10 23:00").build();
+        Content contentTimestampFormat2 = new Timestamp.TimeStampBuilder().rawContent("10.12.2015 23:00").build();
+
+        assertThat(contentTimestampFormat1.getContentAsString(), is("2015-12-10 23:00"));
+        assertThat(contentTimestampFormat2.getContentAsString(), is("10.12.2015 23:00"));
     }
 
     @Test(expected = KodeverkInvalidContentException.class)

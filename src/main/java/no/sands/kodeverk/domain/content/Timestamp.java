@@ -8,9 +8,11 @@ import org.apache.commons.lang3.StringUtils;
  * Self validating representation of the {@code timestamp} data type. The following are accepted timestamp formats:
  * <ul>
  * <li>yyyy-MM-dd HH:mm</li>
+ * <li>dd.MM.yyyy HH:mm</li>
  * </ul>
  *
  * @author Øyvind Strømmen
+ * @author Simen Søhol
  */
 public class Timestamp implements Content {
 
@@ -48,7 +50,7 @@ public class Timestamp implements Content {
         @Override
         public Timestamp build() {
             if (!DateUtil.isTimestampValid(this.rawContent) && StringUtils.isNotBlank(this.rawContent)) {
-                throw new KodeverkInvalidContentException("Attempt to format '" + this.rawContent + "' as a timestamp failed");
+                throw new KodeverkInvalidContentException("'" + this.rawContent + "' is not a valid timestamp");
             }
             this.content = this.rawContent;
             return new Timestamp(this);

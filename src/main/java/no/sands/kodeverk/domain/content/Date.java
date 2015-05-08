@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  * </ul>
  *
  * @author Øyvind Strømmen
+ * @author Simen Søhol
  */
 public class Date implements Content {
 
@@ -49,7 +50,7 @@ public class Date implements Content {
         @Override
         public Date build() {
             if (!DateUtil.isDateValid(this.rawContent) && StringUtils.isNotBlank(this.rawContent)) {
-                throw new KodeverkInvalidContentException("Attempt to format '" + this.rawContent + "' as a date failed");
+                throw new KodeverkInvalidContentException("'" + this.rawContent + "' is not a valid date");
             }
             this.content = this.rawContent;
             return new Date(this);

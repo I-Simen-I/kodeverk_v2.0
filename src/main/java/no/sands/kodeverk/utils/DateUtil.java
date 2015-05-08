@@ -15,6 +15,7 @@ import java.util.Set;
 public class DateUtil {
     private static final String NORWEGIAN_LOCALE = "nb";
     private static final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm";
+    private static final String VALID_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
     private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
     private static final String VALID_DATE_FORMAT = "yyyy-MM-dd";
     private static final int DATE_LENGTH = 10;
@@ -39,13 +40,13 @@ public class DateUtil {
     );
 
     /**
-     * Determine if a timestamp string is formatted as yyyy-MM-dd hh:mm
+     * Determine if a timestamp string is formatted as either yyyy-MM-dd HH:mm or dd.MM.yyyy HH:mm
      *
      * @param date the timestamp to validate
      * @return true if timestamp is valid, false otherwise
      */
     public static boolean isTimestampValid(String date) {
-        return date != null && date.length() == TIMESTAMP_LENGTH && validate(date, DEFAULT_TIMESTAMP_FORMAT);
+        return date != null && date.length() == TIMESTAMP_LENGTH && validate(date, DEFAULT_TIMESTAMP_FORMAT, VALID_TIMESTAMP_FORMAT);
     }
 
     /**

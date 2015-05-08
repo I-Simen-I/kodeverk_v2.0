@@ -18,6 +18,7 @@ public class DateUtilTest {
         assertTrue(DateUtil.isTimestampValid("2015-12-10 23:00"));
         assertTrue(DateUtil.isTimestampValid("2015-01-10 10:59"));
         assertTrue(DateUtil.isTimestampValid("2016-02-29 23:59"));
+        assertTrue(DateUtil.isTimestampValid("29.02.2016 23:59"));
     }
 
     @Test
@@ -37,7 +38,6 @@ public class DateUtilTest {
         assertTrue(DateUtil.isDateValid("10.01.2015"));
         assertTrue(DateUtil.isDateValid("29.02.2016"));
         assertTrue(DateUtil.isDateValid("1960-05-05"));
-
     }
 
     @Test
