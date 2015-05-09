@@ -1,21 +1,11 @@
 # kodeverk_v2.0
 
-POC for å generere kodeverk
-
-- DONE: Sjekke om excelsheeten er et gyldig kodeverk
-- DONE: Timestamp og date må ha inneholde fnutter
-- DONE: Tomme rader skal fjernes under konvertering
-- DONE: Alle verdier som er tomme skal erstattes med null
-- DONE: Endre datoformat og timestamp under konvertering slik at formatet blir likt i csvfilene
-- DONE: Alle datoer som er 01.01.1900 må gjøres om til 31.12.1899 under sql generering eller ved konvertering
-- DONE: Lage exceptionklasser som skal gi bruker skikkelig tilbakemelding hvis konvertering/sql generering feiler
-
-
 # Regler
 	- Kodeverksnavn skal starte med K_
  	- Første kolonne skal være en index eller en kode
  	- Headernavn kan ikke være lengre enn 30 tegn
- 	- Kodeverk skal inneholde de syv standardfeltene: DATO_FOM, DATO_TOM, ER_GYLDIG, OPPRETTET_AV, DATO_OPPRETTET, ENDRET_AV og DATO_ENDRET
+ 	- Standard kodeverk skal inneholde de syv standardfeltene: DATO_FOM, DATO_TOM, ER_GYLDIG, OPPRETTET_AV, DATO_OPPRETTET, ENDRET_AV og DATO_ENDRET
+ 	- Mappingkodeverk trenger ikke feltene: DATO_FOM og DATO_TOM
 
 	Obligatoriske felter:
 		- DATO_FOM
@@ -36,7 +26,7 @@ POC for å generere kodeverk
 			- NOT NULL
 		- DATO_OPPRETTET
 			- Timestamp string
-			- Format: yyyy-MM-dd hh:ss
+			- Format: yyyy-MM-dd HH:mm eller dd.MM.yyyy HH:mm
 			- NOT NULL
 		- ENDRET_AV
 			- String
@@ -44,7 +34,7 @@ POC for å generere kodeverk
 			- NOT NULL
 		- DATO_ENDRET
 			- Timestamp string
-			- Format: yyyy-MM-dd hh:ss
+			- Format: yyyy-MM-dd HH:mm eller dd.MM.yyyy HH:mm
 			- NOT NULL
 
 	Andre felter:
@@ -53,7 +43,7 @@ POC for å generere kodeverk
 			- NULLABLE
 
 	Datatyper:
-		- Datatyper kan bli etterfulgt av tall: eks. c1, c2, d3, t4
+		- Datatyper kan bli etterfulgt av tall: eks. c1, c2, d3, t4, i5
 		- Det kan ikke være en tom kolonne mellom to datatyper: eks. c1, c2, , c3
 		- Det er bare kolonner som har en definert datatype som skal gjøre om til SQL-verdier
 
@@ -65,4 +55,5 @@ POC for å generere kodeverk
 				- Inneholder string datoer på formatet dd.MM.yyyy eller yyyy-MM-dd
 			- Index = i
 				- Kan bare inneholde tall
-				- Starter på 1
+				- Kan ikke være mindre enn 0
+				- NULLABLE
