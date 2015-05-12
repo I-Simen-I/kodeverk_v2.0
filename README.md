@@ -1,11 +1,17 @@
 # kodeverk_v2.0
 
 # Regler
-	- Kodeverksnavn skal starte med K_
- 	- Første kolonne skal være en index eller en kode
- 	- Headernavn kan ikke være lengre enn 30 tegn
- 	- Standard kodeverk skal inneholde de syv standardfeltene: DATO_FOM, DATO_TOM, ER_GYLDIG, OPPRETTET_AV, DATO_OPPRETTET, ENDRET_AV og DATO_ENDRET
- 	- Mappingkodeverk trenger ikke feltene: DATO_FOM og DATO_TOM
+	Kodeverksnavn:
+	 	- Skal alltid starte med K_
+	 	- Kan kun inneholde tegnene A-Z, 0-9 og _
+	 	- Bokstaver skal kun være uppercase
+	 	- Man kan ikke ha to understreker etter hverandre
+	 	- Navnet må slutte på tegnene A-Z eller 0-9
+
+	Kolonneregler
+		- Første kolonne skal være en integer eller en kode
+		- Første kolonne kan ikke være tom
+		- Headernavn kan ikke være lengre enn 30 tegn
 
 	Obligatoriske felter:
 		- DATO_FOM
@@ -53,7 +59,11 @@
 				- Inneholder string datoer på formatet yyyy-MM-dd hh:ss
 			- Date = d
 				- Inneholder string datoer på formatet dd.MM.yyyy eller yyyy-MM-dd
-			- Index = i
+			- Integer = i
 				- Kan bare inneholde tall
 				- Kan ikke være mindre enn 0
 				- NULLABLE
+
+	Generelle regler
+		- Standard kodeverk skal inneholde de syv standardfeltene: DATO_FOM, DATO_TOM, ER_GYLDIG, OPPRETTET_AV, DATO_OPPRETTET, ENDRET_AV og DATO_ENDRET
+		- Mappingkodeverk trenger ikke feltene: DATO_FOM og DATO_TOM
