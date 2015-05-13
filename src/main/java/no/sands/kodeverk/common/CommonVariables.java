@@ -22,10 +22,12 @@ public class CommonVariables {
 
     //Files
     public static final String TEST_FILE_1 = TEST_FILE_PATH + "kodeverk_to_import.xls";
+    public static final String DEFAULT_SQL_FILENAME = "KODEVERK.sql";
 
     //File type endings
     public static final String CSV_FILE = ".csv";
     public static final String XLS_FILE = ".xls";
+    public static final String SQL_FILE = ".sql";
 
     //Column types
     public static final String COLUMN_DEKODE = "dekode";

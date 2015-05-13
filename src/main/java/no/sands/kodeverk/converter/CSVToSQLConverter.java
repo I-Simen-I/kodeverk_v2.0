@@ -40,10 +40,10 @@ public class CSVToSQLConverter {
         ContentFactory.registerContent(DataType.INDEX, new IndexBuilder());
     }
 
-    public Map<String, Integer> generateSQL() throws Exception {
+    public Map<String, Integer> generateSQL(String insertFilePath) throws Exception {
         FileUtil.createDirectory(SQL_FILE_PATH);
 
-        OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(SQL_FILE_PATH + "inserts.sql"), ENCODING_WINDOWS_1252);
+        OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(insertFilePath), ENCODING_WINDOWS_1252);
         Map<String, Integer> insertStats = new HashMap<>();
 
         for (File file : getFilesInFolder(CommonVariables.KODEVERK_FILE_PATH)) {
