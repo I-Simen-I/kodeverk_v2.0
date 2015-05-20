@@ -57,6 +57,6 @@ public class Launcher extends JFrame {
     public static void main(String[] args) throws Exception {
         Launcher launcher = new Launcher();
         launcher.saveFile();
-        System.exit(EXIT_ON_CLOSE);
+        System.exit(0);
     }
 }

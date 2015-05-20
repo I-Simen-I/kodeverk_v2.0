@@ -1,11 +1,12 @@
 package no.sands.kodeverk.domain.content;
 
-import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
-import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
+
+import org.junit.Test;
+
+import no.sands.kodeverk.exceptions.KodeverkInvalidContentException;
 
 /**
  * Unit tests for {@link no.sands.kodeverk.domain.content.Timestamp}
@@ -22,6 +23,9 @@ public class TimestampTest {
 
     @Test
     public void shouldSetContentToNullWhenNullTimestampIsProvided() {
+
+        System.out.println("Inside test");
+
         Content content = new Timestamp.TimeStampBuilder().rawContent(null).build();
         assertThat(content.getContentAsString(), is(nullValue()));
     }
